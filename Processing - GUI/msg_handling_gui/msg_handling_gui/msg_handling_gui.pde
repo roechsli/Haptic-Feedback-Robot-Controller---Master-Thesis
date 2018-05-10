@@ -30,7 +30,7 @@ Serial arduinoPort;
 
 PFont warningFont;
 
-boolean DEBUG = false; // some cryptic terminal output with a lot of numbers 
+boolean DEBUG = true; // some cryptic terminal output with a lot of numbers 
 boolean VERBOSE = false; // verbose output in terminal
 boolean IGNORE_COM = false; // if no port available
 
