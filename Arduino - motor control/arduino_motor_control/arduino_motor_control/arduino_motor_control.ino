@@ -8,6 +8,7 @@
 #define photo_left_pin A2
 #define joystick_right_pin A1
 #define photo_right_pin A3
+#define sine_signal_pin A5
 int motorPinLowGain = 3;    // Motor connected to digital pin 3 (PWM)
 int motorPinHighGain = 11;    // Motor connected to digital pin 11 (PWM)
 int testPin = 13; // Used for testing the speed of Arduino
@@ -31,6 +32,13 @@ const int PHOTO_MAX_LEFT = 787;//770;//1023;//787;
 const int PHOTO_MIN_RIGHT = 678;//680;//0;//678;
 const int PHOTO_MAX_RIGHT = 773;//770;//1023;//773;
 
+char buf[16];
+char all[512];
+char *p = all;
+char *init_p = all;
+char semicolon[5] = ";";
+char end_char[5] = "\n";
+
 unsigned long TIME_BEGIN = 0;
 unsigned long TIME_NOW = 0;
 unsigned long TIME_CYCLE = 1000; // this is the time_step in [microseconds] that determines the running frequency
@@ -40,6 +48,8 @@ void setup() {
   Serial.begin(115200);
   pinMode(motorPinLowGain, OUTPUT);
   pinMode(motorPinHighGain, OUTPUT);
+  
+  pinMode(sine_signal_pin, INPUT);
   pinMode(joystick_left_pin, INPUT);
   pinMode(photo_left_pin, INPUT);
   pinMode(joystick_right_pin, INPUT);
@@ -53,10 +63,16 @@ void loop() {
   digitalWrite(testPin, HIGH); // this is only used to measure the operating frequency
   TIME_BEGIN = micros();
   
+  int sine_signal = analogRead(sine_signal_pin);
+  
   int joy_val_left = analogRead(joystick_left_pin);
   joy_val_left = joy_val_left>>2; // the joystick value is [0..1023] and I want to convert it to 8bit
   int joy_val_right = analogRead(joystick_right_pin);
   joy_val_right = joy_val_right>>2; // the joystick value is [0..1023] and I want to convert it to 8bit
+
+  
+  int photo_value_left_raw = analogRead(photo_left_pin);
+  int photo_value_right_raw = analogRead(photo_right_pin);
 
   int pwmValueLeft = 0;
   int pwmValueRight = 0;
@@ -67,25 +83,15 @@ void loop() {
     pwmValueLeft = output2pwm_sym((joy_val_left-127)>0?joy_val_left:0, LEFT_HAND_AMPLIFIER_GAIN);
     pwmValueRight = output2pwm_sym((joy_val_right-127)>0?joy_val_right:0, RIGHT_HAND_AMPLIFIER_GAIN);
   } else {
-    int photo_value_left = analogRead(photo_left_pin);
-    int photo_value_right = analogRead(photo_right_pin);
     float k_p = 1.0; // k_p = 1; and k_i = 0.01; works as well
     float k_i = 0.0;
     float k_d = 0.0;
-    photo_value_left = limit_value(photo_value_left, PHOTO_MIN_LEFT, PHOTO_MAX_LEFT);
-    photo_value_right = limit_value(photo_value_right, PHOTO_MIN_RIGHT, PHOTO_MAX_RIGHT);
+    int photo_value_left = limit_value(photo_value_left_raw, PHOTO_MIN_LEFT, PHOTO_MAX_LEFT);
+    int photo_value_right = limit_value(photo_value_right_raw, PHOTO_MIN_RIGHT, PHOTO_MAX_RIGHT);
     // just to be sure that it is not out of expected boundaries
 
-    //Serial.println(joy_val_right);
-    Serial.write(joy_val_left);
-    Serial.write(joy_val_right); 
-    Serial.write((joy_val_left + joy_val_right)%256); // this is the checksum
-    //Serial.println(joy_val_right);// for debugging purposes in serial monitor mode
-    if (Serial.available() > 0) {
-      dist_ref = (int)(FILTER_CST*dist_ref + (1-FILTER_CST)* Serial.read());
-    } else {
-      dist_ref = 0.99*dist_ref;// FIXME tune this param
-    }
+    // ignore Serial and read sine wave signal as reference
+    dist_ref = sine_signal >> 2;
     error_left = dist_ref - map_to_255(photo_value_left, PHOTO_MIN_LEFT, PHOTO_MAX_LEFT);
     error_right = dist_ref - map_to_255(photo_value_right, PHOTO_MIN_RIGHT, PHOTO_MAX_RIGHT);
         
@@ -107,9 +113,37 @@ void loop() {
   }
   analogWrite(motorPinLowGain, pwmValueLeftSym);//pwmValueLeftSym
   analogWrite(motorPinHighGain, pwmValueRightSym); //pwmValueRightSym
+
+
+  //fastest way of writing data to serial
+  all[0] = '\0';
+  p = mystrcat(init_p, itoa(dist_ref, buf, 16));
+  p = mystrcat(p, semicolon);
+  p = mystrcat(p, itoa(photo_value_left_raw, buf, 16));
+  p = mystrcat(p, semicolon);
+  p = mystrcat(p, itoa(photo_value_right_raw, buf, 16));
+  p = mystrcat(p, semicolon);
+  /*p = mystrcat(p, itoa(pwmValueLeftSym, buf, 16));
+  p = mystrcat(p, semicolon);
+  p = mystrcat(p, itoa(pwmValueRightSym, buf, 16));
+  p = mystrcat(p, semicolon);*/
+  p = mystrcat(p, itoa(TIME_BEGIN, buf, 16));
+  p = mystrcat(p, semicolon);
+  p = mystrcat(p, end_char);
+  Serial.print(all); //TODO this is necessary for logging
+  
  
   while ((micros() - TIME_BEGIN) < TIME_CYCLE) {  } // do nothing until we reach the time step of TIME_CYCLE
   digitalWrite(testPin, LOW); //instructions in between take roughly 640 microseconds
+}
+
+
+char* mystrcat( char* dest, char* src )
+{
+  // taken from https://stackoverflow.com/questions/21880730/c-what-is-the-best-and-fastest-way-to-concatenate-strings?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
+  while (*dest) dest++;
+  while (*dest++ = *src++);
+  return --dest;
 }
 
 int map_to_255(int receptor_value, int min_val, int max_val) {
