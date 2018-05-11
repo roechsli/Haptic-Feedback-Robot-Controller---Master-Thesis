@@ -27,10 +27,10 @@ int sum_error_left = 0;
 int error_right = 0; 
 int last_error_right = 0;
 int sum_error_right = 0;
-const int PHOTO_MIN_LEFT = 514;//500;//0;//514;
-const int PHOTO_MAX_LEFT = 787;//770;//1023;//787;
-const int PHOTO_MIN_RIGHT = 678;//680;//0;//678;
-const int PHOTO_MAX_RIGHT = 773;//770;//1023;//773;
+const int PHOTO_MIN_LEFT = 490;//500;//0;//514;
+const int PHOTO_MAX_LEFT = 793;//770;//1023;//787;
+const int PHOTO_MIN_RIGHT = 578;//680;//0;//678;
+const int PHOTO_MAX_RIGHT = 767;//770;//1023;//773;
 
 char buf[16];
 char all[512];
@@ -116,6 +116,7 @@ void loop() {
 
 
   //fastest way of writing data to serial
+  // msg: dist_ref ;   photo val left  ;    photo val right ;    time
   all[0] = '\0';
   p = mystrcat(init_p, itoa(dist_ref, buf, 16));
   p = mystrcat(p, semicolon);
