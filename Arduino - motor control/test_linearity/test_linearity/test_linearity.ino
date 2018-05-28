@@ -130,7 +130,7 @@ void loop() {
   p = mystrcat(p, itoa(TIME_BEGIN, buf, 16));
   p = mystrcat(p, semicolon);
   p = mystrcat(p, end_char);*/
-  Serial.println(photo_value_right_raw); //TODO this is necessary for logging
+  Serial.println(photo_value_left_raw); //TODO this is necessary for logging
   
  
   while ((micros() - TIME_BEGIN) < TIME_CYCLE) {  } // do nothing until we reach the time step of TIME_CYCLE
