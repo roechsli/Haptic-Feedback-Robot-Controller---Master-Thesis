@@ -10,10 +10,18 @@ from math import atan2
 PLOT_BOOL = True
 
 INTMAX = 65535
+
+PHOTO_MIN_LEFT = 650
+PHOTO_MAX_LEFT = 830
+PHOTO_MIN_RIGHT = 700
+PHOTO_MAX_RIGHT = 870
+
+"""
 PHOTO_MIN_LEFT = 440
 PHOTO_MAX_LEFT = 830
 PHOTO_MIN_RIGHT = 630
 PHOTO_MAX_RIGHT = 875
+"""
 
 def get_freq_from_filename(filename):
     if filename[0] == "f" and filename[-8:] == "_csv.csv":
@@ -51,44 +59,14 @@ amplitude_factor_r = []
 phasediff_l = []
 amplitude_factor_l = []
 freq_vec = []
-directory = "fra_logs/"
+directory = "20180529_fra_logs/"  # TODO change this if new data shall be analyzed
 for file in os.listdir(directory):
-    if True:  # if you want to skip all this calculation
+    if False:  # TODO change this, if you want to skip all this calculation
         freq_vec = [1.25, 1.6, 100, 10, 12.6, 16, 1, 2.5, 20, 25, 2, 3.17, 32, 40, 4, 50, 5, 6.3, 63, 80, 8]
-        amplitude_factor_l = [0.18312093655031383, 0.19008585620535026, 0.015550463478211691,
-                              0.2791834510627954, 0.318225202275935, 0.39337844196486743,
-                              0.2640693861334663, 0.15937256387989965, 0.38442913558776726,
-                              0.3368011239491985, 0.26341416323742706, 0.179587380570377,
-                              0.1745501197868898, 0.10820490293940287, 0.19803844662374293,
-                              0.08153603742180517, 0.23386509533281746, 0.2515841646660729,
-                              0.045070733483577624, 0.033746128437573436, 0.2293490151221878]
-
-        phasediff_l = [209.32028861381468, -150.2394102526345, 16.348740203083963,
-                       -123.74347056229176, 246.3235080372831, -96.87180529921147,
-                       210.56561019430046, -140.12790964226284, -83.89682238439842,
-                       305.4530750590407, 213.57525945841107, 223.69998825937347,
-                       -34.83878142240319, -20.037439212939162, 220.4153835818249,
-                       -7.246983978798568, 228.65728177360177, -133.39059860045023,
-                       -0.625870996573866, 26.21769676881804, -131.20258235070216]
-
-
-        amplitude_factor_r = [0.37804045847813944, 0.40049081380365026, 0.0017208776805125235,
-                              0.24154040379733116, 0.17283568553961723, 0.11569976621357908,
-                              0.3957775933783711, 0.38435417601557065, 0.07698536204876438,
-                              0.05051462446239852, 0.41448318432568554, 0.39907402546710335,
-                              0.02871012224402575, 0.01439112649707848, 0.40250562818628777,
-                              0.0075704099216118296, 0.3883647221254421, 0.35261224979808753,
-                              0.0049664432586177, 0.0026045342448563625, 0.3026066455918329]
-
-
-        phasediff_r = [207.98768677028977, -147.77310639192558, 55.97828157699515,
-                       -70.56664107667996, 305.35723712143783, -38.99482826513405,
-                       204.75642028354335, -139.85832051211634, -25.61847064680822,
-                       -15.2999187212653, -142.80695875247153, 226.92626461535167,
-                       -2.128589352480205, 6.1298593373593775, -125.13742395703514,
-                       14.665392440703343, 244.4929408859628, -102.14554577336645,
-                       27.36961260908157, 38.95750966221672, -86.31093760972809]
-
+        amplitude_factor_l = [0.17675981919970632, 0.18312267399356463, 0.01949341829267395, 0.26978239192019077, 0.33311878171527165, 0.369774072356006, 0.17400096951295416, 0.1861252801566901, 0.40017296807194397, 0.35064397887112764, 0.18210014901931423, 0.18511272146373267, 0.24791723227837462, 0.1493456317662998, 0.19146047921594653, 0.0870301532158636, 0.21099364288831401, 0.2147280185263324, 0.057726254563911, 0.033107839481778374, 0.2268739054577375]
+        phasediff_l = [205.3467514567597, -153.83743080935628, -320.4845338866222, -138.41202856697728, -130.70251871686537, -117.61487228247117, -153.8657640699463, 206.6923061292191, -94.09974537617197, -63.71638847428862, -153.943579306678, -152.81436374583922, -32.06355657979239, -12.819295739503332, 208.9100765632432, -358.5403588020346, 211.22988735406227, -147.1806573568082, 15.21830488777887, 28.40729165304161, -143.45301992811727]
+        amplitude_factor_r = [0.3213865015198608, 0.3402113519590562, 0.0017350629530853432, 0.2632195090055476, 0.20043435967514273, 0.13753176962093036, 0.30703807504243574, 0.3555171356019676, 0.08792206197073925, 0.0558128683646143, 0.3419203111085945, 0.3610073717927054, 0.031094711719848636, 0.01909289974777871, 0.3600614244021166, 0.009350720910695715, 0.3600395998619217, 0.34258954235828526, 0.005405908932899052, 0.0028516219104144456, 0.31218786121127073]
+        phasediff_r = [204.92819072330562, -151.97006600815976, -319.84408374620705, -79.27443527064112, -62.72997159062926, -45.326803861137805, -157.37797161148433, 215.27285553574174, -30.801214613586374, -16.750805205243367, -149.4433775479537, -139.3751588712953, -3.0897574145693305, 8.407631597919078, 228.2595159881846, -342.8433311689313, 236.59164331706756, -112.32516351906195, 22.705565035590723, 30.47923008367799, -97.33697806039062]
 
         continue
 
@@ -100,7 +78,7 @@ for file in os.listdir(directory):
 
     # to restrict to first file only
     if "f2_csv" not in file:
-        pass  # write pass if all files should be treated
+        pass  # TODO change this to continue if only one frequency file should be treated
 
     df = pd.read_csv(directory + file, delimiter=';')
     # make timeline continuous and not overflow and change from [us] to [s]
@@ -135,11 +113,11 @@ for file in os.listdir(directory):
     (phaseEst_in, amplitudeEst_in, biasEst_in) = fitSine(tSamples, yMeasured_in, frequency_float)
 
     # output left
-    yMeasured_out_l = df.iloc[:, 1]  # shift of four to have the right side
+    yMeasured_out_l = map_to_255(df.iloc[:, 1], PHOTO_MIN_LEFT, PHOTO_MAX_LEFT)#df.iloc[:, 1]  # shift of four to have the right side
     (phaseEst_out_l, amplitudeEst_out_l, biasEst_out_l) = fitSine(tSamples, yMeasured_out_l, frequency_float)
 
     # output right
-    yMeasured_out_r = df.iloc[:, 2]  # shift of four to have the right side
+    yMeasured_out_r = map_to_255(df.iloc[:, 2], PHOTO_MIN_RIGHT, PHOTO_MAX_RIGHT)#df.iloc[:, 2]  # shift of four to have the right side
     (phaseEst_out_r, amplitudeEst_out_r, biasEst_out_r) = fitSine(tSamples, yMeasured_out_r, frequency_float)
     # magnitude and phase offset
     phasediff_l.append(phaseEst_in - phaseEst_out_l)
@@ -150,6 +128,16 @@ for file in os.listdir(directory):
 
 # plot Bode diagram (freq_vec, magn_vec) and (freq_vec, phase_offset_vec)
 # save figures
+"""
+print(amplitude_factor_l)
+print(phasediff_l)
+print(amplitude_factor_r)
+print(phasediff_r)
+"""
+print(amplitude_factor_l)
+print(phasediff_l)
+print(amplitude_factor_r)
+print(phasediff_r)
 indices = np.argsort(freq_vec)
 amplitude_factor_l = 20 * np.log(amplitude_factor_l)
 amplitude_factor_r = 20 * np.log(amplitude_factor_r)

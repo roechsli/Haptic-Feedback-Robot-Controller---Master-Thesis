@@ -29,10 +29,10 @@ int sum_error_left = 0;
 int error_right = 0;
 int last_error_right = 0;
 int sum_error_right = 0;
-const int PHOTO_MIN_LEFT = 440;//500;//0;//514;
-const int PHOTO_MAX_LEFT = 830;//770;//1023;//787;
-const int PHOTO_MIN_RIGHT = 630;//680;//0;//678;
-const int PHOTO_MAX_RIGHT = 875;//770;//1023;//773;
+const int PHOTO_MIN_LEFT = 650;//440;
+const int PHOTO_MAX_LEFT = 830;
+const int PHOTO_MIN_RIGHT = 700;//630;
+const int PHOTO_MAX_RIGHT = 870;//875;
 
 char buf[16];
 char all[512];
@@ -81,7 +81,7 @@ void loop() {
   int pwmValueLeftSym = 128;
   int pwmValueRightSym = 128;
 
-  float k_p = 1.0; // k_p = 1; and k_i = 0.01; works as well
+  float k_p = 3.0; // k_p = 1; and k_i = 0.01; works as well
   float k_i = 0.0;
   float k_d = 0.0;
   int photo_value_left = limit_value(photo_value_left_raw, PHOTO_MIN_LEFT, PHOTO_MAX_LEFT);
@@ -125,8 +125,8 @@ void loop() {
   p = mystrcat(p, itoa(TIME_BEGIN, buf, 16));
   p = mystrcat(p, semicolon);
   p = mystrcat(p, end_char);
-  //Serial.print(all); //TODO this is necessary for logging
-  Serial.println(pwmValueLeftSym);
+  Serial.print(all); //TODO this is necessary for logging
+  //Serial.println(pwmValueLeftSym);
   // message format: dist ref | left val | right val | time stamp
   /*Serial.println(pwmValueLeftSym);
   Serial.print("error = ");
