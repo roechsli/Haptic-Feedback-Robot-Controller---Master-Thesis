@@ -111,7 +111,7 @@ void loop() {
     pwmValueRightSym = output2pwm_sym(motor_output_right, RIGHT_HAND_AMPLIFIER_GAIN);
 
   }
-  analogWrite(motorPinLowGain, pwmValueLeftSym);//pwmValueLeftSym
+  analogWrite(motorPinLowGain, 230);//pwmValueLeftSym
   analogWrite(motorPinHighGain, pwmValueRightSym); //pwmValueRightSym
 
 /*
@@ -130,7 +130,7 @@ void loop() {
   p = mystrcat(p, itoa(TIME_BEGIN, buf, 16));
   p = mystrcat(p, semicolon);
   p = mystrcat(p, end_char);*/
-  Serial.println(photo_value_right_raw); //TODO this is necessary for logging
+  Serial.println(photo_value_left_raw); //TODO this is necessary for logging
   
  
   while ((micros() - TIME_BEGIN) < TIME_CYCLE) {  } // do nothing until we reach the time step of TIME_CYCLE
