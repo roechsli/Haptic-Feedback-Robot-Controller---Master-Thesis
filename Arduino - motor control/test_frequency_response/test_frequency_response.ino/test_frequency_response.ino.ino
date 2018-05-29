@@ -125,7 +125,8 @@ void loop() {
   p = mystrcat(p, itoa(TIME_BEGIN, buf, 16));
   p = mystrcat(p, semicolon);
   p = mystrcat(p, end_char);
-  Serial.print(all); //TODO this is necessary for logging
+  //Serial.print(all); //TODO this is necessary for logging
+  Serial.println(pwmValueLeftSym);
   // message format: dist ref | left val | right val | time stamp
   /*Serial.println(pwmValueLeftSym);
   Serial.print("error = ");

@@ -36,9 +36,5 @@ for filename in os.listdir(directory):
                     buf = ""
                 else:
                     buf = buf + character
-            #destination.write(line)
-        if False:
-            print(line)
-            #destination.write( >some additional line> + "\n" )
     source.close()
     destination.close()
