@@ -81,7 +81,7 @@ void loop() {
   int pwmValueLeftSym = 128;
   int pwmValueRightSym = 128;
 
-  float k_p = 3.0; // k_p = 1; and k_i = 0.01; works as well
+  float k_p = 1.0; // k_p = 1; and k_i = 0.01; works as well
   float k_i = 0.0;
   float k_d = 0.0;
   int photo_value_left = limit_value(photo_value_left_raw, PHOTO_MIN_LEFT, PHOTO_MAX_LEFT);
