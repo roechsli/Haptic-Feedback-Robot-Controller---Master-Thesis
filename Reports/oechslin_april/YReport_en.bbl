@@ -1,0 +1,89 @@
+\begin{thebibliography}{}
+
+\bibitem[Asada, 2016]{AsadaPre}
+Asada (2016).
+\newblock Study on pseudo-haptic device using tactile stimulation.
+\newblock Prethesis.
+
+\bibitem[Asada~T., 2016]{Asada2016}
+Asada~T., Nakamura~T., Y.~A. (2016).
+\newblock Investigation on substitution of force feedback using pressure
+  stimulation to palm.
+\newblock In {\em Haptics Symposium}.
+
+\bibitem[Bermejo and Hui, 2017]{Bermejo2017}
+Bermejo, C. and Hui, P. (2017).
+\newblock A survey on haptic technologies for mobile augmented reality.
+\newblock {\em arXiv preprint arXiv:1709.00698}.
+
+\bibitem[Christiansson, 2007]{Christiansson2007}
+Christiansson, G. A.~V. (2007).
+\newblock {\em Hard master, soft slave haptic teleoperation}.
+\newblock PhD thesis, TU Delft, Delft University of Technology.
+
+\bibitem[Enayati et~al., 2016]{Enayati2016}
+Enayati, N., De~Momi, E., and Ferrigno, G. (2016).
+\newblock Haptics in robot-assisted surgery: challenges and benefits.
+\newblock {\em IEEE reviews in biomedical engineering}, 9:49--65.
+
+\bibitem[Hasegawa et~al., 2006]{Hasegawa2006}
+Hasegawa, S., Toshiaki, I., Hashimoto, N., Salvati, M., Mitake, H., Koike, Y.,
+  and Sato, M. (2006).
+\newblock Human-scale haptic interaction with a reactive virtual human in a
+  real-time physics simulator.
+\newblock {\em Computers in Entertainment (CIE)}, 4(3):9.
+
+\bibitem[Junior et~al., 2016]{Junior2016}
+Junior, A. G.~L., de~Andrade, R.~M., and Bento~Filho, A. (2016).
+\newblock Series elastic actuator: Design, analysis and comparison.
+\newblock In {\em Recent Advances in Robotic Systems}. InTech.
+
+\bibitem[Nakamura et~al., 2016]{Nakamura2016}
+Nakamura, T., Nemoto, S., Ito, T., and Yamamoto, A. (2016).
+\newblock Substituted force feedback using palm pressurization for a handheld
+  controller.
+\newblock In {\em International AsiaHaptics conference}, pages 197--199.
+  Springer.
+
+\bibitem[Nisky et~al., 2011]{Nisky2011}
+Nisky, I., Pressman, A., Pugh, C.~M., Mussa-Ivaldi, F.~A., and Karniel, A.
+  (2011).
+\newblock Perception and action in teleoperated needle insertion.
+\newblock {\em IEEE transactions on haptics}, 4(3):155--166.
+
+\bibitem[Pratt and Williamson, 1995]{Pratt1995}
+Pratt, G.~A. and Williamson, M.~M. (1995).
+\newblock Series elastic actuators.
+\newblock In {\em Intelligent Robots and Systems 95.'Human Robot Interaction
+  and Cooperative Robots', Proceedings. 1995 IEEE/RSJ International Conference
+  on}, volume~1, pages 399--406. IEEE.
+
+\bibitem[Prattichizzo et~al., 2012]{Prattichizzo2012}
+Prattichizzo, D., Pacchierotti, C., and Rosati, G. (2012).
+\newblock Cutaneous force feedback as a sensory subtraction technique in
+  haptics.
+\newblock {\em IEEE Transactions on Haptics}, 5(4):289--300.
+
+\bibitem[Schoonmaker and Cao, 2006]{Schoonmaker2006}
+Schoonmaker, R.~E. and Cao, C.~G. (2006).
+\newblock Vibrotactile force feedback system for minimally invasive surgical
+  procedures.
+\newblock In {\em Systems, Man and Cybernetics, 2006. SMC'06. IEEE
+  International Conference on}, volume~3, pages 2464--2469. IEEE.
+
+\bibitem[Tavakoli et~al., 2004]{Tavakoli2004}
+Tavakoli, M., PateI, R., and Moallem, M. (2004).
+\newblock Design issues in a haptics-based master-slave system for minimally
+  invasive surgery.
+\newblock In {\em Robotics and Automation, 2004. Proceedings. ICRA'04. 2004
+  IEEE International Conference on}, volume~1, pages 371--376. IEEE.
+
+\bibitem[van~den Bedem et~al., 2009]{Bedem2009}
+van~den Bedem, L., Hendrix, R., Rosielle, N., Steinbuch, M., and Nijmeijer, H.
+  (2009).
+\newblock Design of a minimally invasive surgical teleoperated master-slave
+  system with haptic feedback.
+\newblock In {\em Mechatronics and Automation, 2009. ICMA 2009. International
+  Conference on}, pages 60--65. IEEE.
+
+\end{thebibliography}

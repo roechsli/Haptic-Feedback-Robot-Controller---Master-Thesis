@@ -1,0 +1,333 @@
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6630 64-bit) (preloaded format=latex 2018.4.26)  4 MAY 2018 11:47
+entering extended mode
+**./YReport_en.tex
+(YReport_en.tex
+LaTeX2e <2017-04-15>
+Babel <3.18> and hyphenation patterns for 75 language(s) loaded.
+(YReport_en.cls
+Document Class: YReport_en 2012/04/16 KIMURA
+("C:\Users\Oechslin\AppData\Local\Programs\MiKTeX 2.9\tex\latex\base\size11.clo
+"
+File: size11.clo 2014/09/29 v1.4h Standard LaTeX file (size option)
+)
+\c@part=\count79
+\c@section=\count80
+\c@subsection=\count81
+\c@subsubsection=\count82
+\c@paragraph=\count83
+\c@subparagraph=\count84
+\c@figure=\count85
+\c@table=\count86
+\abovecaptionskip=\skip41
+\belowcaptionskip=\skip42
+\bibindent=\dimen102
+\pixel=\dimen103
+\shadebox=\box26
+\@cla=\count87
+\@clb=\count88
+\stampheight=\skip43
+ ("C:\Users\Oechslin\AppData\Local\Programs\MiKTeX 2.9\tex\latex\url\url.sty"
+\Urlmuskip=\muskip10
+Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
+)
+("C:\Users\Oechslin\AppData\Local\Programs\MiKTeX 2.9\tex\latex\graphics\graphi
+cx.sty"
+Package: graphicx 2017/06/01 v1.1a Enhanced LaTeX Graphics (DPC,SPQR)
+
+("C:\Users\Oechslin\AppData\Local\Programs\MiKTeX 2.9\tex\latex\graphics\keyval
+.sty"
+Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
+\KV@toks@=\toks14
+)
+("C:\Users\Oechslin\AppData\Local\Programs\MiKTeX 2.9\tex\latex\graphics\graphi
+cs.sty"
+Package: graphics 2017/06/25 v1.2c Standard LaTeX Graphics (DPC,SPQR)
+
+("C:\Users\Oechslin\AppData\Local\Programs\MiKTeX 2.9\tex\latex\graphics\trig.s
+ty"
+Package: trig 2016/01/03 v1.10 sin cos tan (DPC)
+)
+("C:\Users\Oechslin\AppData\Local\Programs\MiKTeX 2.9\tex\latex\graphics-cfg\gr
+aphics.cfg"
+File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
+)
+Package graphics Info: Driver file: dvips.def on input line 99.
+
+("C:\Users\Oechslin\AppData\Local\Programs\MiKTeX 2.9\tex\latex\graphics-def\dv
+ips.def"
+File: dvips.def 2017/06/20 v3.1d Graphics/color driver for dvips
+))
+\Gin@req@height=\dimen104
+\Gin@req@width=\dimen105
+)
+("C:\Users\Oechslin\AppData\Local\Programs\MiKTeX 2.9\tex\latex\tools\tabularx.
+sty"
+Package: tabularx 2016/02/03 v2.11 `tabularx' package (DPC)
+
+("C:\Users\Oechslin\AppData\Local\Programs\MiKTeX 2.9\tex\latex\tools\array.sty
+"
+Package: array 2016/10/06 v2.4d Tabular extension package (FMi)
+\col@sep=\dimen106
+\extrarowheight=\dimen107
+\NC@list=\toks15
+\extratabsurround=\skip44
+\backup@length=\skip45
+)
+\TX@col@width=\dimen108
+\TX@old@table=\dimen109
+\TX@old@col=\dimen110
+\TX@target=\dimen111
+\TX@delta=\dimen112
+\TX@cols=\count89
+\TX@ftn=\toks16
+)
+("C:\Users\Oechslin\AppData\Local\Programs\MiKTeX 2.9\tex\latex\wrapfig\wrapfig
+.sty"
+\wrapoverhang=\dimen113
+\WF@size=\dimen114
+\c@WF@wrappedlines=\count90
+\WF@box=\box27
+\WF@everypar=\toks17
+Package: wrapfig 2003/01/31  v 3.6
+)
+("C:\Users\Oechslin\AppData\Local\Programs\MiKTeX 2.9\tex\latex\amsmath\amsmath
+.sty"
+Package: amsmath 2017/09/02 v2.17a AMS math features
+\@mathmargin=\skip46
+
+For additional information on amsmath, use the `?' option.
+
+("C:\Users\Oechslin\AppData\Local\Programs\MiKTeX 2.9\tex\latex\amsmath\amstext
+.sty"
+Package: amstext 2000/06/29 v2.01 AMS text
+
+("C:\Users\Oechslin\AppData\Local\Programs\MiKTeX 2.9\tex\latex\amsmath\amsgen.
+sty"
+File: amsgen.sty 1999/11/30 v2.0 generic functions
+\@emptytoks=\toks18
+\ex@=\dimen115
+))
+("C:\Users\Oechslin\AppData\Local\Programs\MiKTeX 2.9\tex\latex\amsmath\amsbsy.
+sty"
+Package: amsbsy 1999/11/29 v1.2d Bold Symbols
+\pmbraise@=\dimen116
+)
+("C:\Users\Oechslin\AppData\Local\Programs\MiKTeX 2.9\tex\latex\amsmath\amsopn.
+sty"
+Package: amsopn 2016/03/08 v2.02 operator names
+)
+\inf@bad=\count91
+LaTeX Info: Redefining \frac on input line 213.
+\uproot@=\count92
+\leftroot@=\count93
+LaTeX Info: Redefining \overline on input line 375.
+\classnum@=\count94
+\DOTSCASE@=\count95
+LaTeX Info: Redefining \ldots on input line 472.
+LaTeX Info: Redefining \dots on input line 475.
+LaTeX Info: Redefining \cdots on input line 596.
+\Mathstrutbox@=\box28
+\strutbox@=\box29
+\big@size=\dimen117
+LaTeX Font Info:    Redeclaring font encoding OML on input line 712.
+LaTeX Font Info:    Redeclaring font encoding OMS on input line 713.
+\macc@depth=\count96
+\c@MaxMatrixCols=\count97
+\dotsspace@=\muskip11
+\c@parentequation=\count98
+\dspbrk@lvl=\count99
+\tag@help=\toks19
+\row@=\count100
+\column@=\count101
+\maxfields@=\count102
+\andhelp@=\toks20
+\eqnshift@=\dimen118
+\alignsep@=\dimen119
+\tagshift@=\dimen120
+\tagwidth@=\dimen121
+\totwidth@=\dimen122
+\lineht@=\dimen123
+\@envbody=\toks21
+\multlinegap=\skip47
+\multlinetaggap=\skip48
+\mathdisplay@stack=\toks22
+LaTeX Info: Redefining \[ on input line 2817.
+LaTeX Info: Redefining \] on input line 2818.
+)
+("C:\Users\Oechslin\AppData\Local\Programs\MiKTeX 2.9\tex\latex\amsfonts\amssym
+b.sty"
+Package: amssymb 2013/01/14 v3.01 AMS font symbols
+
+("C:\Users\Oechslin\AppData\Local\Programs\MiKTeX 2.9\tex\latex\amsfonts\amsfon
+ts.sty"
+Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
+\symAMSa=\mathgroup4
+\symAMSb=\mathgroup5
+LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
+(Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
+))
+\footleft=\dimen124
+) (YRcontents_en.tex) (YReport_en.aux)
+\openout1 = `YReport_en.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 7.
+LaTeX Font Info:    ... okay on input line 7.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 7.
+LaTeX Font Info:    ... okay on input line 7.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 7.
+LaTeX Font Info:    ... okay on input line 7.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 7.
+LaTeX Font Info:    ... okay on input line 7.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 7.
+LaTeX Font Info:    ... okay on input line 7.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 7.
+LaTeX Font Info:    ... okay on input line 7.
+LaTeX Font Info:    Try loading font information for U+msa on input line 21.
+
+("C:\Users\Oechslin\AppData\Local\Programs\MiKTeX 2.9\tex\latex\amsfonts\umsa.f
+d"
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+LaTeX Font Info:    Try loading font information for U+msb on input line 21.
+
+("C:\Users\Oechslin\AppData\Local\Programs\MiKTeX 2.9\tex\latex\amsfonts\umsb.f
+d"
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+)
+("C:\Users\Oechslin\AppData\Local\Programs\MiKTeX 2.9\tex\latex\base\omscmr.fd"
+)
+Overfull \hbox (8.1239pt too wide) in paragraph at lines 26--27
+[]  [] 
+ []
+
+
+Overfull \hbox (12.40744pt too wide) in paragraph at lines 36--36
+\OT1/cmr/m/n/10.95 mo-bile aug-mented re-al-ity ([[]], [[]]) and tele-op-er-ate
+d robotic
+ []
+
+File: YRmaterials/YReportP1.eps Graphic file (type eps)
+<YRmaterials/YReportP1.eps>
+Underfull \hbox (badness 10000) has occurred while \output is active
+[]
+ []
+
+[1
+
+]
+File: Figs/centric_shaft_controller_smaller.eps Graphic file (type eps)
+ <Figs/centric_shaft_controller_smaller.eps>
+File: Figs/centric_shaft_controller_smaller_top_view.eps Graphic file (type eps
+)
+
+<Figs/centric_shaft_controller_smaller_top_view.eps>
+File: YRmaterials/YReportP2.eps Graphic file (type eps)
+
+<YRmaterials/YReportP2.eps>
+Underfull \hbox (badness 10000) has occurred while \output is active
+[]
+ []
+
+[2]
+File: Figs/actuation_system_explained.eps Graphic file (type eps)
+ <Figs/actuation_system_explained.eps>
+File: YRmaterials/YReportP2.eps Graphic file (type eps)
+ <YRmaterials/YReportP2.eps>
+Underfull \hbox (badness 10000) has occurred while \output is active
+[]
+ []
+
+[3]
+File: Figs/left_hand_joystick_cam.eps Graphic file (type eps)
+ <Figs/left_hand_joystick_cam.eps>
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+File: YRmaterials/YReportP2.eps Graphic file (type eps)
+<YRmaterials/YReportP2.eps>
+Underfull \hbox (badness 10000) has occurred while \output is active
+[]
+ []
+
+[4]
+File: Figs/processing_gui.eps Graphic file (type eps)
+ <Figs/processing_gui.eps>
+File: Figs/control_scheme.eps Graphic file (type eps)
+ <Figs/control_scheme.eps>
+File: YRmaterials/YReportP2.eps Graphic file (type eps)
+
+<YRmaterials/YReportP2.eps>
+Underfull \hbox (badness 10000) has occurred while \output is active
+[]
+ []
+
+[5]
+File: Figs/tpr105_circuit.eps Graphic file (type eps)
+ <Figs/tpr105_circuit.eps>
+File: Figs/photoreceptor_curve.eps Graphic file (type eps)
+ <Figs/photoreceptor_curve.eps>
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+File: YRmaterials/YReportP2.eps Graphic file (type eps)
+<YRmaterials/YReportP2.eps>
+Underfull \hbox (badness 10000) has occurred while \output is active
+[]
+ []
+
+[6]
+File: Figs/resp_left_hand_rigid_experim1.eps Graphic file (type eps)
+ <Figs/resp_left_hand_rigid_experim1.eps>
+File: YRmaterials/YReportP2.eps Graphic file (type eps)
+ <YRmaterials/YReportP2.eps>
+Underfull \hbox (badness 10000) has occurred while \output is active
+[]
+ []
+
+[7]
+File: Figs/freq_resp_both_hands_rigid_experim1.eps Graphic file (type eps)
+ <Figs/freq_resp_both_hands_rigid_experim1.eps>
+File: Figs/freq_resp_both_hands_soft_experim1.eps Graphic file (type eps)
+
+<Figs/freq_resp_both_hands_soft_experim1.eps>
+File: YRmaterials/YReportP2.eps Graphic file (type eps)
+ <YRmaterials/YReportP2.eps>
+Underfull \hbox (badness 10000) has occurred while \output is active
+[]
+ []
+
+[8]
+File: YRmaterials/YReportP2.eps Graphic file (type eps)
+ <YRmaterials/YReportP2.eps>
+Underfull \hbox (badness 10000) has occurred while \output is active
+[]
+ []
+
+[9]
+File: YRmaterials/YReportP2.eps Graphic file (type eps)
+ <YRmaterials/YReportP2.eps>
+Underfull \hbox (badness 10000) has occurred while \output is active
+[]
+ []
+
+[10] (YReport_en.bbl)
+File: YRmaterials/YReportP2.eps Graphic file (type eps)
+ <YRmaterials/YReportP2.eps>
+Underfull \hbox (badness 10000) has occurred while \output is active
+[]
+ []
+
+[11] (YReport_en.aux) ) 
+Here is how much of TeX's memory you used:
+ 1857 strings out of 493306
+ 24469 string characters out of 3128523
+ 155098 words of memory out of 3000000
+ 5382 multiletter control sequences out of 15000+200000
+ 13757 words of font info for 53 fonts, out of 3000000 for 9000
+ 1141 hyphenation exceptions out of 8191
+ 34i,19n,28p,946b,350s stack positions out of 5000i,500n,10000p,200000b,50000s
+
+Output written on YReport_en.dvi (11 pages, 294728 bytes).

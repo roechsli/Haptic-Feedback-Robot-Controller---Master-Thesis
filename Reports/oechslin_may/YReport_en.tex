@@ -1,0 +1,41 @@
+\documentclass[11pt, a4paper, twoside]{YReport_en}
+
+\input{YRcontents_en}
+
+\pagestyle{yrstyles}
+
+\begin{document}
+\thispagestyle{yrstylef}
+\begin{center}
+\Huge
+{\bf Monthly Report (Yamamoto Lab.)}
+\end{center}
+%
+\begin{flushright}
+\vspace{5truemm}
+\large
+date: \YRdate \\
+%\Large
+\underline{%
+Author: \YRname \ (\YRgrade)
+}
+\\[4truemm]
+\normalsize
+\end{flushright}
+%
+\YRplan
+
+\vspace{3.2truemm}
+\begin{center}
+{\large \bf --- Work Contents ---}
+\vspace{-6truemm}
+\end{center}
+\hrulefill
+
+\setlength{\baselineskip}{16truept}
+\YRachievement
+
+\newpage
+\bibliographystyle{apalike}
+\bibliography{mybib}
+\end{document}
