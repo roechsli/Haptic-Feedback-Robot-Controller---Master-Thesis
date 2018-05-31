@@ -39,14 +39,14 @@ bool USE_JOYSTICK_DIRECT_LINK = false;
 
 int error_left = 0;
 int last_error_left = 0;
-int sum_error_left = 0;
+float sum_error_left = 0;
 int error_right = 0;
 int last_error_right = 0;
 int sum_error_right = 0;
-const int PHOTO_MIN_LEFT = 650;//440;
-const int PHOTO_MAX_LEFT = 830;
-const int PHOTO_MIN_RIGHT = 700;//630;
-const int PHOTO_MAX_RIGHT = 870;//875;
+const int PHOTO_MIN_LEFT = 750;//650;//440;
+const int PHOTO_MAX_LEFT = 830;//830;//830;
+const int PHOTO_MIN_RIGHT = 710;//700;//630;
+const int PHOTO_MAX_RIGHT = 870;//870;//875;
 
 char buf[16];
 char all[512];
@@ -92,17 +92,17 @@ void loop() {
   
   int pwmValueLeftSym = 128;
   int pwmValueRightSym = 128;
-
+  // 2.5 and 0.01 and 0.01
   float k_p = 1.0; // k_p = 1; and k_i = 0.01; works as well
   float k_i = 0.0;
   float k_d = 0.0;
   
   // ignore Serial and read sine wave signal as reference
   dist_ref = sine_signal >> 2; // dist ref is between [0..255]
-  error_left = dist_ref - map_to_255(photo_value_left_raw, PHOTO_MIN_LEFT, PHOTO_MAX_LEFT);
+  error_left = k_i * (dist_ref - map_to_255(photo_value_left_raw, PHOTO_MIN_LEFT, PHOTO_MAX_LEFT));
   error_right = dist_ref - map_to_255(photo_value_right_raw, PHOTO_MIN_RIGHT, PHOTO_MAX_RIGHT);
-
-  int motor_output_left = k_p * error_left + k_i * sum_error_left + k_d * (error_left - last_error_left);
+  
+  int motor_output_left = k_p * error_left + sum_error_left + k_d * (error_left - last_error_left);
   int motor_output_right =  k_p * error_right + k_i * sum_error_right + k_d * (error_right - last_error_right);//FIXME need two different control parameters?
   sum_error_left = error_left + sum_error_left;
   last_error_left = error_left;
@@ -112,6 +112,15 @@ void loop() {
   // symmetric feedback left and right, (allowing for negative motor values)
   pwmValueLeftSym = output2pwm_sym(motor_output_left, LEFT_HAND_AMPLIFIER_GAIN);
   pwmValueRightSym = output2pwm_sym(motor_output_right, RIGHT_HAND_AMPLIFIER_GAIN);
+
+  //Serial.println(dist_ref);
+  Serial.println(photo_value_left_raw);
+  //Serial.println(map_to_255(photo_value_left_raw, PHOTO_MIN_LEFT, PHOTO_MAX_LEFT));
+  //Serial.println(error_left);
+  //Serial.println(pwmValueRightSym);
+  //Serial.println(sum_error_left);
+  //Serial.println();
+  
 
   analogWrite(motorPinLowGain, pwmValueLeftSym); //pwmValueLeftSym
   analogWrite(motorPinHighGain, pwmValueRightSym); //pwmValueRightSym
@@ -127,7 +136,7 @@ void loop() {
   p = mystrcat(p, itoa(TIME_BEGIN, buf, 16));
   p = mystrcat(p, semicolon);
   p = mystrcat(p, end_char);
-  Serial.print(all); //TODO this is necessary for logging
+  //Serial.print(all); //TODO this is necessary for logging
   // message format: dist ref | left val | right val | time stamp
 
   while ((micros() - TIME_BEGIN) < TIME_CYCLE) {  } // do nothing until we reach the time step of TIME_CYCLE
@@ -163,6 +172,7 @@ int output2pwm_sym(int output, float gain) {
   // This function converts the reference symmetrically into a PWM where 0 is full power in one direction and 255 is full power in the other
   // Due to the non exactness of the sensor MIN and MAX values, this still results in some asymmetries however
   // conversion of feedback to pwm[0..255]:
+  output = limit_value(output, -255, 255);
 
   // limit to MAX_VOLTAGE
   int limit_val = 2 * MOTOR_MAX_VOLTAGE * OUTPUT_PER_VOLT / gain;
