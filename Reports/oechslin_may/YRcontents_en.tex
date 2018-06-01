@@ -31,25 +31,22 @@
 		\shadecells{2-3}
 		\hline
 		Test PlayStation Controller & & & & & & & & & & & & \\
-		\shadecells{4-5}
+		\shadecells{5-6}
+		\hline
+		Frequency Response Analysis & & & & & & & & & & & & \\
+		\shadecells{5-6}
 		\hline
 		Design Pilot Controller & & & & & & & & & & & & \\
-		\shadecells{2-4}
+		\shadecells{4-6}
 		\hline
 		Test Pilot Controller & & & & & & & & & & & & \\
-		\shadecells{4-6}
+		\shadecells{6-7}
 		\hline
 		& & & & & & & & & & & & \\
 		%\shadecells{2-10}
 		\hline
-		Program mbed device& & & & & & & & & & & & \\
-		\shadecells{5-5}
-		\hline
-		Redo experiments & & & & & & & & & & & & \\
-		\shadecells{5-6}
-		\hline
-		Make third controller? & & & & & & & & & & & & \\
-		\shadecells{5-7}
+		Theoretical Analysis& & & & & & & & & & & & \\
+		\shadecells{6-7}
 		\hline
 		Analyze data and compare& & & & & & & & & & & & \\
 		\shadecells{7-8}
@@ -62,6 +59,44 @@
 
 % Main contents of your work
 \newcommand{\YRachievement}{
+	Control Scheme
+	-	Say how I tested the setup, where and how I applied the signal of the wave generator, story with doubling the voltage level due to 50Ohm output impedance (Arduino has practically infinite input impedance, or very high)
+	Photoreceptor circuit (revised)
+	Testing of the PlayStation controller
+	Results of frequency analysis
+	-	Short intro on why pseudo infinite stiffness is ok
+	-	Explain min and max values of photoreceptor
+	-	Showcases of two to three different frequencies and signal following
+	-	Explain formula used for finding magnitude and phase (offset)
+	-	Calculate order, show theoretical similar transfer function, discuss point with slope in the end, but not really necessary
+	
+	Discussion
+	-	Control scheme and gui
+	-	Frequency response function
+	
+	Conclusion
+	Outlook
+	\section{Introduction}
+	This report is the continuation of the first report about the project "Haptic Feedback Controller with Palm Pressurization". The last report has left off with the conclusion that the Arduino had a limited operating frequency and that the gathered data was not reliable enough, since not the whole region of interest in frequency could be covered. First, the idea was to use an mbed and program it to be able to replace the Arduino. However, with a few tricks%TODO explain what I did with prescaler and such
+	 it was possible to reduce the time of some commands to a minimum to stay at an operating frequency of $1$kHz. \\
+	 This report explains the setup and states the result for the adapted controller and provides a somewhat short explanation and discussion of the gathered data.
+	 
+	 \section{Experiment and Data Gathering}
+	 The setup can be seen in figure \ref{}. %TODO make reference
+	 For this experiment, a total of four springs, arranged symmetrical on the palmpad have been used. The springs have a spring constant of $k_s = 1.5$N/mm which corresponds to an equivalent spring constant of $k_{eq} = 6$N/mm. They are distributed around the palm pad, where in their middle the photoreceptor has been attached, to measure the distance between the L-plate and the palm pad. It therefore measures the compression of the springs, which can be related to the output force by Hooke's law as:
+		\begin{equation	}
+			F = k_{eq}x 	
+	 	\end{equation}
+ 	
+ 	\subsection{Setup}
+ 	In this experiment a thorough frequency response analysis shall be done on the controller. On the left-hand side the motor with a reduction ratio of $33:1$ has been used, whereas for the right-hand side, the motor has a reduction ratio of $112:1$. \\
+ 	A reference signal is fed into the Arduino, which then controls the motors to match the compression of the springs with the reference.
+ 	
+ 	\subsection{Control Scheme}
+ 	The reference signal is given by the Function Generator SG-4115. This generator has an intrinsic output impedance of $50$Ohm. This means, that it expects to have a device connected to it with the same value as input impedance. If this is the case, these two elements form a simple voltage divider and only half of the voltage is applied to the target device. However, this is not the case for the Arduino, since it has a considerably higher input impedance. Therefore, the settings made on the function generator result in double the voltage on the Arduino. From this point on, this issue shall be neglected and all future voltage indications refer to the voltage level as seen by the Arduino.\\
+ 	The function generator produces a sine wave between $0$ and $5$V with a frequency ranging from $1$ to $100$Hz. The Arduino reads this voltage and controls the motor to have a proportional spring compression accordingly. In this case $0$V as reference signal is $0\%$ compression and $5$V corresponds to $100\%$ compression.
+ 	 
+	
 	\section{Introduction}
 	A lot of research on haptic feedback in handheld devices has been conducted, not only with force feedback (\cite{Prattichizzo2012}, \cite{Schoonmaker2006}), but also with pressure stimulation (\cite{Asada2016}, \cite{Nakamura2016}). The major applications for such haptic feedback devices can be found in (minimally invasive) surgical teleoperated medical systems (\cite{Bedem2009}, \cite{Enayati2016}, \cite{Tavakoli2004}, \cite{Nisky2011}), mobile augmented reality (\cite{Bermejo2017}, \cite{Hasegawa2006}) and teleoperated robotic systems (for example in space) \cite{Christiansson2007}. However this research project focuses on implementing a feedback on a handheld controller for a non-specified group of grounded wheeled robots. The controller uses pressurization feedback as a substitution for force feedback to give an intuitive%TODO say what intuitive means, give maybe a dictionary definition
 	 feeling about the intrinsic state of the robot. The tests of the controller shall be made on the commercially available crawler robot from topy \footnote{\url{http://www.topy.co.jp}} using two tracks as means of transportation.
