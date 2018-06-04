@@ -59,23 +59,6 @@
 
 % Main contents of your work
 \newcommand{\YRachievement}{
-	Control Scheme
-	-	Say how I tested the setup, where and how I applied the signal of the wave generator, story with doubling the voltage level due to 50Ohm output impedance (Arduino has practically infinite input impedance, or very high)
-	Photoreceptor circuit (revised)
-	Testing of the PlayStation controller
-	Results of frequency analysis
-	-	Short intro on why pseudo infinite stiffness is ok
-	-	Explain min and max values of photoreceptor
-	-	Showcases of two to three different frequencies and signal following
-	-	Explain formula used for finding magnitude and phase (offset)
-	-	Calculate order, show theoretical similar transfer function, discuss point with slope in the end, but not really necessary
-	
-	Discussion
-	-	Control scheme and gui
-	-	Frequency response function
-	
-	Conclusion
-	Outlook
 	
 	\section{Introduction}
 	This report is the continuation of the first report about the project "Haptic Feedback Controller with Palm Pressurization". The last report has left off with the conclusion that the Arduino had a limited operating frequency and that the gathered data was not reliable enough, since not the whole region of interest in frequency could be covered. First, the idea was to use an mbed and program it to be able to replace the Arduino. However, with a few tricks %TODO explain what I did with prescaler and such
@@ -83,7 +66,13 @@
 	This report explains the setup and states the result for the adapted controller and provides a somewhat short explanation and discussion of the gathered data.
 	
 	\section{Experiment and Data Gathering}
-	The setup can be seen in figure \ref{}. %TODO make reference
+	The setup can be seen in figure \ref{fig:setup_annotated}.
+	\begin{figure}[h!]
+		\centering
+		\includegraphics[width=0.4\linewidth]{Figs/setup_annotated}
+		\caption{Schematic of the spring system setup.}
+		\label{fig:setup_annotated}
+	\end{figure}
 	For this experiment, a total of four springs, arranged symmetrical on the palmpad have been used. The springs have a spring constant of $k_s = 1.5$N/mm which corresponds to an equivalent spring constant of $k_{eq} = 6$N/mm. They are distributed around the palm pad, where in their middle the photoreceptor has been attached, to measure the distance between the L-plate and the palm pad. It therefore measures the compression of the springs, which can be related to the output force by Hooke's law as:
 	\begin{equation}
 		F = k_{eq}x 	
