@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6630 64-bit) (preloaded format=latex 2018.4.26)  1 JUN 2018 17:19
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6630 64-bit) (preloaded format=pdflatex 2018.4.26)  4 JUN 2018 13:21
 entering extended mode
 **./YReport_en.tex
 (YReport_en.tex
@@ -197,7 +197,7 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ("C:\Users\Oechslin\AppData\Local\Programs\MiKTeX 2.9\tex\latex\base\omscmr.fd"
 )
 Overfull \hbox (8.1239pt too wide) in paragraph at lines 26--27
-[]  [] 
+  [] 
  []
 
 
@@ -210,10 +210,15 @@ Underfull \hbox (badness 10000) has occurred while \output is active
  []
 
 [1
+Non-PDF special ignored!
+<special> papersize=597.50787pt,845.04684pt
+Non-PDF special ignored!
+<special> PSfile="YRmaterials/YReportP1.eps" llx=0 lly=0 urx=596 ury=842 rw...
 
-]
+{C:/Users/Oechslin/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}]
 File: Figs/frf_measure_points.eps Graphic file (type eps)
- <Figs/frf_measure_points.eps>
+
+<Figs/frf_measure_points.eps>
 File: Figs/tpr105_circuit.eps Graphic file (type eps)
  <Figs/tpr105_circuit.eps>
 
@@ -225,7 +230,12 @@ Underfull \hbox (badness 10000) has occurred while \output is active
 []
  []
 
-[2]
+[2
+Non-PDF special ignored!
+<special> PSfile="YRmaterials/YReportP2.eps" llx=0 lly=0 urx=596 ury=842 rw...
+Non-PDF special ignored!
+<special> PSfile="Figs/frf_measure_points.eps" llx=0 lly=0 urx=1122 ury=519...
+]
 File: Figs/max_volt_applied_plot.eps Graphic file (type eps)
  <Figs/max_volt_applied_plot.eps>
 
@@ -240,7 +250,14 @@ Underfull \hbox (badness 10000) has occurred while \output is active
 []
  []
 
-[3]
+[3
+Non-PDF special ignored!
+<special> PSfile="YRmaterials/YReportP2.eps" llx=0 lly=0 urx=596 ury=842 rw...
+Non-PDF special ignored!
+<special> PSfile="Figs/tpr105_circuit.eps" llx=0 lly=0 urx=591 ury=560 rwi=...
+Non-PDF special ignored!
+<special> PSfile="Figs/max_volt_applied_plot.eps" llx=0 lly=0 urx=565 ury=4...
+]
 File: Figs/1plot_zoom.eps Graphic file (type eps)
  <Figs/1plot_zoom.eps>
 File: Figs/12.6plot_zoom.eps Graphic file (type eps)
@@ -258,17 +275,47 @@ Underfull \hbox (badness 10000) has occurred while \output is active
 []
  []
 
-[4]
+[4
+Non-PDF special ignored!
+<special> PSfile="YRmaterials/YReportP2.eps" llx=0 lly=0 urx=596 ury=842 rw...
+Non-PDF special ignored!
+<special> PSfile="Figs/1plot_zoom.eps" llx=0 lly=0 urx=640 ury=480 rwi=1487...
+Non-PDF special ignored!
+<special> PSfile="Figs/12.6plot_zoom.eps" llx=0 lly=0 urx=640 ury=480 rwi=1...
+Non-PDF special ignored!
+<special> PSfile="Figs/100plot_zoom.eps" llx=0 lly=0 urx=640 ury=480 rwi=14...
+]
+Underfull \hbox (badness 10000) in paragraph at lines 36--36
+
+ []
+
+File: YRmaterials/YReportP2.eps Graphic file (type eps)
+<YRmaterials/YReportP2.eps>
+Underfull \hbox (badness 10000) has occurred while \output is active
+[]
+ []
+
+[5
+Non-PDF special ignored!
+<special> PSfile="YRmaterials/YReportP2.eps" llx=0 lly=0 urx=596 ury=842 rw...
+Non-PDF special ignored!
+<special> PSfile="Figs/bode_left.eps" llx=0 lly=0 urx=640 ury=480 rwi=2231 
+Non-PDF special ignored!
+<special> PSfile="Figs/bode_right.eps" llx=0 lly=0 urx=640 ury=480 rwi=2231...
+]
 File: YRmaterials/YReportP2.eps Graphic file (type eps)
  <YRmaterials/YReportP2.eps>
 Underfull \hbox (badness 10000) has occurred while \output is active
 []
  []
 
-[5] (YReport_en.bbl
+[6
+Non-PDF special ignored!
+<special> PSfile="YRmaterials/YReportP2.eps" llx=0 lly=0 urx=596 ury=842 rw...
+] (YReport_en.bbl
 Underfull \hbox (badness 2486) in paragraph at lines 4--8
-[][]\OT1/cmr/m/n/10.95 exnumerus (2010).  How to fit a sinewave, an ex-am-ple i
-n python.
+[]\OT1/cmr/m/n/10.95 exnumerus (2010).  How to fit a sinewave, an ex-am-ple in 
+python.
  []
 
 )
@@ -278,18 +325,36 @@ Underfull \hbox (badness 10000) has occurred while \output is active
 []
  []
 
-[6] (YReport_en.aux)
+[7
+Non-PDF special ignored!
+<special> PSfile="YRmaterials/YReportP2.eps" llx=0 lly=0 urx=596 ury=842 rw...
+] (YReport_en.aux)
 
 LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 1814 strings out of 493306
- 23302 string characters out of 3128523
- 127237 words of memory out of 3000000
+ 1815 strings out of 493305
+ 23312 string characters out of 3128497
+ 130970 words of memory out of 3000000
  5350 multiletter control sequences out of 15000+200000
  11054 words of font info for 42 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  34i,19n,28p,738b,332s stack positions out of 5000i,500n,10000p,200000b,50000s
+<C:/Users/Oechslin/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfo
+nts/cm/cmbx10.pfb><C:/Users/Oechslin/AppData/Local/Programs/MiKTeX 2.9/fonts/ty
+pe1/public/amsfonts/cm/cmbx12.pfb><C:/Users/Oechslin/AppData/Local/Programs/MiK
+TeX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/Oechslin/AppData/Lo
+cal/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Users/Oech
+slin/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb
+><C:/Users/Oechslin/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfon
+ts/cm/cmr12.pfb><C:/Users/Oechslin/AppData/Local/Programs/MiKTeX 2.9/fonts/type
+1/public/amsfonts/cm/cmr8.pfb><C:/Users/Oechslin/AppData/Local/Programs/MiKTeX 
+2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/Oechslin/AppData/Local/
+Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy8.pfb>
+Output written on YReport_en.pdf (7 pages, 188624 bytes).
+PDF statistics:
+ 62 PDF objects out of 1000 (max. 8388607)
+ 0 named destinations out of 1000 (max. 500000)
+ 1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
-Output written on YReport_en.dvi (6 pages, 245020 bytes).

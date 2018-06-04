@@ -192,12 +192,15 @@
 		\endminipage\hfill
 	\end{figure}
 
+	For the left-hand side, a resonance top at around $13$Hz can be found, with a gain of roughly $-13$dB for lower frequencies. At higher frequencies a slope of roughly $-26$dB/dec has been calculated. For doing so the values in the range of $50$Hz and $100$Hz have been used. The phase shifts from $-330^\circ$ to $-140^\circ$, a total shift of roughly $180^\circ$.\\
+	For the right-hand side, no resonance top is visible, and a constant gain of roughly $-8$dB for lower frequencies can be identified. At higher frequencies a slope of roughly $-30$dB/dec has been calculated. Again using the values in the range of $50$Hz and $100$Hz. The phase shifts from $-338^\circ$ to $-140^\circ$, a total shift of roughly $190^\circ$.
+
 	
 	\section{Discussion}
-	As it can be seen in figues \ref{fig:1plot_zoom} to \ref{fig:100plot_zoom} the signal is not followed very smoothly. For one, the magnitude ration even at low frequencies is at roughly $0.5$. This shows that the proportional gain is too low. This would also lift up the curve indicated in the Bode diagram and shift it towards higher frequencies (to the right). Another important aspect is the saturation behavior of the right motor. The origin of this effect  needs to be investigated in more detail.\\
-	From the Bode diagrams one can conclude several things. First of all, the magnitude at lower frequencies should be around 0 to have perfect following of the reference signal. This can be influenced by tuning the proportional value of the controller.\\
+	As it can be seen in figues \ref{fig:1plot_zoom} to \ref{fig:100plot_zoom} the signal is not followed very smoothly. For one, the magnitude ratio even at low frequencies is at roughly $0.5$. This shows that the proportional gain is too low. This would also lift up the curve indicated in the Bode diagram and shift it towards higher frequencies (to the right). Another important aspect is the saturation behavior of the right motor. The origin of this effect  needs to be investigated in more detail.\\
+	From the Bode diagrams one can conclude several things. First of all, the gain magnitude at lower frequencies should be around $0$dB to have perfect following of the reference signal. This can be influenced by tuning the proportional value of the controller.\\
 	Second, the two motors show different characteristics. While the weaker motor (left-hand side) shows a resonance top around $13$ Herz, the stronger motor has no such behavior. In order to have a more linear system, it is therefore favorable to use the stronger motor for this spring system.\\
-	Furthermore, the first pole of the system can be found around $13$ Herz. The communication frequency between robot and graphical userinterface is suggested (according to the datasheet) to be between $1$Hz and $5$Hz. This shows that the series elastic actuator system as it is implemented in this experiment, is not the limiting factor in the robotic system.\\
+	Furthermore, the first pole of the system can be found around $13$ Herz. The communication frequency between robot and graphical user interface is suggested (according to the datasheet of the robot) to be between $1$Hz and $5$Hz. This shows that the series elastic actuator system as it is implemented in this experiment, is not the limiting factor in the robotic system.\\
 	When one wants to determine the order of the system, one can look at the slope at the tail of the magnitude curve in the Bode plot. In our case they are $-26$dB/dec and $-30$dB/dec for left and right respectively. Since the slopes can only be a multiple of $20$dB/dec, it can be concluded, that the $2 \xi \omega _0$ term from equation \ref{eq:transfer_fn_2nd_order} has a non-negligible influence at the tail of the Bode plot.
 	The equation of a second order transfer function is as follows:
 	\begin{equation}
@@ -212,7 +215,9 @@
 	The Bode diagrams show promising results. This is a first hint that the implementation of the series elastic actuators is not slowing down the system, since the bottleneck is given by the robot GUI communication link.\\
 	
 	\section{Outlook}
-	The input signal is interfering with the output signal on the Arduino. Therefore it is necessary to investigate its impact by implementing a voltage follower to reduce the output impedance.
+	The input signal is interfering with the output signal on the Arduino. Therefore it is necessary to investigate its impact by implementing a voltage follower to reduce the output impedance.\\
+	A theoretical model shall be calculated to take into account the different aspects and parameters of the setup. The goal is to come up with a precise model to simulate different parameter settings, such as equivalent spring constant, motor parameter or running frequency.
+	
 
 	
 	%‚±‚±‚Ü‚Å
