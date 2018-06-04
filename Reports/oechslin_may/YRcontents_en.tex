@@ -73,7 +73,7 @@
 		\caption{Schematic of the spring system setup.}
 		\label{fig:setup_annotated}
 	\end{figure}
-	For this experiment, a total of four springs, arranged symmetrical on the palmpad have been used. The springs have a spring constant of $k_s = 1.5$N/mm which corresponds to an equivalent spring constant of $k_{eq} = 6$N/mm. They are distributed around the palm pad, where in their middle the photoreceptor has been attached, to measure the distance between the L-plate and the palm pad. It therefore measures the compression of the springs, which can be related to the output force by Hooke's law as:
+	For this experiment, a total of four springs, arranged symmetrical on the palmpad have been used. The springs have a spring constant of $k_s = 1.5$N/mm which corresponds to an equivalent spring constant of $k_{eq} = 6$N/mm. They are distributed around the palm pad, where in their middle a distance sensor (called photoreceptor) has been attached, to measure the distance between the L-plate and the palm pad. It therefore measures the compression of the springs, which can be related to the output force by Hooke's law as:
 	\begin{equation}
 		F = k_{eq}x 	
 	\end{equation}
@@ -91,7 +91,7 @@
 		\caption{Control scheme for the frequency response analysis.}
 		\label{fig:frf_measure_points}
 	\end{figure}
-	In this case the output force from the user is infinite, since the palm pads have been blocked by a wall.
+	In this case the counteracting force from the user is infinite, since the palm pads have been blocked by a wall.
 	
 	\subsection{Photoreceptor Circuit}
 	The circuit of the photoreceptor can be found in figure \ref{fig:tpr105_circuit}. The components chosen are the TPR-105 for the sensor, $R_1 = 330\Omega$ and $R_2 = 27k\Omega$.
@@ -110,14 +110,14 @@
 	i_C = h_{FE} i_B
 	\end{equation}
 	\begin{equation}
-	V_{out} = V_{CC} - h_{FE} R_2 i_C = V_{CC} - K R_2 \Delta x
+	V_{out} = V_{CC} - h_{FE} R_2 i_B = V_{CC} - K R_2 \Delta x
 	\end{equation}
 	Where $h_{FE}$ is the forward current gain and $K$ is a constant given by $h_{FE} k_{eq}$.
 	
 	The two resistor values have been empirically found to have the highest sensitivity but not saturating the measurement. The sensitivity decreases with a smaller resistor, since at a certain point, the Arduino cannot detect a change in voltage anymore. Saturation occurs, when the value of $R_2$ is too high.
 	
 	\subsection{Identification of Operational Range (Photoreceptor)}
-	To find the receptor values at maximum compression of the springs, a simple test has been made, where one time $0$V has been applied to the motors, and another time $20$V has been applied. This $20$V value is within a safety margin of the maximum applicable voltage given by the datasheet of the motors. The result can be seen in the figure \ref{fig:max_volt_applied_plot}.
+	To find the receptor values at maximum compression of the springs, a simple test has been made, where one time $0$V has been applied to the motors, and another time $20$V has been applied. This $20$V value is within a safety margin of the maximum applicable voltage given by the datasheet of the motors. The result can be seen in figure \ref{fig:max_volt_applied_plot}.
 	
 	\begin{figure}[h!]
 		\centering
@@ -141,10 +141,10 @@
 		\label{tab:oper_range}
 	\end{figure}
 	
-	Having found these two values, the photoreceptor measurements can be mapped to this range with an 8-bit value. This means that $0$ is no compression and $255$ is fully achievable compression.
+	Using these values, the photoreceptor measurements can be mapped to this range with an 8-bit value. This means that $0$ is no compression and $255$ is fully achievable compression.
 	
 	\section{Frequency Response Analysis}
-	To conduct the frequency response analysis in a meaningful environment, the controller has to be tested under conditions close to the operational ones. To be able to control the distance between palm pads L-plates, and therefore the compression ratio of the springs, the palm pads have been blocked mechanically. With the wave generator producing the reference signal, the Arduino controlled the motors to match the compression with the reference. Figure \ref{} shows some testcases.
+	To conduct the frequency response analysis in a meaningful environment, the controller has to be tested under conditions close to the operational ones. To be able to control the distance between the palm pads and the L-plates, and therefore the compression ratio of the springs, the palm pads have been blocked mechanically. With the wave generator producing the reference signal, the Arduino controlled the motors to match the compression with the reference. Figures \ref{fig:1plot_zoom} to \ref{fig:100plot_zoom} show some testcases.
 	
 	
 	\begin{figure}[!htb]
@@ -181,12 +181,12 @@
 		\endminipage\hfill
 	\end{figure}
 
-	For the left-hand side, a resonance top at around $13$Hz can be found, with a gain of roughly $-13$dB for lower frequencies. At higher frequencies a slope of roughly $-26$dB/dec has been calculated. For doing so the values in the range of $50$Hz and $100$Hz have been used. The phase shifts from $-330^\circ$ to $-140^\circ$, a total shift of roughly $180^\circ$.\\
-	For the right-hand side, no resonance top is visible, and a constant gain of roughly $-8$dB for lower frequencies can be identified. At higher frequencies a slope of roughly $-30$dB/dec has been calculated. Again using the values in the range of $50$Hz and $100$Hz. The phase shifts from $-338^\circ$ to $-140^\circ$, a total shift of roughly $190^\circ$.
+	For the left-hand side, a resonance top at around $13$Hz can be found, with a gain of roughly $-12$dB for lower frequencies. At higher frequencies a slope of roughly $-26$dB/dec has been calculated. For doing so the values in the range of $50$Hz and $100$Hz have been used. The phase shifts from $-25^\circ$ to $-222^\circ$, a total shift of roughly $200^\circ$.\\
+	For the right-hand side, no resonance top is visible, and a constant gain of roughly $-6$dB for lower frequencies can be identified. At higher frequencies a slope of roughly $-30$dB/dec has been calculated. Again using the values in the range of $50$Hz and $100$Hz. The phase shifts from $-25^\circ$ to $-223^\circ$, a total shift of roughly $200^\circ$.
 
 	
 	\section{Discussion}
-	As it can be seen in figues \ref{fig:1plot_zoom} to \ref{fig:100plot_zoom} the signal is not followed very smoothly. For one, the magnitude ratio even at low frequencies is at roughly $0.5$. This shows that the proportional gain is too low. This would also lift up the curve indicated in the Bode diagram and shift it towards higher frequencies (to the right). Another important aspect is the saturation behavior of the right motor. The origin of this effect  needs to be investigated in more detail.\\
+	As it can be seen in figues \ref{fig:1plot_zoom} to \ref{fig:100plot_zoom} the signal is not followed very smoothly. For one, the magnitude ratio even at low frequencies is at roughly $0.5$. This shows that the proportional gain is too low. This would not only lift up the curve indicated in the Bode diagram and shift it towards higher frequencies (to the right). Another important aspect is the saturation behavior of the right motor. The origin of this effect  needs to be investigated in more detail.\\
 	From the Bode diagrams one can conclude several things. First of all, the gain magnitude at lower frequencies should be around $0$dB to have perfect following of the reference signal. This can be influenced by tuning the proportional value of the controller.\\
 	Second, the two motors show different characteristics. While the weaker motor (left-hand side) shows a resonance top around $13$ Herz, the stronger motor has no such behavior. In order to have a more linear system, it is therefore favorable to use the stronger motor for this spring system.\\
 	Furthermore, the first pole of the system can be found around $13$ Herz. The communication frequency between robot and graphical user interface is suggested (according to the datasheet of the robot) to be between $1$Hz and $5$Hz. This shows that the series elastic actuator system as it is implemented in this experiment, is not the limiting factor in the robotic system.\\
@@ -196,7 +196,7 @@
 		H (s) = \frac{\omega _0^2}{s^2 + 2 \xi \omega _0 s + \omega _0^2}
 		\label{eq:transfer_fn_2nd_order}
 	\end{equation}
-	Therefore one should also have a look at the phase lag diagram. The phase shift of roughly $180^\circ$ suggests a second order transfer function. However, in these particular figures (figures \ref{fig:bode_left} and \ref{fig:bode_right}) the phase offset is inverted. Therefore, it should be changed to $- \phi$, where $\phi$ is the current curve.
+	Therefore one should also have a look at the phase lag diagram. The phase shift of roughly $180^\circ$ suggests a second order transfer function.
 	
 	The only thing that might risk the reliability of the Bode diagrams is the fact that the output signal has shown to be electrically interfering with the input signal. This most probably comes from the fact that the output impedance is too high.
 
@@ -205,7 +205,7 @@
 	
 	\section{Outlook}
 	The input signal is interfering with the output signal on the Arduino. Therefore it is necessary to investigate its impact by implementing a voltage follower to reduce the output impedance.\\
-	A theoretical model shall be calculated to take into account the different aspects and parameters of the setup. The goal is to come up with a precise model to simulate different parameter settings, such as equivalent spring constant, motor parameter or running frequency.
+	A theoretical model shall be calculated to take into account the different aspects and parameters of the setup. The goal is to come up with a precise model to simulate different parameter settings, such as equivalent spring constant, motor parameters or operating frequency.
 	
 
 	
