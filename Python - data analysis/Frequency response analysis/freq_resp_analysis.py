@@ -139,9 +139,9 @@ for file in os.listdir(directory):
     yMeasured_out_r = map_to_255(df.iloc[:, 2], PHOTO_MIN_RIGHT, PHOTO_MAX_RIGHT)#df.iloc[:, 2]
     (phaseEst_out_r, amplitudeEst_out_r, biasEst_out_r) = fitSine(tSamples, yMeasured_out_r, frequency_float)
     # magnitude and phase offset
-    phasediff_l.append(phaseEst_in - phaseEst_out_l)
+    phasediff_l.append(phaseEst_out_l - phaseEst_in)
     amplitude_factor_l.append(amplitudeEst_out_l / amplitudeEst_in)
-    phasediff_r.append(phaseEst_in - phaseEst_out_r)
+    phasediff_r.append(phaseEst_out_r - phaseEst_in)
     amplitude_factor_r.append(amplitudeEst_out_r / amplitudeEst_in)
     freq_vec.append(frequency_float)
 
@@ -162,7 +162,7 @@ axarr_l[0].semilogx([freq_vec[x] for x in indices], [amplitude_factor_l[x] for x
 axarr_l[0].set_title('Bode diagram - left side')
 axarr_l[1].semilogx([freq_vec[x] for x in indices], [phasediff_l[x] if phasediff_l[x] < 0 else phasediff_l[x] - 360 for x in indices])
 #axarr_l[1].semilogx([freq_vec[x] for x in indices], [phasediff_l[x]  for x in indices])
-axarr_l[1].set_xlabel('Frequency [rad/sec]')
+axarr_l[1].set_xlabel('Frequency [Hz]')
 axarr_l[0].set_ylabel('Magnitude [dB]')
 axarr_l[1].set_ylabel('Phase [deg]')
 axarr_l[0].grid()
@@ -176,7 +176,7 @@ axarr_r[0].semilogx([freq_vec[x] for x in indices], [amplitude_factor_r[x] for x
 axarr_r[0].set_title('Bode diagram - right side')
 axarr_r[1].semilogx([freq_vec[x] for x in indices], [phasediff_r[x] if phasediff_r[x] < 0 else phasediff_r[x] - 360 for x in indices])
 #axarr_r[1].semilogx([freq_vec[x] for x in indices], [phasediff_r[x] for x in indices])
-axarr_r[1].set_xlabel('Frequency [rad/sec]')
+axarr_r[1].set_xlabel('Frequency [Hz]')
 axarr_r[0].set_ylabel('Magnitude [dB]')
 axarr_r[1].set_ylabel('Phase [deg]')
 axarr_r[0].grid()
