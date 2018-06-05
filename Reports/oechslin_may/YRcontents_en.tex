@@ -165,7 +165,8 @@
 	
 	
 	\subsection{Sinewave Fitting}
-	As described in this example\cite{exnumerus2010}, one can fit a sinewave with the linear least square method to the samples. This function returns the phase, amplitude and the bias. In this case, the difference in phase between input and output, as well as the amplitude ratio is needed in order to plot a Bode diagram.
+	As described in this example\cite{exnumerus2010}, one can fit a sinewave with the linear least square method to the samples. For finding the amplitude the second norm%TODO why not RMS as explained in slides_frf_and_bode_plots.pdf
+	 has been used. This function returns the phase, amplitude and the bias. In this case, the difference in phase between input and output, as well as the amplitude ratio is needed in order to plot a Bode diagram.
 	
 	\subsection{Bode Diagram}
 	The results of the frequency response analysis are shown in figures \ref{fig:bode_left} and \ref{fig:bode_right}.
@@ -183,7 +184,7 @@
 
 	For the left-hand side, a resonance top at around $13$Hz can be found, with a gain of roughly $-12$dB for lower frequencies. At higher frequencies a slope of roughly $-26$dB/dec has been calculated. For doing so the values in the range of $50$Hz and $100$Hz have been used. The phase shifts from $-25^\circ$ to $-222^\circ$, a total shift of roughly $200^\circ$.\\
 	For the right-hand side, no resonance top is visible, and a constant gain of roughly $-6$dB for lower frequencies can be identified. At higher frequencies a slope of roughly $-30$dB/dec has been calculated. Again using the values in the range of $50$Hz and $100$Hz. The phase shifts from $-25^\circ$ to $-223^\circ$, a total shift of roughly $200^\circ$.
-
+	%in slides_frf_and_bode_plots.pdf slide 27 suggests that the pole is stable since it goes from 0 to -180
 	
 	\section{Discussion}
 	As it can be seen in figues \ref{fig:1plot_zoom} to \ref{fig:100plot_zoom} the signal is not followed very smoothly. For one, the magnitude ratio even at low frequencies is at roughly $0.5$. This shows that the proportional gain is too low. This would not only lift up the curve indicated in the Bode diagram and shift it towards higher frequencies (to the right). Another important aspect is the saturation behavior of the right motor. The origin of this effect  needs to be investigated in more detail.\\

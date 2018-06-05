@@ -1,0 +1,149 @@
+% Your name
+\renewcommand{\YRname}{R. Oechslin}
+
+% Your grade/post
+\newcommand{\YRgrade}{M2}
+
+% Submission date
+\newcommand{\YRdate}{2018.Jun.30}
+
+% Your research theme
+\newcommand{\YRtheme}{Haptic Feedback Controller with Palm Pressurization}
+
+% Work plan
+\newcommand{\YRplan}{
+	\hspace{-4truemm}
+	\begin{tabularx}{170truemm}{|p{50truemm}||X|X|X|X|X|X|X|X|X|X|X|X|}
+		\hline
+		\multicolumn{13}{|c|}{\parbox[c][10truemm][c]{0truemm}{} \large Research theme: \bf \YRtheme} \\
+		\hline
+		\hline
+		\multicolumn{13}{|c|}{\parbox[c][8truemm][c]{0truemm}{} \large \bf --- Research Plan ---} \\
+		\hline
+		Term \textbackslash Month & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 & 1 \\
+		\hline
+		% For ``Work plan'', do not change above.
+		\hline
+		Literature review & & & & & & & & & & & & \\
+		\shadecells{2-2}
+		\hline
+		Design PlayStation Controller  & & & & & & & & & & & & \\
+		\shadecells{2-3}
+		\hline
+		Test PlayStation Controller & & & & & & & & & & & & \\
+		\shadecells{4-6}
+		\hline
+		Frequency Response Analysis & & & & & & & & & & & & \\
+		\shadecells{5-6}
+		\hline
+		Design Pilot Controller & & & & & & & & & & & & \\
+		\shadecells{4-6}
+		\hline
+		Test Pilot Controller & & & & & & & & & & & & \\
+		\shadecells{6-7}
+		\hline
+		& & & & & & & & & & & & \\
+		%\shadecells{2-10}
+		\hline
+		Theoretical Analysis & & & & & & & & & & & & \\
+		\shadecells{6-7}
+		\hline
+		Analyze data and compare & & & & & & & & & & & & \\
+		\shadecells{7-8}
+		\hline
+		Write Thesis & & & & & & & & & & & & \\
+		\shadecells{8-8}
+		\hline
+	\end{tabularx}
+}
+
+% Main contents of your work
+\newcommand{\YRachievement}{
+	
+	\section{Introduction}
+	This report is the continuation of the first two reports about the project "Haptic Feedback Controller with Palm Pressurization". The last report has left off ...
+	
+	
+	\section{Theoretical analysis}
+	% I can check with existing papers and take their block diagram
+	To come up with a theoretical analysis of the transfer function, all parameters that play a role have been identified.\\
+	The transfer function is non-linear, but this effect can at first be neglected (the force on the carriage changes with the angle of the motor). There are two types of friction in the system, first in the angular direction from the interior of the motor and bearings, and then in the linear direction namely the carriage in its guideway. These two types of friction can be combined and modeled as visquous damping.\\
+	Similar to the setup and analysis in \cite{Junior2016a} the equations of the motor are given as:
+	\begin{equation}
+		L_a \frac{di_a}{dt} + R_a i_a + K_{emf} \dot{\theta }_m = V_a
+	\end{equation}
+	where $L_a$ is the armature inductance, $R_a$ the armature resistance and $i_a$ the armature current of the motor. $K_{emf}$ is the back electromotive force constant also given by the motor. $V_a$ is the armature voltage and $\theta$ is the angle of the motor shaft.
+	Furthermore, with Newtons law, the sum of all torques must be zero, or:
+	\begin{equation}
+		J_{tot} \ddot{\theta }_m + b_{visc} \dot{\theta} = K_{\tau} i_a
+		\label{eq:torques}
+	\end{equation}
+	In equation \ref{eq:torques} the parameter $J_{tot}$ stands for the total equivalent inertia of the motor and the clamping link, $b_{visc}$ is the viscous coefficient used for modeling friction and $K_{\tau}$ is the proportional current torque gain constant. Ideally this should be the same as the $K_{emf}$. For an initial analysis these two parameters are treated to be identical, but if the results are inconsistent, a more thorough analysis shall be done where these two parameters should be measured in a set of tests. \\%if results are correct, this need not be changed
+	Finally, there is also the gain of the amplifier in voltage mode, which converts the voltage of the Arduino into the voltage applied to the motors. This gain is $K_{ampl} = 10$Volt/Volt.\\
+	
+	The total inertia of the system is determined by the inertia of the rotor $J_m$, the gear inertia $J_g$, the inertia of the clamp link $J_{cl}$ as well as the inertia of the carriage assembly with mass $m$. The last one can be found by simplifying the load to a point mass at distance of the clamp link length $L_{CL}$, which is given by $J_{carr} = m L_{CL}^2$.
+	The gear box reduces the inertia seen by the load by the square of its ratio $R$:
+	\begin{equation}
+		J_{load,\ motor\ side} = \frac{J_{load}}{R^2}
+	\end{equation}
+	%TODO do I need to take into account the rotor inertia J_m and the gear inertia J_g?
+	We have therefore a total inertia of:
+	\begin{equation}
+		J_T = J_m + J_g + n^2 J_{CL} + n^2 m L_{CL}^2
+	\end{equation}
+	where $J_{CL}$ is simplified as a cantilever with an off-center axis of distance $l$: %Source: http://www.orientalmotor.com/technology/motor-sizing-calculations.html
+	%TODO put reference and maybe picture
+	\begin{equation}
+		J_{CL} = \frac{1}{12}m_{CL}(A^2 + B^2 + 12l^2)
+	\end{equation}
+	where $A$ and $B$ are the width and length respectively.\\
+	
+	The conversion between the angle $\theta$ and the distance $x$ can be found by assuming that the horizontal displacement of the carriage is given by $L_{CL} sin(\theta) = x$. For small angles of $\theta$ the Taylor expansen gives $L_{CL} \theta = x$.
+	
+	Combining all these equations one can find the block diagram as depicted in figure \ref{}.
+	%TODO make block diagram, put here and reference
+	From this diagram one can obtain the transfer functions that relate the output $x$ and input $x_{ref}$ as defined in equation \ref{eq:tf_complete}.
+	\begin{equation}
+		F(s) = G_{PID}(s) G_{setup}(s) = \frac{X(s)}{X_{ref}(s)}
+		\label{eq:tf_complete}
+	\end{equation}
+	where $X(s)$ and $X_{ref}(s)$ are the laplace transforms of the output and input functions respectively.
+	
+	%TODO input a table here with all parameters
+	% the weight m_{CL} is roughly 19 grams, but this has to be confirmed!
+	%m_{carr} is roughly 30 grams, but this also has to be confirmed!
+	
+	$G_{setup}(s)$ can be calculated with the known parameters and a first assumption of negligible viscous friction. This sets external torques $T_{ext}$ to zero.\\
+	The parametrical representation of this transfer function is:
+	\begin{equation}
+		\frac{X(s)}{U_1(s)} = G_{setup}(s) = \frac{K_\tau K_{ampl} L_{CL}}{J_{T}L_a s^3 + J_T R_a s^2 + K_\tau K_{emf} s}
+		\label{eq:tf_setup}
+	\end{equation}
+	In equation \ref{eq:tf_setup} $U_1(s)$ is the laplace transform of the output of the PID. %TODO as depicted in figure... create figure
+	The transfer function of the PID block is given in equation \ref{eq:tf_pid}.
+	
+	\begin{equation}
+		\frac{U_1(s)}{E(s)} = G_{PID}(s) = \frac{K_I + K_P s + K_D s^2}{s}
+		\label{eq:tf_pid}
+	\end{equation}
+	Here $E(s)$ stands for the laplacian of the error between the reference signal $x_{ref}$ and the output $x$.\\
+	
+	
+	With the Bode plot of the $G_{setup}(s)$ and the known allures of the desired final transfer function $F(s)$ one can find the shape of the desired PID transfer function $G_{PID}$. The advantage of the Bode plots is that the multiplication of the transfer functions becomes an addition in the diagram.
+	
+	
+	\section{Discussion}
+	asdfdf
+
+	\section{Conclusion}
+	asdf
+	
+	\section{Outlook}
+	faaafaa adsf
+	
+
+	
+	%‚±‚±‚Ü‚Å
+}
+
+

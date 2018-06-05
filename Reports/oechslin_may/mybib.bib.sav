@@ -135,7 +135,7 @@
   year         = {2010},
 }
 
-@InCollection{junior2016series,
+@InCollection{Junior2016a,
   author    = {Junior, Arnaldo Gomes Leal and de Andrade, Rafhael Milanezi and Bento Filho, Ant{\^o}nio},
   title     = {Series Elastic Actuator: Design, Analysis and Comparison},
   booktitle = {Recent Advances in Robotic Systems},
