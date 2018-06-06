@@ -66,62 +66,130 @@
 	
 	\section{Theoretical analysis}
 	% I can check with existing papers and take their block diagram
-	To come up with a theoretical analysis of the transfer function, all parameters that play a role have been identified.\\
-	The transfer function is non-linear, but this effect can at first be neglected (the force on the carriage changes with the angle of the motor). There are two types of friction in the system, first in the angular direction from the interior of the motor and bearings, and then in the linear direction namely the carriage in its guideway. These two types of friction can be combined and modeled as visquous damping.\\
+	To come up with a theoretical analysis of the transfer function, a simplifying mechanical schematic has been drawn. This schematic can be seen in figure \ref{fig:mechanical_schematics}.
+	\begin{figure}[h!]
+		\centering
+		\includegraphics[width=1\linewidth]{Figs/mechanical_schematics}
+		\caption{Simplifying mechanical schematic of the actuation system with the stimulator.}
+		\label{fig:mechanical_schematics}
+	\end{figure}
+	The equations of motion can be formulated with the major parameters defined in the schematic. A full explanation of all parameters can be seen in table \ref{}. The variables with subscript $1$ refer to the first mass element, the carriage in its guideway, whereas variables with subscript $2$ refer to the stimulator, the palm pad. For the motor the subscript $m$ has been used.\\ %TODO make this table
+	
+	\subsection{Assumptions}
+	First of all, it is important to mention that the transfer function is non-linear, due to the motor angle $\theta$ that determines the force that acts on the carriage $c_1$. As an initial approach however, this effect has been neglected . More specifically, it is assumed that $\theta \ll 1$ and $\cos{\theta} \frac{T_m}{L_{CL} } = F_{carr} $ becomes $\frac{T_m}{L_{CL} } \simeq F_{carr} $. Furthermore, there are two types of friction in the system. Once in the angular direction from the interior of the motor and bearings, and then in the linear direction namely the carriage in its guideway and the palm pad. These two types of friction can be combined and modeled as visquous damping with coefficients $b_m$, $b_1$ and $b_2$ respectively.\\
+	
+	\subsection{Expected Transfer Functions}
+	The system can be cut into three major transfer functions. The block diagram including these three transfer functions is depicted in figure \ref{fig:3tf_block_diagram}. %TODO implement figure
+	\begin{figure}[h!]
+		\centering
+		\includegraphics[width=1\linewidth]{Figs/3tf_block_diagram}
+		\caption{Block diagram with three different transfer functions.}
+		\label{fig:3tf_block_diagram}
+	\end{figure}
+	According to this figure one can obtain a transfer function of the following form:
+	\begin{equation}
+		F(s) = G_{PID}(s)G_{motor}(s)G_{mass-spring}(s) = \frac{V_{ardu}}{E} \frac{\theta}{V_{ardu}} \frac{\Delta X}{\theta} = \frac{\Delta X}{E}
+	\end{equation}
+	Using this form one can calculate the three individual transfer functions and finally relate the compression of the springs $\Delta X$ to the compression given as reference $\Delta X_{ref}$.
+	\subsubsection{PID Transfer Function}
+	The transfer function given by the PID controller is very straight forward and can be taken out of the books. %FIXME reference here?
+	Specific for this case is the multiplication factor $K_{b2V}$ to get from the 8-bit value to the Arduino voltage level. The transfer function is given in equation \ref{eq:tf_pid}. 
+	\begin{equation}
+		G_{PID} (s) = \frac{V_{ardu}(s)}{E(s)} = K_{b2V} (K_P + \frac{K_I}{s} + K_Ds)
+		\label{eq:tf_pid}
+	\end{equation}
+	
+	\subsubsection{Motor Transfer Function}
+	The second transfer function relates the motor variable $\theta$ to the Arduino voltage. It can be calculated using the sums of all torques and the conversion parameters intrinsic to the motor.\\
 	Similar to the setup and analysis in \cite{Junior2016a} the equations of the motor are given as:
 	\begin{equation}
-		L_a \frac{di_a}{dt} + R_a i_a + K_{emf} \dot{\theta }_m = V_a
+		L_a \frac{di_a}{dt} + R_a i_a + K_{emf} \dot{\theta } = V_a
 	\end{equation}
-	where $L_a$ is the armature inductance, $R_a$ the armature resistance and $i_a$ the armature current of the motor. $K_{emf}$ is the back electromotive force constant also given by the motor. $V_a$ is the armature voltage and $\theta$ is the angle of the motor shaft.
+	where $L_a$ is the armature inductance, $R_a$ the armature resistance and $i_a$ the armature current of the motor. $K_{emf}$ is the back electromotive force constant also given by the motor. $V_a$ is the armature voltage and $\theta$ is the angle of the motor shaft.\\
 	Furthermore, with Newtons law, the sum of all torques must be zero, or:
 	\begin{equation}
-		J_{tot} \ddot{\theta }_m + b_{visc} \dot{\theta} = K_{\tau} i_a
+		J_{T} \ddot{\theta } + b_{m} \dot{\theta} = T_m = K_{\tau} i_a
 		\label{eq:torques}
 	\end{equation}
-	In equation \ref{eq:torques} the parameter $J_{tot}$ stands for the total equivalent inertia of the motor and the clamping link, $b_{visc}$ is the viscous coefficient used for modeling friction and $K_{\tau}$ is the proportional current torque gain constant. Ideally this should be the same as the $K_{emf}$. For an initial analysis these two parameters are treated to be identical, but if the results are inconsistent, a more thorough analysis shall be done where these two parameters should be measured in a set of tests. \\%if results are correct, this need not be changed
-	Finally, there is also the gain of the amplifier in voltage mode, which converts the voltage of the Arduino into the voltage applied to the motors. This gain is $K_{ampl} = 10$Volt/Volt.\\
-	
-	The total inertia of the system is determined by the inertia of the rotor $J_m$, the gear inertia $J_g$, the inertia of the clamp link $J_{cl}$ as well as the inertia of the carriage assembly with mass $m$. The last one can be found by simplifying the load to a point mass at distance of the clamp link length $L_{CL}$, which is given by $J_{carr} = m L_{CL}^2$.
-	The gear box reduces the inertia seen by the load by the square of its ratio $R$:
+	In equation \ref{eq:torques} the parameter $J_{T}$ stands for the total equivalent inertia of the motor and the clamping link, $b_{m}$ is the viscous coefficient used for modeling friction and $K_{\tau}$ is the proportional current torque gain constant. The moment of inertia can either be calculated as the sum of all inertias seen by the motor shaft, or measured in a simple test.\\ %TODO state what method I used, maybe compare both?
+	Finally, there is also the gain of the amplifier in voltage mode, which converts the voltage of the Arduino into the voltage applied to the motors. This gain is $K_{ampl} = 10$Volt/Volt. To this voltage an offset voltage of $V_{offset} = -20$V is added.\\
+	The total inertia of the system is determined by the inertia of the rotor $J_m$, the gear inertia $J_g$, the inertia of the clamp link $J_{CL}$ as well as the inertia of the carriage assembly with mass $m_1$. The last one can be found by simplifying the load to a point mass at distance of the clamp link length $L_{CL}$, which is given by $J_{carr} = m_1 L_{CL}^2$.
+	The gear box increases the inertia seen by the motor shaft by the square of its ratio $R$:
 	\begin{equation}
-		J_{load,\ motor\ side} = \frac{J_{load}}{R^2}
+		J_{load,\ motor\ side} = J_{load} R^2
 	\end{equation}
 	%TODO do I need to take into account the rotor inertia J_m and the gear inertia J_g?
 	We have therefore a total inertia of:
 	\begin{equation}
-		J_T = J_m + J_g + n^2 J_{CL} + n^2 m L_{CL}^2
+		J_T = J_m + J_g + n^2 J_{CL} + n_2^2 m L_{CL}^2
 	\end{equation}
 	where $J_{CL}$ is simplified as a cantilever with an off-center axis of distance $l$: %Source: http://www.orientalmotor.com/technology/motor-sizing-calculations.html
 	%TODO put reference and maybe picture
+	
 	\begin{equation}
 		J_{CL} = \frac{1}{12}m_{CL}(A^2 + B^2 + 12l^2)
 	\end{equation}
 	where $A$ and $B$ are the width and length respectively.\\
+	$n_2^2$ is the equivalent reduction ratio at the point mass $m_1$ taking into account the lever of $L_{CL}$. %TODO how to calculate this
 	
-	The conversion between the angle $\theta$ and the distance $x$ can be found by assuming that the horizontal displacement of the carriage is given by $L_{CL} sin(\theta) = x$. For small angles of $\theta$ the Taylor expansen gives $L_{CL} \theta = x$.
 	
-	Combining all these equations one can find the block diagram as depicted in figure \ref{fig:block_diagram}.
-	%TODO make block diagram, put here and reference
-	\begin{figure}[h!]
-		\centering
-		\includegraphics[width=1\linewidth]{Figs/block_diagram}
-		\caption{Complete block diagram.}
-		\label{fig:block_diagram}
-	\end{figure}
+	The conversion between the angle $\theta$ and the distance $x$ can be found by assuming that the horizontal displacement of the carriage is given by $L_{CL} sin(\theta) = x$. For small angles of $\theta$ the Taylor expansion gives $L_{CL} \theta = x$.
+	Combining all these equations one can find the transfer function of the motor stated in equation \ref{eq:tf_motor}
+	
+	
+	\begin{equation}
+		G_{motor} (s) = \frac{\theta(s)}{V_{ardu}(s)} = \frac{K_{ampl} K_{\tau}}{(L_a s + R_a)(J_T s^2 + b_m s) + K_{\tau} K_{emf} s}
+		\label{eq:tf_motor}
+	\end{equation}
+	
+	\subsubsection{Mass Spring Transfer Function}
+	Finally, one can identify the last of the three transfer sub-functions. This one correlates the output $\Delta x$ to the motor variable $\theta$. The output $\Delta x$ is the compression of the springs and is given by $\Delta x = x_2 - x_1$. In fact, one can find an intermediary transfer function $T_1$ such that $\frac{X_1(s)}{\theta(s)} = T_1(s)$. With the expression of $X_2 = A X_1$ one can find the coefficient for the compression: $\Delta X = X_2 - X_1 = T_1 (A-1) \theta$ which is used to simplify the expression later in this analysis.\\
+	The basic equations of motion for the two objects with masses $m_1$ and $m_2$ are given by Newtons law.
+	\begin{equation}
+		m_1 \ddot{x}_1 = F_{carr} + k_{eq} (x_2 - x_1) - b_1 \dot{x}_1
+		\label{eq:mov_carr}
+	\end{equation}
+	\begin{equation}
+		m_2 \ddot{x}_2 = -k_{eq} (x_2 - x_1) - b_2 \dot{x}_2
+		\label{eq:mov_stimul}
+	\end{equation}
+	In equations \ref{eq:mov_carr} and \ref{eq:mov_stimul} $b_1$ and $b_2$ are the friction coefficients and $F_{carr}$ is the force acting on the carriage, determined by the torque applied from the motor. Using the Laplace transform and equation \ref{eq:mov_carr} yields the solution for the parameter $A$ as follows:
+	
+	\begin{equation}
+		X_2 = A X_1 = \frac{k_{eq}}{s^2 m_2 + b_2 s + k_{eq}} X_1
+		\label{eq:mov_carr_find_A}
+	\end{equation}
+	
+	 Replacing the force $F_{carr}$ in equation \ref{eq:mov_stimul} by $\frac{T_m}{L_{CL}}$ and using equation \ref{eq:torques} and the Laplace transform yields the following expression:
+	
+	\begin{equation}
+		\frac{X_1}{\theta} = T_1 = \frac{s^4 J_T m_2 + s^3 (J_T b_2 + m_2 b_m) + s^2 (J_T k_{eq} + b_m b_2) + s b_m k_{eq}}{[s^4 m_1 m_2 + s^3(m_1 b_2 + m_2 b_1) + s^2 ((m_1 + m_2) k_{eq} + b_1 b_2) + s k_{eq} (b_1 + b_2)] L_{CL}}
+		\label{eq:mov_stimul_find_T1}
+	\end{equation}
+	
+	Thus one can write the complete expression for $\frac{\Delta X}{\theta}$ as:
+	\begin{equation}
+		\frac{\Delta X(s)}{\theta (s)} = - \frac{(s^4 J_T m_2 + s^3 (J_T b_2 + m_2 b_m) + s^2 (J_T k_{eq} + b_m b_2) + s b_m k_{eq})(s^2 m_2 + b_2 s)}{[s^4 m_1 m_2 + s^3(m_1 b_2 + m_2 b_1) + s^2 ((m_1 + m_2) k_{eq} + b_1 b_2) + s k_{eq} (b_1 + b_2)] L_{CL}(s^2 m_2 + b_2s + k_{eq})}
+		\label{eq:tf_mass_spring}
+	\end{equation}
+	
+	
+	
+	%%%%%%%%%%%TODO stopped writing here
 
 	From this diagram and the equations mentioned above, one can obtain the transfer functions that relate the output $x$ and input $x_{ref}$ as defined in equation \ref{eq:tf_complete}.
 	\begin{equation}
 		F(s) = G_{PID}(s) G_{setup}(s) = \frac{X(s)}{X_{ref}(s)}
 		\label{eq:tf_complete}
 	\end{equation}
-	where $X(s)$ and $X_{ref}(s)$ are the laplace transforms of the output and input functions respectively.
+	where $X(s)$ and $X_{ref}(s)$ are the Laplace transforms of the output and input functions respectively.
 	
 	%TODO input a table here with all parameters
 	% the weight m_{CL} is roughly 19 grams, but this has to be confirmed!
 	%m_{carr} is roughly 30 grams, but this also has to be confirmed!
 	
 	$G_{setup}(s)$ can be calculated with the known parameters and a first assumption of negligible viscous friction. This sets external torques $T_{ext}$ to zero.\\
-	The parametrical representation of this transfer function is:
+	The parametric representation of this transfer function is:
 	\begin{equation}
 		\frac{X(s)}{U_1(s)} = G_{setup}(s) = \frac{K_\tau K_{ampl} L_{CL}}{J_{T}L_a s^3 + J_T R_a s^2 + K_\tau K_{emf} s}
 		\label{eq:tf_setup}
