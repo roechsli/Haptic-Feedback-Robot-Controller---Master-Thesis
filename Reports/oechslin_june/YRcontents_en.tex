@@ -100,9 +100,16 @@
 	
 	The conversion between the angle $\theta$ and the distance $x$ can be found by assuming that the horizontal displacement of the carriage is given by $L_{CL} sin(\theta) = x$. For small angles of $\theta$ the Taylor expansen gives $L_{CL} \theta = x$.
 	
-	Combining all these equations one can find the block diagram as depicted in figure \ref{}.
+	Combining all these equations one can find the block diagram as depicted in figure \ref{fig:block_diagram}.
 	%TODO make block diagram, put here and reference
-	From this diagram one can obtain the transfer functions that relate the output $x$ and input $x_{ref}$ as defined in equation \ref{eq:tf_complete}.
+	\begin{figure}[h!]
+		\centering
+		\includegraphics[width=1\linewidth]{Figs/block_diagram}
+		\caption{Complete block diagram.}
+		\label{fig:block_diagram}
+	\end{figure}
+
+	From this diagram and the equations mentioned above, one can obtain the transfer functions that relate the output $x$ and input $x_{ref}$ as defined in equation \ref{eq:tf_complete}.
 	\begin{equation}
 		F(s) = G_{PID}(s) G_{setup}(s) = \frac{X(s)}{X_{ref}(s)}
 		\label{eq:tf_complete}

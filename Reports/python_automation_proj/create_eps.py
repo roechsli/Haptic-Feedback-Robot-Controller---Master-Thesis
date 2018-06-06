@@ -1,6 +1,6 @@
 import Image
 import os
-dir = "../oechslin_may/Figs/"
+dir = "../oechslin_june/Figs/"
 
 print("Created files:")
 for files in os.listdir(dir):
