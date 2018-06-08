@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6630 64-bit) (preloaded format=latex 2018.4.26)  6 JUN 2018 11:53
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6630 64-bit) (preloaded format=latex 2018.4.26)  8 JUN 2018 10:54
 entering extended mode
 **./YReport_en.tex
 (YReport_en.tex
@@ -200,6 +200,11 @@ Overfull \hbox (8.1239pt too wide) in paragraph at lines 26--27
 []  [] 
  []
 
+File: Figs/mechanical_schematic.eps Graphic file (type eps)
+<Figs/mechanical_schematic.eps>
+
+LaTeX Warning: Reference `' on page 1 undefined on input line 36.
+
 
 Underfull \hbox (badness 10000) in paragraph at lines 36--36
 
@@ -214,12 +219,8 @@ Underfull \hbox (badness 10000) has occurred while \output is active
 [1
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 36--36
-
- []
-
-File: Figs/block_diagram.eps Graphic file (type eps)
-<Figs/block_diagram.eps>
+File: Figs/2tf_block_diagram.eps Graphic file (type eps)
+ <Figs/2tf_block_diagram.eps>
 File: YRmaterials/YReportP2.eps Graphic file (type eps)
  <YRmaterials/YReportP2.eps>
 Underfull \hbox (badness 10000) has occurred while \output is active
@@ -227,9 +228,10 @@ Underfull \hbox (badness 10000) has occurred while \output is active
  []
 
 [2]
-Underfull \hbox (badness 10000) in paragraph at lines 36--36
+File: Figs/block_diagram.eps Graphic file (type eps)
+ <Figs/block_diagram.eps>
 
- []
+LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 File: YRmaterials/YReportP2.eps Graphic file (type eps)
 <YRmaterials/YReportP2.eps>
@@ -237,21 +239,32 @@ Underfull \hbox (badness 10000) has occurred while \output is active
 []
  []
 
-[3] (YReport_en.bbl)
+[3]
 File: YRmaterials/YReportP2.eps Graphic file (type eps)
  <YRmaterials/YReportP2.eps>
 Underfull \hbox (badness 10000) has occurred while \output is active
 []
  []
 
-[4] (YReport_en.aux) ) 
-Here is how much of TeX's memory you used:
- 1786 strings out of 493306
- 22628 string characters out of 3128523
- 116255 words of memory out of 3000000
- 5329 multiletter control sequences out of 15000+200000
- 11092 words of font info for 42 fonts, out of 3000000 for 9000
- 1141 hyphenation exceptions out of 8191
- 34i,19n,28p,618b,312s stack positions out of 5000i,500n,10000p,200000b,50000s
+[4] (YReport_en.bbl)
+File: YRmaterials/YReportP2.eps Graphic file (type eps)
+ <YRmaterials/YReportP2.eps>
+Underfull \hbox (badness 10000) has occurred while \output is active
+[]
+ []
 
-Output written on YReport_en.dvi (4 pages, 237628 bytes).
+[5] (YReport_en.aux)
+
+LaTeX Warning: There were undefined references.
+
+ ) 
+Here is how much of TeX's memory you used:
+ 1799 strings out of 493306
+ 22916 string characters out of 3128523
+ 121047 words of memory out of 3000000
+ 5339 multiletter control sequences out of 15000+200000
+ 11400 words of font info for 43 fonts, out of 3000000 for 9000
+ 1141 hyphenation exceptions out of 8191
+ 34i,19n,28p,759b,312s stack positions out of 5000i,500n,10000p,200000b,50000s
+
+Output written on YReport_en.dvi (5 pages, 241296 bytes).
