@@ -6,7 +6,7 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.53"
+    ComputedModelVersion    "1.69"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -54,8 +54,8 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "oechslin"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Mon Jun 11 17:20:22 2018"
-  ModelVersionFormat	  "1.%<AutoIncrement:53>"
+  LastModifiedDate	  "Tue Jun 12 17:16:50 2018"
+  ModelVersionFormat	  "1.%<AutoIncrement:69>"
   ConfigurationManager	  "None"
   LinearizationMsg	  "none"
   Profile		  off
@@ -580,6 +580,14 @@ Model {
       SampleTime	      "-1"
     }
     Block {
+      BlockType		      ToWorkspace
+      VariableName	      "simulink_output"
+      MaxDataPoints	      "1000"
+      Decimation	      "1"
+      SampleTime	      "0"
+      FixptAsFi		      off
+    }
+    Block {
       BlockType		      TransferFcn
       Numerator		      "[1]"
       Denominator	      "[1 2 1]"
@@ -606,7 +614,7 @@ Model {
   }
   System {
     Name		    "block_diagram"
-    Location		    [16, 99, 1271, 678]
+    Location		    [16, 99, 1271, 700]
     Open		    on
     ModelBrowserVisibility  off
     ModelBrowserWidth	    200
@@ -621,14 +629,14 @@ Model {
       BlockType		      SubSystem
       Name		      "Arduino read out"
       Ports		      [2, 1]
-      Position		      [140, 329, 265, 371]
+      Position		      [125, 349, 250, 391]
       TreatAsAtomicUnit	      off
       MinAlgLoopOccurrences   off
       RTWSystemCode	      "Auto"
       MaskHideContents	      off
       System {
 	Name			"Arduino read out"
-	Location		[339, 358, 1068, 703]
+	Location		[100, 415, 829, 760]
 	Open			on
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
@@ -729,7 +737,7 @@ Model {
 	  Ports			  [3]
 	  Position		  [635, 18, 665, 52]
 	  Floating		  off
-	  Location		  [943, 132, 1352, 483]
+	  Location		  [686, 128, 1213, 691]
 	  Open			  on
 	  NumInputPorts		  "3"
 	  ZoomMode		  "xonly"
@@ -896,20 +904,20 @@ Model {
       BlockType		      Integrator
       Name		      "Integrator"
       Ports		      [1, 1]
-      Position		      [955, 115, 985, 145]
+      Position		      [955, 135, 985, 165]
       IgnoreLimit	      off
     }
     Block {
       BlockType		      Integrator
       Name		      "Integrator1"
       Ports		      [1, 1]
-      Position		      [880, 335, 910, 365]
+      Position		      [880, 355, 910, 385]
       IgnoreLimit	      off
     }
     Block {
       BlockType		      Gain
       Name		      "K_ampl"
-      Position		      [335, 335, 365, 365]
+      Position		      [320, 355, 350, 385]
       Gain		      "K_ampl"
       ParameterDataTypeMode   "Inherit via internal rule"
       OutDataTypeMode	      "Inherit via internal rule"
@@ -918,7 +926,7 @@ Model {
     Block {
       BlockType		      Gain
       Name		      "K_emf"
-      Position		      [600, 440, 630, 470]
+      Position		      [585, 460, 615, 490]
       Orientation	      "left"
       Gain		      "K_emf"
       ParameterDataTypeMode   "Inherit via internal rule"
@@ -928,7 +936,7 @@ Model {
     Block {
       BlockType		      Gain
       Name		      "K_tau"
-      Position		      [610, 335, 640, 365]
+      Position		      [610, 355, 640, 385]
       Gain		      "K_tau"
       ParameterDataTypeMode   "Inherit via internal rule"
       OutDataTypeMode	      "Inherit via internal rule"
@@ -937,7 +945,7 @@ Model {
     Block {
       BlockType		      Gain
       Name		      "L_CL"
-      Position		      [665, 280, 695, 310]
+      Position		      [665, 300, 695, 330]
       Orientation	      "down"
       NamePlacement	      "alternate"
       Gain		      "L_CL"
@@ -948,37 +956,174 @@ Model {
     Block {
       BlockType		      Gain
       Name		      "L_CL1"
-      Position		      [1055, 335, 1085, 365]
+      Position		      [1055, 355, 1085, 385]
       Gain		      "L_CL"
       ParameterDataTypeMode   "Inherit via internal rule"
       OutDataTypeMode	      "Inherit via internal rule"
       SaturateOnIntegerOverflow	off
     }
     Block {
-      BlockType		      Scope
-      Name		      "Scope"
-      Ports		      [1]
-      Position		      [1110, 39, 1140, 71]
-      Floating		      off
-      Location		      [950, 301, 1359, 672]
-      Open		      on
-      NumInputPorts	      "1"
-      List {
-	ListType		AxesTitles
-	axes1			"%<SignalLabel>"
-      }
-      TimeRange		      "10"
-      DataFormat	      "StructureWithTime"
-      LimitDataPoints	      off
+      BlockType		      Gain
+      Name		      "L_CL2"
+      Position		      [835, 300, 865, 330]
+      Orientation	      "up"
+      Gain		      "L_CL"
+      ParameterDataTypeMode   "Inherit via internal rule"
+      OutDataTypeMode	      "Inherit via internal rule"
+      SaturateOnIntegerOverflow	off
+    }
+    Block {
+      BlockType		      Sin
+      Name		      "Sine Wave"
+      Ports		      [0, 1]
+      Position		      [15, 345, 45, 375]
+      SineType		      "Time based"
+      Amplitude		      "2"
+      Bias		      "2.5"
+      Frequency		      "freq * 2*3.1416"
       SampleTime	      "0"
     }
     Block {
+      BlockType		      Sum
+      Name		      "Sum1"
+      Ports		      [2, 1]
+      Position		      [385, 360, 405, 380]
+      ShowName		      off
+      IconShape		      "round"
+      Inputs		      "++|"
+      InputSameDT	      off
+      OutDataTypeMode	      "Inherit via internal rule"
+      SaturateOnIntegerOverflow	off
+    }
+    Block {
+      BlockType		      Sum
+      Name		      "Sum2"
+      Ports		      [2, 1]
+      Position		      [455, 360, 475, 380]
+      ShowName		      off
+      IconShape		      "round"
+      Inputs		      "|+-"
+      InputSameDT	      off
+      OutDataTypeMode	      "Inherit via internal rule"
+      SaturateOnIntegerOverflow	off
+    }
+    Block {
+      BlockType		      Sum
+      Name		      "Sum3"
+      Ports		      [3, 1]
+      Position		      [670, 360, 690, 380]
+      ShowName		      off
+      IconShape		      "round"
+      Inputs		      "++-"
+      InputSameDT	      off
+      OutDataTypeMode	      "Inherit via internal rule"
+      SaturateOnIntegerOverflow	off
+    }
+    Block {
+      BlockType		      Sum
+      Name		      "Sum4"
+      Ports		      [3, 1]
+      Position		      [670, 140, 690, 160]
+      ShowName		      off
+      IconShape		      "round"
+      Inputs		      "---"
+      InputSameDT	      off
+      OutDataTypeMode	      "Inherit via internal rule"
+      SaturateOnIntegerOverflow	off
+    }
+    Block {
+      BlockType		      Sum
+      Name		      "Sum5"
+      Ports		      [2, 1]
+      Position		      [1095, 205, 1115, 225]
+      Orientation	      "left"
+      NamePlacement	      "alternate"
+      ShowName		      off
+      IconShape		      "round"
+      Inputs		      "+|-"
+      InputSameDT	      off
+      OutDataTypeMode	      "Inherit via internal rule"
+      SaturateOnIntegerOverflow	off
+    }
+    Block {
+      BlockType		      Sum
+      Name		      "Sum6"
+      Ports		      [2, 1]
+      Position		      [840, 250, 860, 270]
+      Orientation	      "left"
+      NamePlacement	      "alternate"
+      ShowName		      off
+      IconShape		      "round"
+      Inputs		      "+|-"
+      InputSameDT	      off
+      OutDataTypeMode	      "Inherit via internal rule"
+      SaturateOnIntegerOverflow	off
+    }
+    Block {
+      BlockType		      Sum
+      Name		      "Sum7"
+      Ports		      [2, 1]
+      Position		      [730, 205, 750, 225]
+      Orientation	      "left"
+      NamePlacement	      "alternate"
+      ShowName		      off
+      IconShape		      "round"
+      Inputs		      "|+-"
+      InputSameDT	      off
+      OutDataTypeMode	      "Inherit via internal rule"
+      SaturateOnIntegerOverflow	off
+    }
+    Block {
+      BlockType		      ToWorkspace
+      Name		      "To Workspace"
+      Position		      [1100, 15, 1160, 45]
+      VariableName	      "dx"
+      MaxDataPoints	      "inf"
+      SampleTime	      "-1"
+      SaveFormat	      "Structure"
+    }
+    Block {
+      BlockType		      ToWorkspace
+      Name		      "To Workspace1"
+      Position		      [115, 260, 175, 290]
+      VariableName	      "dx_ref"
+      MaxDataPoints	      "inf"
+      SampleTime	      "-1"
+      SaveFormat	      "Structure"
+    }
+    Block {
+      BlockType		      TransferFcn
+      Name		      "Transfer Fcn"
+      Position		      [500, 352, 560, 388]
+      Denominator	      "[L_a R_a]"
+    }
+    Block {
+      BlockType		      TransferFcn
+      Name		      "Transfer Fcn1"
+      Position		      [720, 132, 780, 168]
+      Denominator	      "[m_2 0]"
+    }
+    Block {
+      BlockType		      TransferFcn
+      Name		      "Transfer Fcn2"
+      Position		      [730, 352, 790, 388]
+      Denominator	      "[J_T 0]"
+    }
+    Block {
+      BlockType		      Constant
+      Name		      "V_offset"
+      Position		      [380, 280, 410, 310]
+      Orientation	      "down"
+      NamePlacement	      "alternate"
+      Value		      "V_offset"
+    }
+    Block {
       BlockType		      Scope
-      Name		      "Scope1"
+      Name		      "armature\nvoltage"
       Ports		      [1]
-      Position		      [540, 39, 570, 71]
+      Position		      [525, 59, 555, 91]
       Floating		      off
-      Location		      [950, 301, 1359, 672]
+      Location		      [796, 277, 1205, 648]
       Open		      off
       NumInputPorts	      "1"
       List {
@@ -992,10 +1137,97 @@ Model {
       SampleTime	      "0"
     }
     Block {
+      BlockType		      Gain
+      Name		      "b_1"
+      Position		      [730, 420, 760, 450]
+      Orientation	      "left"
+      Gain		      "b_1"
+      ParameterDataTypeMode   "Inherit via internal rule"
+      OutDataTypeMode	      "Inherit via internal rule"
+      SaturateOnIntegerOverflow	off
+    }
+    Block {
+      BlockType		      Gain
+      Name		      "b_op"
+      Position		      [780, 65, 810, 95]
+      Orientation	      "left"
+      Gain		      "b_op"
+      ParameterDataTypeMode   "Inherit via internal rule"
+      OutDataTypeMode	      "Inherit via internal rule"
+      SaturateOnIntegerOverflow	off
+    }
+    Block {
+      BlockType		      Gain
+      Name		      "b_spring"
+      Position		      [775, 245, 805, 275]
+      Orientation	      "left"
+      Gain		      "b_spring"
+      ParameterDataTypeMode   "Inherit via internal rule"
+      OutDataTypeMode	      "Inherit via internal rule"
+      SaturateOnIntegerOverflow	off
+    }
+    Block {
       BlockType		      Scope
-      Name		      "Scope2"
+      Name		      "back emf"
       Ports		      [1]
-      Position		      [630, 49, 660, 81]
+      Position		      [520, 539, 550, 571]
+      Floating		      off
+      Location		      [695, 265, 1104, 636]
+      Open		      off
+      NumInputPorts	      "1"
+      List {
+	ListType		AxesTitles
+	axes1			"%<SignalLabel>"
+      }
+      TimeRange		      "10"
+      SaveName		      "ScopeData6"
+      DataFormat	      "StructureWithTime"
+      LimitDataPoints	      off
+      SampleTime	      "0"
+    }
+    Block {
+      BlockType		      Scope
+      Name		      "delta x"
+      Ports		      [1]
+      Position		      [1110, 59, 1140, 91]
+      Floating		      off
+      Location		      [715, 382, 1124, 753]
+      Open		      off
+      NumInputPorts	      "1"
+      List {
+	ListType		AxesTitles
+	axes1			"%<SignalLabel>"
+      }
+      TimeRange		      "10"
+      DataFormat	      "StructureWithTime"
+      LimitDataPoints	      off
+      SampleTime	      "0"
+    }
+    Block {
+      BlockType		      Gain
+      Name		      "k_eq"
+      Position		      [775, 200, 805, 230]
+      Orientation	      "left"
+      Gain		      "k_eq"
+      ParameterDataTypeMode   "Inherit via internal rule"
+      OutDataTypeMode	      "Inherit via internal rule"
+      SaturateOnIntegerOverflow	off
+    }
+    Block {
+      BlockType		      Gain
+      Name		      "k_op"
+      Position		      [780, 20, 810, 50]
+      Orientation	      "left"
+      Gain		      "k_op"
+      ParameterDataTypeMode   "Inherit via internal rule"
+      OutDataTypeMode	      "Inherit via internal rule"
+      SaturateOnIntegerOverflow	off
+    }
+    Block {
+      BlockType		      Scope
+      Name		      "motor\ntorque"
+      Ports		      [1]
+      Position		      [500, 224, 530, 256]
       Floating		      off
       Location		      [815, 331, 1224, 702]
       Open		      off
@@ -1012,137 +1244,28 @@ Model {
       SampleTime	      "0"
     }
     Block {
-      BlockType		      Sin
-      Name		      "Sine Wave"
-      Ports		      [0, 1]
-      Position		      [15, 325, 45, 355]
-      SineType		      "Time based"
-      Amplitude		      "2"
-      Bias		      "2.5"
+      BlockType		      Scope
+      Name		      "omega"
+      Ports		      [1]
+      Position		      [980, 494, 1010, 526]
+      Floating		      off
+      Location		      [695, 265, 1104, 636]
+      Open		      off
+      NumInputPorts	      "1"
+      List {
+	ListType		AxesTitles
+	axes1			"%<SignalLabel>"
+      }
+      TimeRange		      "10"
+      SaveName		      "ScopeData4"
+      DataFormat	      "StructureWithTime"
+      LimitDataPoints	      off
       SampleTime	      "0"
-    }
-    Block {
-      BlockType		      Sum
-      Name		      "Sum1"
-      Ports		      [2, 1]
-      Position		      [400, 340, 420, 360]
-      ShowName		      off
-      IconShape		      "round"
-      Inputs		      "++|"
-      InputSameDT	      off
-      OutDataTypeMode	      "Inherit via internal rule"
-      SaturateOnIntegerOverflow	off
-    }
-    Block {
-      BlockType		      Sum
-      Name		      "Sum2"
-      Ports		      [2, 1]
-      Position		      [470, 340, 490, 360]
-      ShowName		      off
-      IconShape		      "round"
-      Inputs		      "|+-"
-      InputSameDT	      off
-      OutDataTypeMode	      "Inherit via internal rule"
-      SaturateOnIntegerOverflow	off
-    }
-    Block {
-      BlockType		      Sum
-      Name		      "Sum3"
-      Ports		      [3, 1]
-      Position		      [670, 340, 690, 360]
-      ShowName		      off
-      IconShape		      "round"
-      Inputs		      "++-"
-      InputSameDT	      off
-      OutDataTypeMode	      "Inherit via internal rule"
-      SaturateOnIntegerOverflow	off
-    }
-    Block {
-      BlockType		      Sum
-      Name		      "Sum4"
-      Ports		      [2, 1]
-      Position		      [670, 120, 690, 140]
-      ShowName		      off
-      IconShape		      "round"
-      Inputs		      "-|-"
-      InputSameDT	      off
-      OutDataTypeMode	      "Inherit via internal rule"
-      SaturateOnIntegerOverflow	off
-    }
-    Block {
-      BlockType		      Sum
-      Name		      "Sum5"
-      Ports		      [2, 1]
-      Position		      [1095, 185, 1115, 205]
-      Orientation	      "left"
-      NamePlacement	      "alternate"
-      ShowName		      off
-      IconShape		      "round"
-      Inputs		      "+|-"
-      InputSameDT	      off
-      OutDataTypeMode	      "Inherit via internal rule"
-      SaturateOnIntegerOverflow	off
-    }
-    Block {
-      BlockType		      TransferFcn
-      Name		      "Transfer Fcn"
-      Position		      [515, 332, 575, 368]
-      Denominator	      "[L_a R_a]"
-    }
-    Block {
-      BlockType		      TransferFcn
-      Name		      "Transfer Fcn1"
-      Position		      [730, 112, 790, 148]
-      Denominator	      "[m_2 0]"
-    }
-    Block {
-      BlockType		      TransferFcn
-      Name		      "Transfer Fcn2"
-      Position		      [730, 332, 790, 368]
-      Denominator	      "[J_T 0]"
-    }
-    Block {
-      BlockType		      Constant
-      Name		      "V_offset"
-      Position		      [395, 260, 425, 290]
-      Orientation	      "down"
-      NamePlacement	      "alternate"
-      Value		      "V_offset"
-    }
-    Block {
-      BlockType		      Gain
-      Name		      "b_1"
-      Position		      [730, 400, 760, 430]
-      Orientation	      "left"
-      Gain		      "b_1"
-      ParameterDataTypeMode   "Inherit via internal rule"
-      OutDataTypeMode	      "Inherit via internal rule"
-      SaturateOnIntegerOverflow	off
-    }
-    Block {
-      BlockType		      Gain
-      Name		      "b_2"
-      Position		      [810, 45, 840, 75]
-      Orientation	      "left"
-      Gain		      "b_2"
-      ParameterDataTypeMode   "Inherit via internal rule"
-      OutDataTypeMode	      "Inherit via internal rule"
-      SaturateOnIntegerOverflow	off
-    }
-    Block {
-      BlockType		      Gain
-      Name		      "k_eq"
-      Position		      [820, 180, 850, 210]
-      Orientation	      "left"
-      Gain		      "k_eq"
-      ParameterDataTypeMode   "Inherit via internal rule"
-      OutDataTypeMode	      "Inherit via internal rule"
-      SaturateOnIntegerOverflow	off
     }
     Block {
       BlockType		      Gain
       Name		      "reduction ratio"
-      Position		      [980, 335, 1010, 365]
+      Position		      [980, 355, 1010, 385]
       Gain		      "1/n"
       ParameterDataTypeMode   "Inherit via internal rule"
       OutDataTypeMode	      "Inherit via internal rule"
@@ -1151,61 +1274,123 @@ Model {
     Block {
       BlockType		      Gain
       Name		      "reduction ratio1"
-      Position		      [665, 220, 695, 250]
+      Position		      [665, 240, 695, 270]
       Orientation	      "down"
       NamePlacement	      "alternate"
+      Gain		      "1/n"
       ParameterDataTypeMode   "Inherit via internal rule"
       OutDataTypeMode	      "Inherit via internal rule"
       SaturateOnIntegerOverflow	off
     }
+    Block {
+      BlockType		      Scope
+      Name		      "theta"
+      Ports		      [1]
+      Position		      [975, 439, 1005, 471]
+      Floating		      off
+      Location		      [695, 265, 1104, 636]
+      Open		      off
+      NumInputPorts	      "1"
+      List {
+	ListType		AxesTitles
+	axes1			"%<SignalLabel>"
+      }
+      TimeRange		      "10"
+      SaveName		      "ScopeData7"
+      DataFormat	      "StructureWithTime"
+      LimitDataPoints	      off
+      SampleTime	      "0"
+    }
+    Block {
+      BlockType		      Scope
+      Name		      "x_1"
+      Ports		      [1]
+      Position		      [1190, 339, 1220, 371]
+      Floating		      off
+      Location		      [695, 265, 1104, 636]
+      Open		      off
+      NumInputPorts	      "1"
+      List {
+	ListType		AxesTitles
+	axes1			"%<SignalLabel>"
+      }
+      TimeRange		      "10"
+      SaveName		      "ScopeData8"
+      DataFormat	      "StructureWithTime"
+      LimitDataPoints	      off
+      SampleTime	      "0"
+    }
+    Block {
+      BlockType		      Scope
+      Name		      "x_2"
+      Ports		      [1]
+      Position		      [1170, 134, 1200, 166]
+      Floating		      off
+      Location		      [695, 265, 1104, 636]
+      Open		      off
+      NumInputPorts	      "1"
+      List {
+	ListType		AxesTitles
+	axes1			"%<SignalLabel>"
+      }
+      TimeRange		      "10"
+      SaveName		      "ScopeData5"
+      DataFormat	      "StructureWithTime"
+      LimitDataPoints	      off
+      SampleTime	      "0"
+    }
     Line {
       SrcBlock		      "V_offset"
       SrcPort		      1
-      Points		      [0, 30]
       DstBlock		      "Sum1"
       DstPort		      1
     }
     Line {
       SrcBlock		      "K_ampl"
       SrcPort		      1
+      Points		      [0, 0]
       DstBlock		      "Sum1"
       DstPort		      2
     }
     Line {
       SrcBlock		      "Arduino read out"
       SrcPort		      1
+      Points		      [0, 0]
       DstBlock		      "K_ampl"
       DstPort		      1
     }
     Line {
       SrcBlock		      "Sum1"
       SrcPort		      1
-      Points		      [25, 0]
+      Points		      [0, 0; 25, 0]
       Branch {
 	DstBlock		"Sum2"
 	DstPort			1
       }
       Branch {
 	Points			[0, -295]
-	DstBlock		"Scope1"
+	DstBlock		"armature\nvoltage"
 	DstPort			1
       }
     }
     Line {
       SrcBlock		      "Sum2"
       SrcPort		      1
+      Points		      [0, 0]
       DstBlock		      "Transfer Fcn"
       DstPort		      1
     }
     Line {
       SrcBlock		      "Transfer Fcn"
       SrcPort		      1
+      Points		      [0, 0]
       DstBlock		      "K_tau"
       DstPort		      1
     }
     Line {
       SrcBlock		      "L_CL"
       SrcPort		      1
+      Points		      [0, 0]
       DstBlock		      "Sum3"
       DstPort		      1
     }
@@ -1218,8 +1403,8 @@ Model {
 	DstPort			2
       }
       Branch {
-	Points			[0, -75; -35, 0]
-	DstBlock		"Scope2"
+	Points			[0, -75; -165, 0]
+	DstBlock		"motor\ntorque"
 	DstPort			1
       }
     }
@@ -1230,32 +1415,32 @@ Model {
       DstPort		      1
     }
     Line {
-      SrcBlock		      "Transfer Fcn1"
+      SrcBlock		      "b_op"
       SrcPort		      1
-      Points		      [105, 0]
-      Branch {
-	DstBlock		"Integrator"
-	DstPort			1
-      }
-      Branch {
-	Points			[0, -70]
-	DstBlock		"b_2"
-	DstPort			1
-      }
-    }
-    Line {
-      SrcBlock		      "b_2"
-      SrcPort		      1
-      Points		      [-125, 0]
+      Points		      [-95, 0]
       DstBlock		      "Sum4"
       DstPort		      1
     }
     Line {
       SrcBlock		      "Integrator"
       SrcPort		      1
-      Points		      [115, 0]
-      DstBlock		      "Sum5"
-      DstPort		      1
+      Points		      [0, 0; 40, 0]
+      Branch {
+	Points			[0, -115]
+	DstBlock		"k_op"
+	DstPort			1
+      }
+      Branch {
+	Points			[75, 0]
+	Branch {
+	  DstBlock		  "Sum5"
+	  DstPort		  1
+	}
+	Branch {
+	  DstBlock		  "x_2"
+	  DstPort		  1
+	}
+      }
     }
     Line {
       Labels		      [2, 0]
@@ -1269,53 +1454,56 @@ Model {
       Branch {
 	Points			[0, 0]
 	Branch {
-	  Points		  [0, -140]
-	  DstBlock		  "Scope"
-	  DstPort		  1
-	}
-	Branch {
 	  Labels		  [1, 0]
-	  Points		  [0, 300; -820, 0; 0, -135]
+	  Points		  [0, 300; -835, 0; 0, -135]
 	  DstBlock		  "Arduino read out"
 	  DstPort		  2
 	}
-      }
-    }
-    Line {
-      SrcBlock		      "k_eq"
-      SrcPort		      1
-      Points		      [0, 0; -135, 0]
-      Branch {
-	DstBlock		"Sum4"
-	DstPort			2
-      }
-      Branch {
-	DstBlock		"reduction ratio1"
-	DstPort			1
+	Branch {
+	  Points		  [0, -140; 140, 0]
+	  Branch {
+	    DstBlock		    "delta x"
+	    DstPort		    1
+	  }
+	  Branch {
+	    Points		    [0, -45]
+	    DstBlock		    "To Workspace"
+	    DstPort		    1
+	  }
+	}
       }
     }
     Line {
       SrcBlock		      "L_CL1"
       SrcPort		      1
-      Points		      [15, 0]
-      DstBlock		      "Sum5"
-      DstPort		      2
+      Points		      [15, 0; 0, -15]
+      Branch {
+	DstBlock		"Sum5"
+	DstPort			2
+      }
+      Branch {
+	DstBlock		"x_1"
+	DstPort			1
+      }
     }
     Line {
       SrcBlock		      "Integrator1"
       SrcPort		      1
-      Points		      [0, 0]
-      DstBlock		      "reduction ratio"
-      DstPort		      1
+      Points		      [0, 0; 30, 0]
+      Branch {
+	DstBlock		"reduction ratio"
+	DstPort			1
+      }
+      Branch {
+	Points			[0, 85]
+	DstBlock		"theta"
+	DstPort			1
+      }
     }
     Line {
       SrcBlock		      "Transfer Fcn2"
       SrcPort		      1
       Points		      [0, 0; 15, 0]
-      Branch {
-	DstBlock		"Integrator1"
-	DstPort			1
-      }
       Branch {
 	Points			[0, 65]
 	Branch {
@@ -1325,6 +1513,22 @@ Model {
 	Branch {
 	  Points		  [0, 40]
 	  DstBlock		  "K_emf"
+	  DstPort		  1
+	}
+      }
+      Branch {
+	Points			[40, 0]
+	Branch {
+	  DstBlock		  "Integrator1"
+	  DstPort		  1
+	}
+	Branch {
+	  Points		  [0, 140]
+	  DstBlock		  "omega"
+	  DstPort		  1
+	}
+	Branch {
+	  DstBlock		  "L_CL2"
 	  DstPort		  1
 	}
       }
@@ -1346,92 +1550,173 @@ Model {
     Line {
       SrcBlock		      "K_emf"
       SrcPort		      1
-      Points		      [-115, 0]
-      DstBlock		      "Sum2"
-      DstPort		      2
+      Points		      [0, 0; -115, 0]
+      Branch {
+	DstBlock		"Sum2"
+	DstPort			2
+      }
+      Branch {
+	Points			[0, 80]
+	DstBlock		"back emf"
+	DstPort			1
+      }
     }
     Line {
       SrcBlock		      "Sine Wave"
       SrcPort		      1
-      DstBlock		      "Arduino read out"
-      DstPort		      1
+      Points		      [45, 0]
+      Branch {
+	DstBlock		"Arduino read out"
+	DstPort			1
+      }
+      Branch {
+	Points			[0, -85]
+	DstBlock		"To Workspace1"
+	DstPort			1
+      }
     }
     Line {
       SrcBlock		      "reduction ratio"
       SrcPort		      1
-      Points		      [25, 0]
       DstBlock		      "L_CL1"
       DstPort		      1
     }
     Line {
       SrcBlock		      "reduction ratio1"
       SrcPort		      1
+      Points		      [0, 10]
       DstBlock		      "L_CL"
       DstPort		      1
     }
+    Line {
+      SrcBlock		      "k_op"
+      SrcPort		      1
+      Points		      [-135, 0; 0, 115]
+      DstBlock		      "Sum4"
+      DstPort		      2
+    }
+    Line {
+      SrcBlock		      "L_CL2"
+      SrcPort		      1
+      DstBlock		      "Sum6"
+      DstPort		      2
+    }
+    Line {
+      SrcBlock		      "Sum6"
+      SrcPort		      1
+      DstBlock		      "b_spring"
+      DstPort		      1
+    }
+    Line {
+      SrcBlock		      "b_spring"
+      SrcPort		      1
+      Points		      [-30, 0]
+      DstBlock		      "Sum7"
+      DstPort		      2
+    }
+    Line {
+      SrcBlock		      "k_eq"
+      SrcPort		      1
+      DstBlock		      "Sum7"
+      DstPort		      1
+    }
+    Line {
+      SrcBlock		      "Sum7"
+      SrcPort		      1
+      Points		      [0, 0; -45, 0]
+      Branch {
+	DstBlock		"reduction ratio1"
+	DstPort			1
+      }
+      Branch {
+	DstBlock		"Sum4"
+	DstPort			3
+      }
+    }
+    Line {
+      SrcBlock		      "Transfer Fcn1"
+      SrcPort		      1
+      Points		      [65, 0]
+      Branch {
+	DstBlock		"Integrator"
+	DstPort			1
+      }
+      Branch {
+	Points			[0, 0]
+	Branch {
+	  DstBlock		  "Sum6"
+	  DstPort		  1
+	}
+	Branch {
+	  Points		  [0, -70]
+	  DstBlock		  "b_op"
+	  DstPort		  1
+	}
+      }
+    }
     Annotation {
       Name		      "Delta x voltage_ref"
-      Position		      [73, 314]
+      Position		      [58, 334]
       UseDisplayTextAsClickCallback off
     }
     Annotation {
       Name		      "x_2"
-      Position		      [1004, 121]
+      Position		      [1004, 141]
       UseDisplayTextAsClickCallback off
     }
     Annotation {
       Name		      "Delta x"
-      Position		      [960, 187]
+      Position		      [960, 207]
       UseDisplayTextAsClickCallback off
     }
     Annotation {
       Name		      "x_1"
-      Position		      [1124, 316]
+      Position		      [1124, 336]
       UseDisplayTextAsClickCallback off
     }
     Annotation {
       Name		      "dtheta_m / dt"
-      Position		      [825, 333]
+      Position		      [825, 353]
       UseDisplayTextAsClickCallback off
     }
     Annotation {
       Name		      "theta_m"
-      Position		      [937, 337]
-      UseDisplayTextAsClickCallback off
-    }
-    Annotation {
-      Name		      "Delta x"
-      Position		      [1057, 42]
+      Position		      [937, 357]
       UseDisplayTextAsClickCallback off
     }
     Annotation {
       Name		      "back_emf"
-      Position		      [511, 441]
+      Position		      [496, 461]
       UseDisplayTextAsClickCallback off
     }
     Annotation {
       Name		      "V_a"
-      Position		      [430, 332]
+      Position		      [415, 352]
       UseDisplayTextAsClickCallback off
     }
     Annotation {
       Name		      "V_ardu"
-      Position		      [301, 335]
+      Position		      [286, 355]
       UseDisplayTextAsClickCallback off
     }
     Annotation {
       Name		      "Delta x"
-      Position		      [113, 514]
+      Position		      [98, 534]
       UseDisplayTextAsClickCallback off
     }
     Annotation {
       Name		      "theta"
-      Position		      [1027, 337]
+      Position		      [1027, 357]
       UseDisplayTextAsClickCallback off
     }
     Annotation {
       Name		      "dx_2 / dt"
-      Position		      [821, 116]
+      Position		      [891, 121]
+      UseDisplayTextAsClickCallback off
+    }
+    Annotation {
+      Name		      "i_a"
+      Position		      [578, 360]
       UseDisplayTextAsClickCallback off
     }
   }
