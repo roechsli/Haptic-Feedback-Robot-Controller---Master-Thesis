@@ -4,7 +4,7 @@ clear all
 %TODO:
 %verify m_2, measure friction coefficients (springs, motor)
 % Simulation
-freq = 100 % [Hz]
+freq = 1 % [Hz]
 
 % Amplifier
 K_ampl = 10 % [V/V]
