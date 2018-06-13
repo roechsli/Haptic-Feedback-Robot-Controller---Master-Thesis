@@ -18,6 +18,7 @@ K_emf = 3.29E-3 / 60 % [V/s]
 n = 112 % [-] reduction ratio
 
 % Mechanical
+assumed_max_displ = 3E-10 % [m] // is what is expected to be the biggest compression (this is dynamic, not static) --> still dx_max?
 J_T = 1.25E-3 / n / n % [kg m^2] %estimated to be 0.2 kg m^2
 m_2 = 7E-3% [kg]
 L_CL = 20E-3 % [m]
@@ -33,10 +34,11 @@ k_op = 1E5%15 % [N/m] (stiffness of operators hand)
 b_op = 1E2%1 % [Ns/m] (damping of operators hand)
 
 % Arduino
-K_Vto8bit = 51 % [V^-1]
+MOTOR_MAX_V = 20 % [V]
 dist_min = 2.2E-3 % [m]
 dist_max = 4E-3 % [m]
 dx_max = dist_min - dist_max % [m] // Delta x / dx_max * 255 gives 8bit from Delta x
+K_V2dist = dx_max/5 % [m/V]
+K_PID2Va = MOTOR_MAX_V/assumed_max_displ% [V] // pid value to voltage conversion (results in final desired armature voltage)
 
-MOTOR_MAX_V = 20 % [V]
 limit_val = 2 * MOTOR_MAX_V * K_Vto8bit / K_ampl % [-]
