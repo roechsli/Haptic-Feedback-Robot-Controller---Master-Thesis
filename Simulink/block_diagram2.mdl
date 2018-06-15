@@ -6,7 +6,7 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.96"
+    ComputedModelVersion    "1.115"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -54,8 +54,8 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "oechslin"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Wed Jun 13 18:25:40 2018"
-  ModelVersionFormat	  "1.%<AutoIncrement:96>"
+  LastModifiedDate	  "Fri Jun 15 17:16:24 2018"
+  ModelVersionFormat	  "1.%<AutoIncrement:115>"
   ConfigurationManager	  "None"
   LinearizationMsg	  "none"
   Profile		  off
@@ -606,7 +606,7 @@ Model {
   }
   System {
     Name		    "block_diagram2"
-    Location		    [16, 83, 1271, 669]
+    Location		    [16, 83, 1364, 641]
     Open		    on
     ModelBrowserVisibility  off
     ModelBrowserWidth	    200
@@ -628,8 +628,8 @@ Model {
       MaskHideContents	      off
       System {
 	Name			"Arduino read out"
-	Location		[100, 183, 829, 528]
-	Open			on
+	Location		[700, 379, 1429, 658]
+	Open			off
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
 	ScreenColor		"white"
@@ -654,7 +654,7 @@ Model {
 	Block {
 	  BlockType		  Gain
 	  Name			  "K_PID2Va"
-	  Position		  [400, 115, 430, 145]
+	  Position		  [410, 115, 440, 145]
 	  Gain			  "K_PID2Va"
 	  ParameterDataTypeMode	  "Inherit via internal rule"
 	  OutDataTypeMode	  "Inherit via internal rule"
@@ -673,8 +673,9 @@ Model {
 	  BlockType		  SubSystem
 	  Name			  "K_Va2Vardu\n"
 	  Ports			  [1, 1]
-	  Position		  [470, 109, 570, 151]
-	  FontSize		  10
+	  Position		  [475, 109, 575, 151]
+	  NamePlacement		  "alternate"
+	  ShowName		  off
 	  TreatAsAtomicUnit	  off
 	  MinAlgLoopOccurrences	  off
 	  RTWSystemCode		  "Auto"
@@ -768,9 +769,31 @@ Model {
 "roller"
 	  SourceType		  "PID Controller"
 	  ShowPortLabels	  on
-	  P			  "0.05"
+	  P			  "1"
 	  I			  "0"
 	  D			  "0"
+	}
+	Block {
+	  BlockType		  Scope
+	  Name			  "PID val"
+	  Ports			  [1]
+	  Position		  [390, 54, 420, 86]
+	  Floating		  off
+	  Location		  [751, 277, 1160, 648]
+	  Open			  off
+	  NumInputPorts		  "1"
+	  ZoomMode		  "xonly"
+	  List {
+	    ListType		    AxesTitles
+	    axes1		    "%<SignalLabel>"
+	  }
+	  TimeRange		  "10"
+	  YMin			  "-20"
+	  YMax			  "20"
+	  SaveName		  "ScopeData16"
+	  DataFormat		  "StructureWithTime"
+	  LimitDataPoints	  off
+	  SampleTime		  "0"
 	}
 	Block {
 	  BlockType		  Scope
@@ -778,19 +801,19 @@ Model {
 	  Ports			  [3]
 	  Position		  [635, 18, 665, 52]
 	  Floating		  off
-	  Location		  [688, 175, 1215, 738]
+	  Location		  [1060, 295, 1587, 858]
 	  Open			  on
 	  NumInputPorts		  "3"
-	  ZoomMode		  "yonly"
+	  ZoomMode		  "xonly"
 	  List {
 	    ListType		    AxesTitles
 	    axes1		    "%<SignalLabel>"
 	    axes2		    "%<SignalLabel>"
 	    axes3		    "%<SignalLabel>"
 	  }
-	  TimeRange		  "5               "
-	  YMin			  "-0.00075~-0.002~0"
-	  YMax			  "1.0842e-019~0~4"
+	  TimeRange		  "5"
+	  YMin			  "-4.06576e-020~-5e-005~-2.5"
+	  YMax			  "0.00075~0.0005~0"
 	  SaveName		  "ScopeData2"
 	  DataFormat		  "StructureWithTime"
 	  LimitDataPoints	  off
@@ -805,6 +828,36 @@ Model {
 	  IconShape		  "round"
 	  Inputs		  "|+-"
 	  InputSameDT		  off
+	  OutDataTypeMode	  "Inherit via internal rule"
+	  SaturateOnIntegerOverflow off
+	}
+	Block {
+	  BlockType		  Scope
+	  Name			  "Va des"
+	  Ports			  [1]
+	  Position		  [495, 194, 525, 226]
+	  Floating		  off
+	  Location		  [751, 277, 1160, 648]
+	  Open			  off
+	  NumInputPorts		  "1"
+	  ZoomMode		  "xonly"
+	  List {
+	    ListType		    AxesTitles
+	    axes1		    "%<SignalLabel>"
+	  }
+	  TimeRange		  "10"
+	  YMin			  "-20"
+	  YMax			  "20"
+	  SaveName		  "ScopeData17"
+	  DataFormat		  "StructureWithTime"
+	  LimitDataPoints	  off
+	  SampleTime		  "0"
+	}
+	Block {
+	  BlockType		  Gain
+	  Name			  "minus1"
+	  Position		  [130, 200, 160, 230]
+	  ParameterDataTypeMode	  "Inherit via internal rule"
 	  OutDataTypeMode	  "Inherit via internal rule"
 	  SaturateOnIntegerOverflow off
 	}
@@ -824,15 +877,21 @@ Model {
 	Line {
 	  SrcBlock		  "Sum"
 	  SrcPort		  1
-	  Points		  [15, 0]
 	  DstBlock		  "PID Controller"
 	  DstPort		  1
 	}
 	Line {
 	  SrcBlock		  "PID Controller"
 	  SrcPort		  1
-	  DstBlock		  "K_PID2Va"
-	  DstPort		  1
+	  Points		  [5, 0]
+	  Branch {
+	    DstBlock		    "K_PID2Va"
+	    DstPort		    1
+	  }
+	  Branch {
+	    DstBlock		    "PID val"
+	    DstPort		    1
+	  }
 	}
 	Line {
 	  SrcBlock		  "K_V2dist"
@@ -851,9 +910,26 @@ Model {
 	Line {
 	  SrcBlock		  "K_Va2Vardu\n"
 	  SrcPort		  1
-	  Points		  [20, 0]
+	  DstBlock		  "V_ardu"
+	  DstPort		  1
+	}
+	Line {
+	  SrcBlock		  "Delta x"
+	  SrcPort		  1
+	  DstBlock		  "minus1"
+	  DstPort		  1
+	}
+	Line {
+	  SrcBlock		  "K_PID2Va"
+	  SrcPort		  1
+	  Points		  [0, 0]
 	  Branch {
-	    DstBlock		    "V_ardu"
+	    DstBlock		    "K_Va2Vardu\n"
+	    DstPort		    1
+	  }
+	  Branch {
+	    Points		    [0, 80]
+	    DstBlock		    "Va des"
 	    DstPort		    1
 	  }
 	  Branch {
@@ -863,9 +939,9 @@ Model {
 	  }
 	}
 	Line {
-	  SrcBlock		  "Delta x"
+	  SrcBlock		  "minus1"
 	  SrcPort		  1
-	  Points		  [175, 0]
+	  Points		  [80, 0]
 	  Branch {
 	    Points		    [45, 0]
 	    DstBlock		    "Sum"
@@ -876,12 +952,6 @@ Model {
 	    DstBlock		    "Scope1"
 	    DstPort		    2
 	  }
-	}
-	Line {
-	  SrcBlock		  "K_PID2Va"
-	  SrcPort		  1
-	  DstBlock		  "K_Va2Vardu\n"
-	  DstPort		  1
 	}
       }
     }
@@ -911,7 +981,6 @@ Model {
       Name		      "K_V_ardu2V_a\n"
       Ports		      [1, 1]
       Position		      [320, 393, 385, 437]
-      FontSize		      10
       TreatAsAtomicUnit	      off
       MinAlgLoopOccurrences   off
       RTWSystemCode	      "Auto"
@@ -937,7 +1006,7 @@ Model {
 	Block {
 	  BlockType		  Gain
 	  Name			  "K_ampl"
-	  Position		  [255, 95, 285, 125]
+	  Position		  [180, 95, 210, 125]
 	  Gain			  "K_ampl"
 	  ParameterDataTypeMode	  "Inherit via internal rule"
 	  OutDataTypeMode	  "Inherit via internal rule"
@@ -947,7 +1016,7 @@ Model {
 	  BlockType		  Sum
 	  Name			  "Sum"
 	  Ports			  [2, 1]
-	  Position		  [195, 100, 215, 120]
+	  Position		  [245, 100, 265, 120]
 	  ShowName		  off
 	  IconShape		  "round"
 	  Inputs		  "++|"
@@ -958,7 +1027,7 @@ Model {
 	Block {
 	  BlockType		  Constant
 	  Name			  "V_offset"
-	  Position		  [190, 15, 220, 45]
+	  Position		  [240, 15, 270, 45]
 	  Orientation		  "down"
 	  NamePlacement		  "alternate"
 	  Value			  "V_offset"
@@ -979,17 +1048,17 @@ Model {
 	Line {
 	  SrcBlock		  "V_ardu"
 	  SrcPort		  1
-	  DstBlock		  "Sum"
-	  DstPort		  2
-	}
-	Line {
-	  SrcBlock		  "Sum"
-	  SrcPort		  1
 	  DstBlock		  "K_ampl"
 	  DstPort		  1
 	}
 	Line {
 	  SrcBlock		  "K_ampl"
+	  SrcPort		  1
+	  DstBlock		  "Sum"
+	  DstPort		  2
+	}
+	Line {
+	  SrcBlock		  "Sum"
 	  SrcPort		  1
 	  DstBlock		  "V_a"
 	  DstPort		  1
@@ -1145,7 +1214,7 @@ Model {
     Block {
       BlockType		      ToWorkspace
       Name		      "To Workspace1"
-      Position		      [115, 305, 175, 335]
+      Position		      [140, 180, 200, 210]
       VariableName	      "dx_ref"
       MaxDataPoints	      "inf"
       SampleTime	      "-1"
@@ -1172,11 +1241,33 @@ Model {
     }
     Block {
       BlockType		      Scope
+      Name		      "V ardu"
+      Ports		      [1]
+      Position		      [300, 289, 330, 321]
+      Floating		      off
+      Location		      [796, 281, 1205, 652]
+      Open		      off
+      NumInputPorts	      "1"
+      ZoomMode		      "yonly"
+      List {
+	ListType		AxesTitles
+	axes1			"%<SignalLabel>"
+      }
+      TimeRange		      "10"
+      YMin		      "-2000000000"
+      YMax		      "2000000000"
+      SaveName		      "ScopeData15"
+      DataFormat	      "StructureWithTime"
+      LimitDataPoints	      off
+      SampleTime	      "0"
+    }
+    Block {
+      BlockType		      Scope
       Name		      "armature\nvoltage"
       Ports		      [1]
       Position		      [450, 249, 480, 281]
       Floating		      off
-      Location		      [796, 277, 1205, 648]
+      Location		      [796, 281, 1205, 652]
       Open		      off
       NumInputPorts	      "1"
       ZoomMode		      "xonly"
@@ -1185,6 +1276,8 @@ Model {
 	axes1			"%<SignalLabel>"
       }
       TimeRange		      "10"
+      YMin		      "-2000000000"
+      YMax		      "2000000000"
       SaveName		      "ScopeData1"
       DataFormat	      "StructureWithTime"
       LimitDataPoints	      off
@@ -1253,6 +1346,27 @@ Model {
 	axes1			"%<SignalLabel>"
       }
       TimeRange		      "10"
+      DataFormat	      "StructureWithTime"
+      LimitDataPoints	      off
+      SampleTime	      "0"
+    }
+    Block {
+      BlockType		      Scope
+      Name		      "delta x  ref"
+      Ports		      [1]
+      Position		      [140, 289, 170, 321]
+      Floating		      off
+      Location		      [263, 268, 884, 639]
+      Open		      off
+      NumInputPorts	      "1"
+      List {
+	ListType		AxesTitles
+	axes1			"%<SignalLabel>"
+      }
+      TimeRange		      "5               "
+      YMin		      "1"
+      YMax		      "1.06"
+      SaveName		      "ScopeData14"
       DataFormat	      "StructureWithTime"
       LimitDataPoints	      off
       SampleTime	      "0"
@@ -1515,8 +1629,16 @@ Model {
     Line {
       SrcBlock		      "Arduino read out"
       SrcPort		      1
-      DstBlock		      "K_V_ardu2V_a\n"
-      DstPort		      1
+      Points		      [15, 0]
+      Branch {
+	DstBlock		"K_V_ardu2V_a\n"
+	DstPort			1
+      }
+      Branch {
+	Points			[0, -110]
+	DstBlock		"V ardu"
+	DstPort			1
+      }
     }
     Line {
       SrcBlock		      "K_V_ardu2V_a\n"
@@ -1555,7 +1677,7 @@ Model {
     Line {
       SrcBlock		      "L_CL"
       SrcPort		      1
-      Points		      [0, 0]
+      Points		      [0, 25]
       DstBlock		      "Sum3"
       DstPort		      1
     }
@@ -1729,21 +1851,27 @@ Model {
     Line {
       SrcBlock		      "Sine Wave"
       SrcPort		      1
-      Points		      [0, 0; 45, 0]
+      Points		      [45, 0]
       Branch {
 	DstBlock		"Arduino read out"
 	DstPort			1
       }
       Branch {
-	Points			[0, -85]
-	DstBlock		"To Workspace1"
-	DstPort			1
+	Points			[0, -100]
+	Branch {
+	  Points		  [0, -110]
+	  DstBlock		  "To Workspace1"
+	  DstPort		  1
+	}
+	Branch {
+	  DstBlock		  "delta x  ref"
+	  DstPort		  1
+	}
       }
     }
     Line {
       SrcBlock		      "reduction ratio"
       SrcPort		      1
-      Points		      [25, 0]
       DstBlock		      "L_CL1"
       DstPort		      1
     }
@@ -1765,13 +1893,13 @@ Model {
       SrcPort		      1
       Points		      [-30, 0]
       Branch {
-	DstBlock		"Sum7"
-	DstPort			2
-      }
-      Branch {
 	Points			[-30, 0; 0, 30]
 	DstBlock		"spr_damping_f"
 	DstPort			1
+      }
+      Branch {
+	DstBlock		"Sum7"
+	DstPort			2
       }
     }
     Line {
@@ -1810,7 +1938,6 @@ Model {
     Line {
       SrcBlock		      "reduction ratio2"
       SrcPort		      1
-      Points		      [0, -5]
       DstBlock		      "L_CL2"
       DstPort		      1
     }
