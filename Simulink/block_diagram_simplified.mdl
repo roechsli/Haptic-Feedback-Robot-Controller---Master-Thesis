@@ -1,5 +1,5 @@
 Model {
-  Name			  "block_diagram2"
+  Name			  "block_diagram_simplified"
   Version		  6.3
   MdlSubVersion		  0
   GraphicalInterface {
@@ -54,7 +54,7 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "oechslin"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Mon Jun 18 17:57:38 2018"
+  LastModifiedDate	  "Fri Jun 15 17:42:57 2018"
   ModelVersionFormat	  "1.%<AutoIncrement:117>"
   ConfigurationManager	  "None"
   LinearizationMsg	  "none"
@@ -450,6 +450,10 @@ Model {
       SampleTime	      "inf"
     }
     Block {
+      BlockType		      Derivative
+      LinearizePole	      "inf"
+    }
+    Block {
       BlockType		      Gain
       Gain		      "1"
       Multiplication	      "Element-wise(K.*u)"
@@ -513,9 +517,6 @@ Model {
       InitialOutput	      "[]"
     }
     Block {
-      BlockType		      Reference
-    }
-    Block {
       BlockType		      Scope
       ModelBased	      off
       TickLabels	      "OneTimeTick"
@@ -571,14 +572,6 @@ Model {
       SampleTime	      "-1"
     }
     Block {
-      BlockType		      ToWorkspace
-      VariableName	      "simulink_output"
-      MaxDataPoints	      "1000"
-      Decimation	      "1"
-      SampleTime	      "0"
-      FixptAsFi		      off
-    }
-    Block {
       BlockType		      TransferFcn
       Numerator		      "[1]"
       Denominator	      "[1 2 1]"
@@ -604,7 +597,7 @@ Model {
     FontAngle		    "normal"
   }
   System {
-    Name		    "block_diagram2"
+    Name		    "block_diagram_simplified"
     Location		    [16, 83, 1364, 641]
     Open		    on
     ModelBrowserVisibility  off
@@ -767,56 +760,10 @@ Model {
 	  SourceBlock		  "simulink_extras/Additional\nLinear/PID Cont"
 "roller"
 	  SourceType		  "PID Controller"
-	  ShowPortLabels	  "on"
+	  ShowPortLabels	  on
 	  P			  "1"
 	  I			  "0"
 	  D			  "0"
-	}
-	Block {
-	  BlockType		  Scope
-	  Name			  "PID val"
-	  Ports			  [1]
-	  Position		  [390, 54, 420, 86]
-	  Floating		  off
-	  Location		  [751, 277, 1160, 648]
-	  Open			  off
-	  NumInputPorts		  "1"
-	  ZoomMode		  "xonly"
-	  List {
-	    ListType		    AxesTitles
-	    axes1		    "%<SignalLabel>"
-	  }
-	  TimeRange		  "10"
-	  YMin			  "-20"
-	  YMax			  "20"
-	  SaveName		  "ScopeData16"
-	  DataFormat		  "StructureWithTime"
-	  LimitDataPoints	  off
-	  SampleTime		  "0"
-	}
-	Block {
-	  BlockType		  Scope
-	  Name			  "Scope1"
-	  Ports			  [3]
-	  Position		  [635, 18, 665, 52]
-	  Floating		  off
-	  Location		  [1060, 295, 1587, 858]
-	  Open			  off
-	  NumInputPorts		  "3"
-	  ZoomMode		  "xonly"
-	  List {
-	    ListType		    AxesTitles
-	    axes1		    "%<SignalLabel>"
-	    axes2		    "%<SignalLabel>"
-	    axes3		    "%<SignalLabel>"
-	  }
-	  TimeRange		  "5"
-	  YMin			  "-4.06576e-020~-5e-005~-2.5"
-	  YMax			  "0.00075~0.0005~0"
-	  SaveName		  "ScopeData2"
-	  DataFormat		  "StructureWithTime"
-	  LimitDataPoints	  off
-	  SampleTime		  "0"
 	}
 	Block {
 	  BlockType		  Sum
@@ -829,28 +776,6 @@ Model {
 	  InputSameDT		  off
 	  OutDataTypeMode	  "Inherit via internal rule"
 	  SaturateOnIntegerOverflow off
-	}
-	Block {
-	  BlockType		  Scope
-	  Name			  "Va des"
-	  Ports			  [1]
-	  Position		  [495, 194, 525, 226]
-	  Floating		  off
-	  Location		  [751, 277, 1160, 648]
-	  Open			  off
-	  NumInputPorts		  "1"
-	  ZoomMode		  "xonly"
-	  List {
-	    ListType		    AxesTitles
-	    axes1		    "%<SignalLabel>"
-	  }
-	  TimeRange		  "10"
-	  YMin			  "-20"
-	  YMax			  "20"
-	  SaveName		  "ScopeData17"
-	  DataFormat		  "StructureWithTime"
-	  LimitDataPoints	  off
-	  SampleTime		  "0"
 	}
 	Block {
 	  BlockType		  Gain
@@ -882,29 +807,14 @@ Model {
 	Line {
 	  SrcBlock		  "PID Controller"
 	  SrcPort		  1
-	  Points		  [5, 0]
-	  Branch {
-	    DstBlock		    "K_PID2Va"
-	    DstPort		    1
-	  }
-	  Branch {
-	    DstBlock		    "PID val"
-	    DstPort		    1
-	  }
+	  DstBlock		  "K_PID2Va"
+	  DstPort		  1
 	}
 	Line {
 	  SrcBlock		  "K_V2dist"
 	  SrcPort		  1
-	  Points		  [70, 0]
-	  Branch {
-	    DstBlock		    "Sum"
-	    DstPort		    1
-	  }
-	  Branch {
-	    Points		    [0, -105]
-	    DstBlock		    "Scope1"
-	    DstPort		    1
-	  }
+	  DstBlock		  "Sum"
+	  DstPort		  1
 	}
 	Line {
 	  SrcBlock		  "K_Va2Vardu\n"
@@ -921,36 +831,15 @@ Model {
 	Line {
 	  SrcBlock		  "K_PID2Va"
 	  SrcPort		  1
-	  Points		  [0, 0]
-	  Branch {
-	    DstBlock		    "K_Va2Vardu\n"
-	    DstPort		    1
-	  }
-	  Branch {
-	    Points		    [0, 80]
-	    DstBlock		    "Va des"
-	    DstPort		    1
-	  }
-	  Branch {
-	    Points		    [0, -85]
-	    DstBlock		    "Scope1"
-	    DstPort		    3
-	  }
+	  DstBlock		  "K_Va2Vardu\n"
+	  DstPort		  1
 	}
 	Line {
 	  SrcBlock		  "minus1"
 	  SrcPort		  1
-	  Points		  [80, 0]
-	  Branch {
-	    Points		    [45, 0]
-	    DstBlock		    "Sum"
-	    DstPort		    2
-	  }
-	  Branch {
-	    Points		    [0, -180]
-	    DstBlock		    "Scope1"
-	    DstPort		    2
-	  }
+	  Points		  [125, 0]
+	  DstBlock		  "Sum"
+	  DstPort		  2
 	}
       }
     }
@@ -1067,7 +956,7 @@ Model {
     Block {
       BlockType		      Gain
       Name		      "K_emf"
-      Position		      [585, 505, 615, 535]
+      Position		      [585, 475, 615, 505]
       Orientation	      "left"
       Gain		      "K_emf"
       ParameterDataTypeMode   "Inherit via internal rule"
@@ -1202,24 +1091,6 @@ Model {
       SaturateOnIntegerOverflow	off
     }
     Block {
-      BlockType		      ToWorkspace
-      Name		      "To Workspace"
-      Position		      [1125, 20, 1185, 50]
-      VariableName	      "dx"
-      MaxDataPoints	      "inf"
-      SampleTime	      "-1"
-      SaveFormat	      "Structure"
-    }
-    Block {
-      BlockType		      ToWorkspace
-      Name		      "To Workspace1"
-      Position		      [140, 180, 200, 210]
-      VariableName	      "dx_ref"
-      MaxDataPoints	      "inf"
-      SampleTime	      "-1"
-      SaveFormat	      "Structure"
-    }
-    Block {
       BlockType		      TransferFcn
       Name		      "Transfer Fcn"
       Position		      [500, 397, 560, 433]
@@ -1229,6 +1100,7 @@ Model {
       BlockType		      TransferFcn
       Name		      "Transfer Fcn1"
       Position		      [745, 137, 805, 173]
+      Numerator		      "[0]"
       Denominator	      "[m_2]"
     }
     Block {
@@ -1236,50 +1108,6 @@ Model {
       Name		      "Transfer Fcn2"
       Position		      [755, 397, 815, 433]
       Denominator	      "[J_T 0]"
-    }
-    Block {
-      BlockType		      Scope
-      Name		      "V ardu"
-      Ports		      [1]
-      Position		      [300, 289, 330, 321]
-      Floating		      off
-      Location		      [796, 281, 1205, 652]
-      Open		      off
-      NumInputPorts	      "1"
-      ZoomMode		      "yonly"
-      List {
-	ListType		AxesTitles
-	axes1			"%<SignalLabel>"
-      }
-      TimeRange		      "10"
-      YMin		      "-2000000000"
-      YMax		      "2000000000"
-      SaveName		      "ScopeData15"
-      DataFormat	      "StructureWithTime"
-      LimitDataPoints	      off
-      SampleTime	      "0"
-    }
-    Block {
-      BlockType		      Scope
-      Name		      "armature\nvoltage"
-      Ports		      [1]
-      Position		      [450, 249, 480, 281]
-      Floating		      off
-      Location		      [796, 281, 1205, 652]
-      Open		      off
-      NumInputPorts	      "1"
-      ZoomMode		      "xonly"
-      List {
-	ListType		AxesTitles
-	axes1			"%<SignalLabel>"
-      }
-      TimeRange		      "10"
-      YMin		      "-2000000000"
-      YMax		      "2000000000"
-      SaveName		      "ScopeData1"
-      DataFormat	      "StructureWithTime"
-      LimitDataPoints	      off
-      SampleTime	      "0"
     }
     Block {
       BlockType		      Gain
@@ -1303,25 +1131,6 @@ Model {
     }
     Block {
       BlockType		      Scope
-      Name		      "back emf"
-      Ports		      [1]
-      Position		      [390, 474, 420, 506]
-      Floating		      off
-      Location		      [695, 265, 1104, 636]
-      Open		      off
-      NumInputPorts	      "1"
-      List {
-	ListType		AxesTitles
-	axes1			"%<SignalLabel>"
-      }
-      TimeRange		      "10"
-      SaveName		      "ScopeData6"
-      DataFormat	      "StructureWithTime"
-      LimitDataPoints	      off
-      SampleTime	      "0"
-    }
-    Block {
-      BlockType		      Scope
       Name		      "delta x"
       Ports		      [1]
       Position		      [1135, 64, 1165, 96]
@@ -1334,27 +1143,6 @@ Model {
 	axes1			"%<SignalLabel>"
       }
       TimeRange		      "10"
-      DataFormat	      "StructureWithTime"
-      LimitDataPoints	      off
-      SampleTime	      "0"
-    }
-    Block {
-      BlockType		      Scope
-      Name		      "delta x  ref"
-      Ports		      [1]
-      Position		      [140, 289, 170, 321]
-      Floating		      off
-      Location		      [263, 268, 884, 639]
-      Open		      off
-      NumInputPorts	      "1"
-      List {
-	ListType		AxesTitles
-	axes1			"%<SignalLabel>"
-      }
-      TimeRange		      "5               "
-      YMin		      "1"
-      YMax		      "1.06"
-      SaveName		      "ScopeData14"
       DataFormat	      "StructureWithTime"
       LimitDataPoints	      off
       SampleTime	      "0"
@@ -1378,87 +1166,6 @@ Model {
       ParameterDataTypeMode   "Inherit via internal rule"
       OutDataTypeMode	      "Inherit via internal rule"
       SaturateOnIntegerOverflow	off
-    }
-    Block {
-      BlockType		      Scope
-      Name		      "motor\ncurrent"
-      Ports		      [1]
-      Position		      [540, 194, 570, 226]
-      Floating		      off
-      Location		      [815, 331, 1224, 702]
-      Open		      off
-      NumInputPorts	      "1"
-      ZoomMode		      "xonly"
-      List {
-	ListType		AxesTitles
-	axes1			"%<SignalLabel>"
-      }
-      TimeRange		      "10"
-      SaveName		      "ScopeData13"
-      DataFormat	      "StructureWithTime"
-      LimitDataPoints	      off
-      SampleTime	      "0"
-    }
-    Block {
-      BlockType		      Scope
-      Name		      "motor\ntorque"
-      Ports		      [1]
-      Position		      [600, 194, 630, 226]
-      Floating		      off
-      Location		      [815, 331, 1224, 702]
-      Open		      off
-      NumInputPorts	      "1"
-      ZoomMode		      "xonly"
-      List {
-	ListType		AxesTitles
-	axes1			"%<SignalLabel>"
-      }
-      TimeRange		      "10"
-      SaveName		      "ScopeData3"
-      DataFormat	      "StructureWithTime"
-      LimitDataPoints	      off
-      SampleTime	      "0"
-    }
-    Block {
-      BlockType		      Scope
-      Name		      "omega_m"
-      Ports		      [1]
-      Position		      [895, 464, 925, 496]
-      Floating		      off
-      Location		      [695, 265, 1104, 636]
-      Open		      off
-      NumInputPorts	      "1"
-      List {
-	ListType		AxesTitles
-	axes1			"%<SignalLabel>"
-      }
-      TimeRange		      "10"
-      SaveName		      "ScopeData4"
-      DataFormat	      "StructureWithTime"
-      LimitDataPoints	      off
-      SampleTime	      "0"
-    }
-    Block {
-      BlockType		      Scope
-      Name		      "op_spr_force"
-      Ports		      [1]
-      Position		      [910, 54, 940, 86]
-      Floating		      off
-      Location		      [53, 382, 461, 753]
-      Open		      off
-      NumInputPorts	      "1"
-      ZoomMode		      "xonly"
-      List {
-	ListType		AxesTitles
-	axes1			"%<SignalLabel>"
-      }
-      TimeRange		      "5               "
-      YMin		      "-8"
-      YMax		      "11"
-      SaveName		      "ScopeData9"
-      DataFormat	      "StructureWithTime"
-      LimitDataPoints	      off
-      SampleTime	      "0"
     }
     Block {
       BlockType		      Gain
@@ -1491,156 +1198,17 @@ Model {
       OutDataTypeMode	      "Inherit via internal rule"
       SaturateOnIntegerOverflow	off
     }
-    Block {
-      BlockType		      Scope
-      Name		      "res. force m2"
-      Ports		      [1]
-      Position		      [735, 79, 765, 111]
-      Floating		      off
-      Location		      [488, 398, 897, 768]
-      Open		      off
-      NumInputPorts	      "1"
-      ZoomMode		      "xonly"
-      List {
-	ListType		AxesTitles
-	axes1			"%<SignalLabel>"
-      }
-      TimeRange		      "5               "
-      YMin		      "-1.75"
-      YMax		      "1.75"
-      SaveName		      "ScopeData10"
-      DataFormat	      "StructureWithTime"
-      LimitDataPoints	      off
-      SampleTime	      "0"
-    }
-    Block {
-      BlockType		      Scope
-      Name		      "spr_damping_f"
-      Ports		      [1]
-      Position		      [755, 279, 785, 311]
-      Floating		      off
-      Location		      [61, 380, 469, 751]
-      Open		      off
-      NumInputPorts	      "1"
-      ZoomMode		      "xonly"
-      List {
-	ListType		AxesTitles
-	axes1			"%<SignalLabel>"
-      }
-      TimeRange		      "5               "
-      YMin		      "-8"
-      YMax		      "11"
-      SaveName		      "ScopeData12"
-      DataFormat	      "StructureWithTime"
-      LimitDataPoints	      off
-      SampleTime	      "0"
-    }
-    Block {
-      BlockType		      Scope
-      Name		      "spr_stiff_f"
-      Ports		      [1]
-      Position		      [910, 174, 940, 206]
-      Floating		      off
-      Location		      [866, 398, 1274, 769]
-      Open		      off
-      NumInputPorts	      "1"
-      ZoomMode		      "xonly"
-      List {
-	ListType		AxesTitles
-	axes1			"%<SignalLabel>"
-      }
-      TimeRange		      "5               "
-      YMin		      "-8"
-      YMax		      "11"
-      SaveName		      "ScopeData11"
-      DataFormat	      "StructureWithTime"
-      LimitDataPoints	      off
-      SampleTime	      "0"
-    }
-    Block {
-      BlockType		      Scope
-      Name		      "theta_m"
-      Ports		      [1]
-      Position		      [1000, 484, 1030, 516]
-      Floating		      off
-      Location		      [695, 265, 1104, 636]
-      Open		      off
-      NumInputPorts	      "1"
-      List {
-	ListType		AxesTitles
-	axes1			"%<SignalLabel>"
-      }
-      TimeRange		      "10"
-      SaveName		      "ScopeData7"
-      DataFormat	      "StructureWithTime"
-      LimitDataPoints	      off
-      SampleTime	      "0"
-    }
-    Block {
-      BlockType		      Scope
-      Name		      "x_1"
-      Ports		      [1]
-      Position		      [1180, 384, 1210, 416]
-      Floating		      off
-      Location		      [695, 265, 1104, 636]
-      Open		      off
-      NumInputPorts	      "1"
-      List {
-	ListType		AxesTitles
-	axes1			"%<SignalLabel>"
-      }
-      TimeRange		      "10"
-      SaveName		      "ScopeData8"
-      DataFormat	      "StructureWithTime"
-      LimitDataPoints	      off
-      SampleTime	      "0"
-    }
-    Block {
-      BlockType		      Scope
-      Name		      "x_2"
-      Ports		      [1]
-      Position		      [1195, 139, 1225, 171]
-      Floating		      off
-      Location		      [854, 379, 1262, 738]
-      Open		      off
-      NumInputPorts	      "1"
-      List {
-	ListType		AxesTitles
-	axes1			"%<SignalLabel>"
-      }
-      TimeRange		      "10"
-      SaveName		      "ScopeData5"
-      DataFormat	      "StructureWithTime"
-      LimitDataPoints	      off
-      SampleTime	      "0"
-    }
     Line {
       SrcBlock		      "Arduino read out"
       SrcPort		      1
-      Points		      [15, 0]
-      Branch {
-	DstBlock		"K_V_ardu2V_a\n"
-	DstPort			1
-      }
-      Branch {
-	Points			[0, -110]
-	DstBlock		"V ardu"
-	DstPort			1
-      }
+      DstBlock		      "K_V_ardu2V_a\n"
+      DstPort		      1
     }
     Line {
       SrcBlock		      "K_V_ardu2V_a\n"
       SrcPort		      1
-      Points		      [35, 0]
-      Branch {
-	DstBlock		"Sum2"
-	DstPort			1
-      }
-      Branch {
-	Points			[0, -150]
-	DstBlock		"armature\nvoltage"
-	DstPort			1
-      }
+      DstBlock		      "Sum2"
+      DstPort		      1
     }
     Line {
       SrcBlock		      "Sum2"
@@ -1651,16 +1219,8 @@ Model {
     Line {
       SrcBlock		      "Transfer Fcn"
       SrcPort		      1
-      Points		      [10, 0]
-      Branch {
-	DstBlock		"K_tau"
-	DstPort			1
-      }
-      Branch {
-	Points			[0, -145; -60, 0; 0, -60]
-	DstBlock		"motor\ncurrent"
-	DstPort			1
-      }
+      DstBlock		      "K_tau"
+      DstPort		      1
     }
     Line {
       SrcBlock		      "L_CL"
@@ -1670,32 +1230,10 @@ Model {
       DstPort		      1
     }
     Line {
-      SrcBlock		      "K_tau"
-      SrcPort		      1
-      Points		      [0, 0; 5, 0]
-      Branch {
-	DstBlock		"Sum3"
-	DstPort			2
-      }
-      Branch {
-	Points			[0, -45; -65, 0]
-	DstBlock		"motor\ntorque"
-	DstPort			1
-      }
-    }
-    Line {
       SrcBlock		      "Sum4"
       SrcPort		      1
-      Points		      [0, 0; 5, 0]
-      Branch {
-	DstBlock		"Transfer Fcn1"
-	DstPort			1
-      }
-      Branch {
-	Points			[0, -60]
-	DstBlock		"res. force m2"
-	DstPort			1
-      }
+      DstBlock		      "Transfer Fcn1"
+      DstPort		      1
     }
     Line {
       SrcBlock		      "Integrator"
@@ -1708,14 +1246,8 @@ Model {
       }
       Branch {
 	Points			[75, 0]
-	Branch {
-	  DstBlock		  "Sum5"
-	  DstPort		  1
-	}
-	Branch {
-	  DstBlock		  "x_2"
-	  DstPort		  1
-	}
+	DstBlock		"Sum5"
+	DstPort			1
       }
     }
     Line {
@@ -1723,6 +1255,10 @@ Model {
       SrcBlock		      "Sum5"
       SrcPort		      1
       Points		      [0, 0; -155, 0]
+      Branch {
+	DstBlock		"k_eq"
+	DstPort			1
+      }
       Branch {
 	Points			[0, 0]
 	Branch {
@@ -1732,49 +1268,24 @@ Model {
 	  DstPort		  2
 	}
 	Branch {
-	  Points		  [0, -140; 140, 0]
-	  Branch {
-	    DstBlock		    "delta x"
-	    DstPort		    1
-	  }
-	  Branch {
-	    Points		    [0, -45]
-	    DstBlock		    "To Workspace"
-	    DstPort		    1
-	  }
+	  Points		  [0, -140]
+	  DstBlock		  "delta x"
+	  DstPort		  1
 	}
-      }
-      Branch {
-	DstBlock		"k_eq"
-	DstPort			1
       }
     }
     Line {
       SrcBlock		      "L_CL1"
       SrcPort		      1
-      Points		      [15, 0; 0, -15]
-      Branch {
-	DstBlock		"Sum5"
-	DstPort			2
-      }
-      Branch {
-	DstBlock		"x_1"
-	DstPort			1
-      }
+      Points		      [15, 0]
+      DstBlock		      "Sum5"
+      DstPort		      2
     }
     Line {
       SrcBlock		      "Integrator1"
       SrcPort		      1
-      Points		      [0, 0; 30, 0]
-      Branch {
-	DstBlock		"reduction ratio"
-	DstPort			1
-      }
-      Branch {
-	Points			[0, 85]
-	DstBlock		"theta_m"
-	DstPort			1
-      }
+      DstBlock		      "reduction ratio"
+      DstPort		      1
     }
     Line {
       SrcBlock		      "Transfer Fcn2"
@@ -1787,17 +1298,12 @@ Model {
 	  DstPort		  1
 	}
 	Branch {
-	  Points		  [0, 65]
-	  DstBlock		  "omega_m"
-	  DstPort		  1
-	}
-	Branch {
 	  DstBlock		  "reduction ratio2"
 	  DstPort		  1
 	}
       }
       Branch {
-	Points			[0, 105]
+	Points			[0, 75]
 	DstBlock		"K_emf"
 	DstPort			1
       }
@@ -1811,37 +1317,15 @@ Model {
     Line {
       SrcBlock		      "K_emf"
       SrcPort		      1
-      Points		      [0, 0; -115, 0]
-      Branch {
-	DstBlock		"Sum2"
-	DstPort			2
-      }
-      Branch {
-	Points			[-90, 0]
-	DstBlock		"back emf"
-	DstPort			1
-      }
+      Points		      [-115, 0]
+      DstBlock		      "Sum2"
+      DstPort		      2
     }
     Line {
       SrcBlock		      "Sine Wave"
       SrcPort		      1
-      Points		      [45, 0]
-      Branch {
-	DstBlock		"Arduino read out"
-	DstPort			1
-      }
-      Branch {
-	Points			[0, -100]
-	Branch {
-	  Points		  [0, -110]
-	  DstBlock		  "To Workspace1"
-	  DstPort		  1
-	}
-	Branch {
-	  DstBlock		  "delta x  ref"
-	  DstPort		  1
-	}
-      }
+      DstBlock		      "Arduino read out"
+      DstPort		      1
     }
     Line {
       SrcBlock		      "reduction ratio"
@@ -1866,29 +1350,14 @@ Model {
       SrcBlock		      "b_spring"
       SrcPort		      1
       Points		      [-30, 0]
-      Branch {
-	Points			[-30, 0; 0, 30]
-	DstBlock		"spr_damping_f"
-	DstPort			1
-      }
-      Branch {
-	DstBlock		"Sum7"
-	DstPort			2
-      }
+      DstBlock		      "Sum7"
+      DstPort		      2
     }
     Line {
       SrcBlock		      "k_eq"
       SrcPort		      1
-      Points		      [0, 0]
-      Branch {
-	DstBlock		"Sum7"
-	DstPort			1
-      }
-      Branch {
-	Points			[0, -30]
-	DstBlock		"spr_stiff_f"
-	DstPort			1
-      }
+      DstBlock		      "Sum7"
+      DstPort		      1
     }
     Line {
       SrcBlock		      "Sum7"
@@ -1931,17 +1400,9 @@ Model {
     Line {
       SrcBlock		      "b_op"
       SrcPort		      1
-      Points		      [-15, 0; 0, -10]
-      Branch {
-	Points			[-105, 0]
-	DstBlock		"Sum4"
-	DstPort			1
-      }
-      Branch {
-	Points			[0, -5]
-	DstBlock		"op_spr_force"
-	DstPort			1
-      }
+      Points		      [-120, 0]
+      DstBlock		      "Sum4"
+      DstPort		      1
     }
     Line {
       SrcBlock		      "Integrator2"
@@ -1963,6 +1424,12 @@ Model {
 	  DstPort		  1
 	}
       }
+    }
+    Line {
+      SrcBlock		      "K_tau"
+      SrcPort		      1
+      DstBlock		      "Sum3"
+      DstPort		      2
     }
     Annotation {
       Name		      "Delta x voltage_ref"
@@ -1996,7 +1463,7 @@ Model {
     }
     Annotation {
       Name		      "back_emf"
-      Position		      [496, 506]
+      Position		      [501, 476]
       UseDisplayTextAsClickCallback off
     }
     Annotation {
@@ -2021,7 +1488,7 @@ Model {
     }
     Annotation {
       Name		      "dx_2 / dt"
-      Position		      [916, 141]
+      Position		      [916, 126]
       UseDisplayTextAsClickCallback off
     }
     Annotation {
