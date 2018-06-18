@@ -23,6 +23,10 @@ K_tau = 31.4E-3 % [Nm/A]
 K_emf = 3.29E-3 / 60 % [V/s]
 %simplify(K_V2dist * (K_P + K_D * s + K_I/s) * K_PID2Va / (-J_T * s^2 * n/L_CL *( 1 + (k_eq+b_sp*s)/(m_2*s^2 +b_op*s + k_op))* (L_a*s + R_a) /K_tau - K_emf * s * J_T*s^2*n/L_CL*( 1 + (k_eq+b_sp*s)/(m_2*s^2 +b_op*s + k_op)) - (k_eq + b_sp*s)*L_CL* (L_a*s + R_a) /K_tau / n - (K_P + K_D * s + K_I/s) * K_PID2Va))
 s = tf('s');
-my_transfer = tf(K_V2dist * (K_P + K_D * s + K_I/s) * K_PID2Va / (-J_T * s^2 * n/L_CL *( 1 + (k_eq+b_sp*s)/(m_2*s^2 +b_op*s + k_op))* (L_a*s + R_a) /K_tau - K_emf * s * J_T*s^2*n/L_CL*( 1 + (k_eq+b_sp*s)/(m_2*s^2 +b_op*s + k_op)) - (k_eq + b_sp*s)*L_CL* (L_a*s + R_a) /K_tau / n - (K_P + K_D * s + K_I/s) * K_PID2Va))
+%old_formula my_transfer = tf(K_V2dist * (K_P + K_D * s + K_I/s) * K_PID2Va / (-J_T * s^2 * n/L_CL *( 1 + (k_eq+b_sp*s)/(m_2*s^2 +b_op*s + k_op))* (L_a*s + R_a) /K_tau - K_emf * s * J_T*s^2*n/L_CL*( 1 + (k_eq+b_sp*s)/(m_2*s^2 +b_op*s + k_op)) - (k_eq + b_sp*s)*L_CL* (L_a*s + R_a) /K_tau / n - (K_P + K_D * s + K_I/s) * K_PID2Va))
+% normal operator:
+my_transfer = tf((K_P + K_D*s + K_I/s)*K_PID2Va/(L_a*s + R_a)*K_tau/(-J_T*s^2*n/L_CL*(1+(k_eq + b_sp*s)/(m_2*s^2 + b_op*s + k_op)) -(k_eq + b_sp*s)*L_CL/n - (K_P + K_D*s + K_I/s)/(L_a*s + R_a)*K_tau*K_PID2Va - K_emf/(L_a*s + R_a)*K_tau*s*n/L_CL *(1 + (k_eq + b_sp*s)/(m_2*s^2 + b_op*s + k_op))))
 
+% blocked by wall:
+my_transfer = tf(-(K_P + K_D*s + K_I/s)*K_PID2Va/(L_a*s + R_a)*K_tau/(J_T*s^2*n_LCL*DX +(k_eq + b_sp*s)*L_CL/n + (K_P + K_D*s + K_I/s)*K_PID2Va/(L_a*s + R_a)*K_tau + K_emf*s/(L_a*s + R_a)*K_tau*n_LCL) )
 bode(my_transfer)

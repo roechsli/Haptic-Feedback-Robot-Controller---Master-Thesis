@@ -19,9 +19,10 @@ for k = 1:length(spring_damping_vec)
     b_sp = spring_damping_vec(k)
     
     s = tf('s');
-    my_transfer = tf((K_V2dist * (K_P + K_D * s + K_I/s) * K_PID2Va / (-J_T * s^2 * n/L_CL *( 1 + (k_eq+b_sp*s)/(m_2*s^2 +b_sp*s + k_eq))* (L_a*s + R_a) /K_tau - K_emf * s * J_T*s^2*n/L_CL*( 1 + (k_eq+b_sp*s)/(m_2*s^2 +b_sp*s + k_eq)) - (k_eq + b_sp*s)*L_CL* (L_a*s + R_a) /K_tau / n - (K_P + K_D * s + K_I/s) * K_PID2Va)))
-      
-    
+    % operator:
+    %my_transfer = tf((K_P + K_D*s + K_I/s)*K_PID2Va/(L_a*s + R_a)*K_tau/(-J_T*s^2*n/L_CL*(1+(k_eq + b_sp*s)/(m_2*s^2 + b_op*s + k_op)) -(k_eq + b_sp*s)*L_CL/n - (K_P + K_D*s + K_I/s)/(L_a*s + R_a)*K_tau*K_PID2Va - K_emf/(L_a*s + R_a)*K_tau*s*n/L_CL *(1 + (k_eq + b_sp*s)/(m_2*s^2 + b_op*s + k_op))))      
+    % blocked by walls
+    my_transfer = tf((K_P + K_D*s + K_I/s)*K_PID2Va/(L_a*s + R_a)*K_tau/(J_T*s^2*n/L_CL +(k_eq + b_sp*s)*L_CL/n + (K_P + K_D*s + K_I/s)*K_PID2Va/(L_a*s + R_a)*K_tau + K_emf*s/(L_a*s + R_a)*K_tau*n/L_CL) )
     %Plot figure and save
     fig = figure('units','normalized','outerposition',[0 0 1 1],'DefaultAxesFontSize',18);
     bode(my_transfer)
