@@ -6,7 +6,7 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.117"
+    ComputedModelVersion    "1.119"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -54,8 +54,8 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "oechslin"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Fri Jun 15 17:42:57 2018"
-  ModelVersionFormat	  "1.%<AutoIncrement:117>"
+  LastModifiedDate	  "Tue Jun 19 11:37:08 2018"
+  ModelVersionFormat	  "1.%<AutoIncrement:119>"
   ConfigurationManager	  "None"
   LinearizationMsg	  "none"
   Profile		  off
@@ -598,7 +598,7 @@ Model {
   }
   System {
     Name		    "block_diagram_simplified"
-    Location		    [16, 83, 1364, 641]
+    Location		    [16, 83, 1360, 641]
     Open		    on
     ModelBrowserVisibility  off
     ModelBrowserWidth	    200
@@ -620,7 +620,7 @@ Model {
       MaskHideContents	      off
       System {
 	Name			"Arduino read out"
-	Location		[700, 379, 1429, 658]
+	Location		[358, 343, 1087, 622]
 	Open			off
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
@@ -766,6 +766,52 @@ Model {
 	  D			  "0"
 	}
 	Block {
+	  BlockType		  Scope
+	  Name			  "PID val"
+	  Ports			  [1]
+	  Position		  [390, 54, 420, 86]
+	  Floating		  off
+	  Location		  [751, 277, 1160, 648]
+	  Open			  off
+	  NumInputPorts		  "1"
+	  ZoomMode		  "xonly"
+	  List {
+	    ListType		    AxesTitles
+	    axes1		    "%<SignalLabel>"
+	  }
+	  TimeRange		  "10"
+	  YMin			  "-20"
+	  YMax			  "20"
+	  SaveName		  "ScopeData16"
+	  DataFormat		  "StructureWithTime"
+	  LimitDataPoints	  off
+	  SampleTime		  "0"
+	}
+	Block {
+	  BlockType		  Scope
+	  Name			  "Scope1"
+	  Ports			  [3]
+	  Position		  [635, 18, 665, 52]
+	  Floating		  off
+	  Location		  [1060, 295, 1587, 858]
+	  Open			  off
+	  NumInputPorts		  "3"
+	  ZoomMode		  "xonly"
+	  List {
+	    ListType		    AxesTitles
+	    axes1		    "%<SignalLabel>"
+	    axes2		    "%<SignalLabel>"
+	    axes3		    "%<SignalLabel>"
+	  }
+	  TimeRange		  "5"
+	  YMin			  "-4.06576e-020~-5e-005~-2.5"
+	  YMax			  "0.00075~0.0005~0"
+	  SaveName		  "ScopeData2"
+	  DataFormat		  "StructureWithTime"
+	  LimitDataPoints	  off
+	  SampleTime		  "0"
+	}
+	Block {
 	  BlockType		  Sum
 	  Name			  "Sum"
 	  Ports			  [2, 1]
@@ -776,6 +822,28 @@ Model {
 	  InputSameDT		  off
 	  OutDataTypeMode	  "Inherit via internal rule"
 	  SaturateOnIntegerOverflow off
+	}
+	Block {
+	  BlockType		  Scope
+	  Name			  "Va des"
+	  Ports			  [1]
+	  Position		  [495, 194, 525, 226]
+	  Floating		  off
+	  Location		  [751, 277, 1160, 648]
+	  Open			  off
+	  NumInputPorts		  "1"
+	  ZoomMode		  "xonly"
+	  List {
+	    ListType		    AxesTitles
+	    axes1		    "%<SignalLabel>"
+	  }
+	  TimeRange		  "10"
+	  YMin			  "-20"
+	  YMax			  "20"
+	  SaveName		  "ScopeData17"
+	  DataFormat		  "StructureWithTime"
+	  LimitDataPoints	  off
+	  SampleTime		  "0"
 	}
 	Block {
 	  BlockType		  Gain
@@ -807,14 +875,29 @@ Model {
 	Line {
 	  SrcBlock		  "PID Controller"
 	  SrcPort		  1
-	  DstBlock		  "K_PID2Va"
-	  DstPort		  1
+	  Points		  [5, 0]
+	  Branch {
+	    DstBlock		    "K_PID2Va"
+	    DstPort		    1
+	  }
+	  Branch {
+	    DstBlock		    "PID val"
+	    DstPort		    1
+	  }
 	}
 	Line {
 	  SrcBlock		  "K_V2dist"
 	  SrcPort		  1
-	  DstBlock		  "Sum"
-	  DstPort		  1
+	  Points		  [70, 0]
+	  Branch {
+	    DstBlock		    "Sum"
+	    DstPort		    1
+	  }
+	  Branch {
+	    Points		    [0, -105]
+	    DstBlock		    "Scope1"
+	    DstPort		    1
+	  }
 	}
 	Line {
 	  SrcBlock		  "K_Va2Vardu\n"
@@ -831,15 +914,36 @@ Model {
 	Line {
 	  SrcBlock		  "K_PID2Va"
 	  SrcPort		  1
-	  DstBlock		  "K_Va2Vardu\n"
-	  DstPort		  1
+	  Points		  [0, 0]
+	  Branch {
+	    DstBlock		    "K_Va2Vardu\n"
+	    DstPort		    1
+	  }
+	  Branch {
+	    Points		    [0, 80]
+	    DstBlock		    "Va des"
+	    DstPort		    1
+	  }
+	  Branch {
+	    Points		    [0, -85]
+	    DstBlock		    "Scope1"
+	    DstPort		    3
+	  }
 	}
 	Line {
 	  SrcBlock		  "minus1"
 	  SrcPort		  1
-	  Points		  [125, 0]
-	  DstBlock		  "Sum"
-	  DstPort		  2
+	  Points		  [80, 0]
+	  Branch {
+	    Points		    [45, 0]
+	    DstBlock		    "Sum"
+	    DstPort		    2
+	  }
+	  Branch {
+	    Points		    [0, -180]
+	    DstBlock		    "Scope1"
+	    DstPort		    2
+	  }
 	}
       }
     }
@@ -956,7 +1060,7 @@ Model {
     Block {
       BlockType		      Gain
       Name		      "K_emf"
-      Position		      [585, 475, 615, 505]
+      Position		      [585, 465, 615, 495]
       Orientation	      "left"
       Gain		      "K_emf"
       ParameterDataTypeMode   "Inherit via internal rule"
@@ -1100,13 +1204,12 @@ Model {
       BlockType		      TransferFcn
       Name		      "Transfer Fcn1"
       Position		      [745, 137, 805, 173]
-      Numerator		      "[0]"
       Denominator	      "[m_2]"
     }
     Block {
       BlockType		      TransferFcn
       Name		      "Transfer Fcn2"
-      Position		      [755, 397, 815, 433]
+      Position		      [710, 397, 770, 433]
       Denominator	      "[J_T 0]"
     }
     Block {
@@ -1230,6 +1333,12 @@ Model {
       DstPort		      1
     }
     Line {
+      SrcBlock		      "K_tau"
+      SrcPort		      1
+      DstBlock		      "Sum3"
+      DstPort		      2
+    }
+    Line {
       SrcBlock		      "Sum4"
       SrcPort		      1
       DstBlock		      "Transfer Fcn1"
@@ -1256,14 +1365,10 @@ Model {
       SrcPort		      1
       Points		      [0, 0; -155, 0]
       Branch {
-	DstBlock		"k_eq"
-	DstPort			1
-      }
-      Branch {
 	Points			[0, 0]
 	Branch {
 	  Labels		  [1, 0]
-	  Points		  [0, 330; -865, 0; 0, -125]
+	  Points		  [0, 305; -865, 0; 0, -100]
 	  DstBlock		  "Arduino read out"
 	  DstPort		  2
 	}
@@ -1272,6 +1377,10 @@ Model {
 	  DstBlock		  "delta x"
 	  DstPort		  1
 	}
+      }
+      Branch {
+	DstBlock		"k_eq"
+	DstPort			1
       }
     }
     Line {
@@ -1290,7 +1399,7 @@ Model {
     Line {
       SrcBlock		      "Transfer Fcn2"
       SrcPort		      1
-      Points		      [0, 0; 15, 0]
+      Points		      [0, 0; 60, 0]
       Branch {
 	Points			[40, 0]
 	Branch {
@@ -1303,7 +1412,7 @@ Model {
 	}
       }
       Branch {
-	Points			[0, 75]
+	Points			[0, 65]
 	DstBlock		"K_emf"
 	DstPort			1
       }
@@ -1425,12 +1534,6 @@ Model {
 	}
       }
     }
-    Line {
-      SrcBlock		      "K_tau"
-      SrcPort		      1
-      DstBlock		      "Sum3"
-      DstPort		      2
-    }
     Annotation {
       Name		      "Delta x voltage_ref"
       Position		      [58, 379]
@@ -1453,7 +1556,7 @@ Model {
     }
     Annotation {
       Name		      "dtheta_m / dt"
-      Position		      [850, 398]
+      Position		      [815, 403]
       UseDisplayTextAsClickCallback off
     }
     Annotation {
@@ -1463,12 +1566,12 @@ Model {
     }
     Annotation {
       Name		      "back_emf"
-      Position		      [501, 476]
+      Position		      [496, 471]
       UseDisplayTextAsClickCallback off
     }
     Annotation {
       Name		      "V_a"
-      Position		      [405, 402]
+      Position		      [415, 407]
       UseDisplayTextAsClickCallback off
     }
     Annotation {
@@ -1478,7 +1581,7 @@ Model {
     }
     Annotation {
       Name		      "Delta x"
-      Position		      [128, 539]
+      Position		      [123, 514]
       UseDisplayTextAsClickCallback off
     }
     Annotation {
@@ -1488,7 +1591,7 @@ Model {
     }
     Annotation {
       Name		      "dx_2 / dt"
-      Position		      [916, 126]
+      Position		      [916, 141]
       UseDisplayTextAsClickCallback off
     }
     Annotation {

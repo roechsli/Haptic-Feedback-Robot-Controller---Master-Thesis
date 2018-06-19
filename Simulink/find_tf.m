@@ -30,3 +30,15 @@ my_transfer = tf((K_P + K_D*s + K_I/s)*K_PID2Va/(L_a*s + R_a)*K_tau/(-J_T*s^2*n/
 % blocked by wall:
 my_transfer = tf(-(K_P + K_D*s + K_I/s)*K_PID2Va/(L_a*s + R_a)*K_tau/(J_T*s^2*n_LCL*DX +(k_eq + b_sp*s)*L_CL/n + (K_P + K_D*s + K_I/s)*K_PID2Va/(L_a*s + R_a)*K_tau + K_emf*s/(L_a*s + R_a)*K_tau*n_LCL) )
 bode(my_transfer)
+
+
+%%%%% Revised version: E = DX_ref - DX
+%not blocked
+(K_P + K_D*s + K_I /s)*K_PIDV2a/(L_a*s + R_a)*K_tau/(-J_T *s^2*n/L_CL*(1+(k_eq + b_sp*s)/(m_2*s^2 + b_op*s+ k_op)) + (K_P + K_D*s + K_I /s)*K_PID2Va/(L_a*s + R_a)*K_tau - K_emf*s/(L_a*s + R_a)*K_tau*n/L_CL - (k_eq + b_sp*s)*L_CL/n)  = DX/DX_ref
+
+%blocked
+(K_P + K_D*s + K_I /s)*K_PIDV2a/(L_a*s + R_a)*K_tau/(-J_T *s^2*n/L_CL + (K_P + K_D*s + K_I /s)*K_PID2Va/(L_a*s + R_a)*K_tau - K_emf*s/(L_a*s + R_a)*K_tau*n/L_CL - (k_eq + b_sp*s)*L_CL/n)  = DX/DX_ref
+
+
+
+
