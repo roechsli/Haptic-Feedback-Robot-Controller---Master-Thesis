@@ -24,8 +24,15 @@ for k = 1:length(spring_damping_vec)
     % blocked by walls
     my_transfer = tf((K_P + K_D*s + K_I /s)*K_PID2Va/(L_a*s + R_a)*K_tau/(-J_T *s^2*n/L_CL + (K_P + K_D*s + K_I /s)*K_PID2Va/(L_a*s + R_a)*K_tau - K_emf*s/(L_a*s + R_a)*K_tau*n/L_CL - (k_eq + b_sp*s)*L_CL/n))
     %Plot figure and save
-    fig = figure('units','normalized','outerposition',[0 0 1 1],'DefaultAxesFontSize',18);
-    bode(my_transfer)
+    fig = figure('units','normalized','outerposition',[0 0 1 1]);%,'DefaultAxesFontSize',36
+    PlotHandle= bodeplot(my_transfer);
+    set(findall(fig, 'type','axes'),'fontsize',16)
+    PlotOptions= getoptions(PlotHandle);
+    PlotOptions.Title.String= '';
+    PlotOptions.XLabel.FontSize= 20;
+    PlotOptions.YLabel.FontSize= 20;
+    PlotHandle.setoptions(PlotOptions)
+    
     set(findall(gcf,'Type','line'),'LineWidth',4)
     xlim([1 120])
     grid on
