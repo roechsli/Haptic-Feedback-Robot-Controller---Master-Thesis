@@ -3,6 +3,16 @@
   Robot controller with haptic feedback
   2018/04/06  Tokyo`
 */
+#define FASTADC 1
+
+// defines for setting and clearing register bits
+#ifndef cbi
+#define cbi(sfr, bit) (_SFR_BYTE(sfr) &= ~_BV(bit))
+#endif
+#ifndef sbi
+#define sbi(sfr, bit) (_SFR_BYTE(sfr) |= _BV(bit))
+#endif
+
 
 #define joystick_left_pin A0
 #define photo_left_pin A2
@@ -14,6 +24,10 @@ int motorPinHighGain = 11;    // Motor connected to digital pin 11 (PWM)
 int testPin = 13; // Used for testing the speed of Arduino
 
 //int roman_zaehl_var = 0;
+int sine_signal = 0;
+int photo_value_left_raw = 0;
+int photo_value_right_raw = 0;
+
 
 int dist_ref = 0;
 float FILTER_CST = 0.5;
@@ -29,10 +43,10 @@ int sum_error_left = 0;
 int error_right = 0;
 int last_error_right = 0;
 int sum_error_right = 0;
-const int PHOTO_MIN_LEFT = 440;//500;//0;//514;
-const int PHOTO_MAX_LEFT = 830;//770;//1023;//787;
-const int PHOTO_MIN_RIGHT = 630;//680;//0;//678;
-const int PHOTO_MAX_RIGHT = 875;//770;//1023;//773;
+const int PHOTO_MIN_LEFT = 650;//440;
+const int PHOTO_MAX_LEFT = 830;
+const int PHOTO_MIN_RIGHT = 700;//630;
+const int PHOTO_MAX_RIGHT = 870;//875;
 
 char buf[16];
 char all[512];
@@ -47,7 +61,7 @@ unsigned long TIME_CYCLE = 1000; // this is the time_step in [microseconds] that
 
 
 void setup() {
-  Serial.begin(115200);
+  Serial.begin(250000);
   pinMode(motorPinLowGain, OUTPUT);
   pinMode(motorPinHighGain, OUTPUT);
 
@@ -59,39 +73,34 @@ void setup() {
   pinMode(testPin, OUTPUT);
 
   TCCR2B = TCCR2B & B11111000 | B00000001; // for PWM frequency of 31372.55 Hz
+
+  #if FASTADC
+ // set prescale to 16
+ sbi(ADCSRA,ADPS2) ;
+ cbi(ADCSRA,ADPS1) ;
+ cbi(ADCSRA,ADPS0) ;
+  #endif
 }
 
 void loop() {
   digitalWrite(testPin, HIGH); // this is only used to measure the operating frequency
   TIME_BEGIN = micros();
 
-  int sine_signal = analogRead(sine_signal_pin);
-  /*
-    int joy_val_left = analogRead(joystick_left_pin);
-    joy_val_left = joy_val_left>>2; // the joystick value is [0..1023] and I want to convert it to 8bit
-    int joy_val_right = analogRead(joystick_right_pin);
-    joy_val_right = joy_val_right>>2; // the joystick value is [0..1023] and I want to convert it to 8bit
-  */
-
-  int photo_value_left_raw = analogRead(photo_left_pin);
-  int photo_value_right_raw = analogRead(photo_right_pin);
-
-  int pwmValueLeft = 0;
-  int pwmValueRight = 0;
+  sine_signal = analogRead(sine_signal_pin);
+  photo_value_left_raw = analogRead(photo_left_pin);
+  photo_value_right_raw = analogRead(photo_right_pin);
+  
   int pwmValueLeftSym = 128;
   int pwmValueRightSym = 128;
 
   float k_p = 1.0; // k_p = 1; and k_i = 0.01; works as well
   float k_i = 0.0;
   float k_d = 0.0;
-  int photo_value_left = limit_value(photo_value_left_raw, PHOTO_MIN_LEFT, PHOTO_MAX_LEFT);
-  int photo_value_right = limit_value(photo_value_right_raw, PHOTO_MIN_RIGHT, PHOTO_MAX_RIGHT);
-  // just to be sure that it is not out of expected boundaries
-
+  
   // ignore Serial and read sine wave signal as reference
   dist_ref = sine_signal >> 2; // dist ref is between [0..255]
-  error_left = dist_ref - map_to_255(photo_value_left, PHOTO_MIN_LEFT, PHOTO_MAX_LEFT);
-  error_right = dist_ref - map_to_255(photo_value_right, PHOTO_MIN_RIGHT, PHOTO_MAX_RIGHT);
+  error_left = dist_ref - map_to_255(photo_value_left_raw, PHOTO_MIN_LEFT, PHOTO_MAX_LEFT);
+  error_right = dist_ref - map_to_255(photo_value_right_raw, PHOTO_MIN_RIGHT, PHOTO_MAX_RIGHT);
 
   int motor_output_left = k_p * error_left + k_i * sum_error_left + k_d * (error_left - last_error_left);
   int motor_output_right =  k_p * error_right + k_i * sum_error_right + k_d * (error_right - last_error_right);//FIXME need two different control parameters?
@@ -101,16 +110,13 @@ void loop() {
   last_error_right = error_right;
   
   // symmetric feedback left and right, (allowing for negative motor values)
-  
   pwmValueLeftSym = output2pwm_sym(motor_output_left, LEFT_HAND_AMPLIFIER_GAIN);
   pwmValueRightSym = output2pwm_sym(motor_output_right, RIGHT_HAND_AMPLIFIER_GAIN);
 
   analogWrite(motorPinLowGain, pwmValueLeftSym); //pwmValueLeftSym
   analogWrite(motorPinHighGain, pwmValueRightSym); //pwmValueRightSym
-
-
+  
   //fastest way of writing data to serial
-  // msg: dist_ref ;   photo val left  ;    photo val right ;    time
   all[0] = '\0';
   p = mystrcat(init_p, itoa(dist_ref, buf, 16));
   p = mystrcat(p, semicolon);
@@ -118,28 +124,11 @@ void loop() {
   p = mystrcat(p, semicolon);
   p = mystrcat(p, itoa(photo_value_right_raw, buf, 16));
   p = mystrcat(p, semicolon);
-  /*p = mystrcat(p, itoa(pwmValueLeftSym, buf, 16));
-    p = mystrcat(p, semicolon);
-    p = mystrcat(p, itoa(pwmValueRightSym, buf, 16));
-    p = mystrcat(p, semicolon);*/
   p = mystrcat(p, itoa(TIME_BEGIN, buf, 16));
   p = mystrcat(p, semicolon);
   p = mystrcat(p, end_char);
   Serial.print(all); //TODO this is necessary for logging
   // message format: dist ref | left val | right val | time stamp
-  /*Serial.println(pwmValueLeftSym);
-  Serial.print("error = ");
-  Serial.println(error_left);
-  Serial.print("sine = ");
-  Serial.println(dist_ref);
-
-  
-  Serial.print("roman_zaehl_var = ");
-  Serial.println(roman_zaehl_var);
-  roman_zaehl_var += 1;
-  Serial.print("pwm = ");
-  Serial.println(output2pwm_sym(roman_zaehl_var, LEFT_HAND_AMPLIFIER_GAIN));
-  if (roman_zaehl_var > 255) roman_zaehl_var = -255;*/
 
   while ((micros() - TIME_BEGIN) < TIME_CYCLE) {  } // do nothing until we reach the time step of TIME_CYCLE
   digitalWrite(testPin, LOW); //instructions in between take roughly 640 microseconds
