@@ -3,28 +3,23 @@ import csv
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+import pickle
 
 from pylab import *
 from math import atan2
 
-PLOT_BOOL = False
+PLOT_BOOL = True
 CALC_OPER_FREQ = False
+SHORT_CUT = True
+only_this_file = "f"  # change this to "f" if all frequencies shall be tested, otherwise "f2_csv"
 
 INTMAX = 65535
-
 PHOTO_MIN_LEFT = 650
 PHOTO_MAX_LEFT = 830
 PHOTO_MIN_RIGHT = 700
 PHOTO_MAX_RIGHT = 870
-directory = "20180529_fra_logs/"  # TODO change this if new data shall be analyzed
-
-"""
-PHOTO_MIN_LEFT = 440
-PHOTO_MAX_LEFT = 830
-PHOTO_MIN_RIGHT = 630
-PHOTO_MAX_RIGHT = 875
-directory = "20180525_fra_logs/"  # TODO change this if new data shall be analyzed
-"""
+MAX_DISPLACEMENT_UM = 1800
+directory = "20180621_fra_logs/"  # TODO change this if new data shall be analyzed
 
 def get_freq_from_filename(filename):
     if filename[0] == "f" and filename[-8:] == "_csv.csv":
@@ -32,12 +27,9 @@ def get_freq_from_filename(filename):
     else:
         return ""
 
-def map_to_255(receptor_value, min_val, max_val):
-    # this is the same function as in arduino code, that maps the measured value
-    # to the range [0..255] =  [normal..compressed]
-    converted = (receptor_value - min_val) * 51 / (max_val - min_val) * 5
-    converted = 255 - converted
-    return converted
+def sensor2dist(sensor_value, min_val, max_val):
+  # maps the measured value to the distance (assumed linearity) in micrometers
+  return (MAX_DISPLACEMENT_UM - (sensor_value - min_val) * MAX_DISPLACEMENT_UM / (max_val - min_val) ) / 1000
 
 def fitSine(tList, yList, freq):
     #from: http://exnumerus.blogspot.jp/2010/04/how-to-fit-sine-wave-example-in-python.html
@@ -63,12 +55,31 @@ phasediff_l = []
 amplitude_factor_l = []
 freq_vec = []
 for file in os.listdir(directory):
-    if False:  # TODO change this, if you want to skip all this calculation
+    if SHORT_CUT:  # TODO change this, if you want to skip all the calculation
         freq_vec = [1.25, 1.6, 100, 10, 12.6, 16, 1, 2.5, 20, 25, 2, 3.17, 32, 40, 4, 50, 5, 6.3, 63, 80, 8]
-        amplitude_factor_l = [0.25040974386625153, 0.2594237881575532, 0.027615675914620687, 0.38219172188693584, 0.47191827409663434, 0.5238466025043429, 0.24650137347668222, 0.26367748022198007, 0.5669117047685919, 0.4967456367340987, 0.2579752111106925, 0.2622430220736225, 0.3512160790610284, 0.2115729783355916, 0.27123567888926187, 0.12329271705580712, 0.29890766075845365, 0.3041980262456386, 0.08177886063221472, 0.04690277259918248, 0.32140469939845934]
-        phasediff_l = [25.346751456760742, -333.83743080935653, -140.48453388661724, 41.587971433023625, -310.7025187168664, 62.385127717528775, -333.8657640699465, 26.692306129220952, 85.9002546238281, -243.7163884742885, 26.05642069332231, 27.185636254161082, 147.93644342020917, 167.18070426049786, 28.910076563242654, -178.54035880203273, 31.22988735406183, -327.1806573568086, 195.2183048877806, -151.59270834695292, 36.54698007188293]
-        amplitude_factor_r = [0.48207975227979577, 0.510317027938587, 0.002602594429631148, 0.3948292635083239, 0.30065153951271084, 0.20629765443139778, 0.4605571125636496, 0.5332757034029528, 0.13188309295611006, 0.08371930254692196, 0.5128804666628917, 0.5415110576890578, 0.04664206757977547, 0.028639349621668753, 0.540092136603179, 0.014026081366043247, 0.5400593997928911, 0.5138843135374294, 0.008108863399352646, 0.004277432865617745, 0.4682817918169037]
-        phasediff_r = [24.928190723305732, -331.97006600815985, -139.8440837460424, -259.2744352706402, -242.72997159062953, 134.67319613886136, -337.377971611484, 35.27285553574225, 149.19878538641257, -196.7508052052425, 30.556622452045957, 40.624841128704745, -183.08975741455893, 188.407631597924, 48.25951598818422, -162.8433311689285, 56.591643317067124, -292.3251635190619, 202.70556503559357, -149.52076991621885, -277.33697806039027]
+        amplitude_factor_l = [0.42398913976097446, 0.4282153912079033, 0.12378284313044466, 0.711221069409896,
+                               0.7225816897317351, 0.7646527825863285, 0.40112267357697934, 0.42743202148716863,
+                               0.9914095813817145, 1.2222055794324236, 0.4284915596303108, 0.42862587415289155,
+                               1.6182794339223205, 1.264568245831212, 0.4311669676245879, 0.5462780686764698,
+                               0.44415703547915164, 0.5944384653289748, 0.2708103187351025, 0.170468881007046,
+                               0.6476744573446083]
+        phasediff_l = [-29.67419316918162, 329.3954574722484, 151.77595893442785, -34.1606097854003,
+                       -37.606370641125956, -40.36468813694745, -30.36855317966672, -31.3116501593979,
+                       -47.26522334530678, 306.8163968335256, -30.42922969682391, -32.857491878311464,
+                       -97.71371390960005, 201.5446736191579, -33.54162038250308, 190.83991403280896,
+                       -34.409877680170055, 329.51955549109414, -178.44505217712023, -191.64710085535776,
+                       -31.420544562906162]
+        amplitude_factor_r = [0.682529120529401, 0.6881751766721432, 0.0022154853818361154, 0.9234556155923191,
+                              0.8826716111054062, 0.6589189142362378, 0.6824321178608364, 0.7149014578498121,
+                              0.4682488094473188, 0.2899691163444707, 0.6985377868987559, 0.7410563355373039,
+                              0.14053263238672217, 0.05085633307181245, 0.7602497656273546, 0.0258420423441291,
+                              0.8079029768733247, 0.8547492932126076, 0.011593031609452593, 0.005914752729396196,
+                              0.8929581931654754]
+        phasediff_r = [-20.266230280843104, 338.87333291671956, 104.73683443996734, -68.027983641311, -93.7109757424358,
+                       238.84336015384935, -19.797341054607188, -24.148441334186202, -140.83812403663828,
+                       201.01499505958088, -22.34252685864527, -26.849042440608443, 191.0566801899678,
+                       178.3109527558047, -30.078416184330564, 172.97924637960566, -35.34272693855357,
+                       317.35253460336855, -176.6359639822056, -204.16704226303582, -52.8252198134289]
 
         continue
 
@@ -79,14 +90,20 @@ for file in os.listdir(directory):
     print(frequency)
 
     # to restrict to first file only
-    if "f2_csv" not in file:
-        pass  # TODO change this to continue if only one frequency file should be treated
+    if only_this_file not in file:
+        continue
 
     df = pd.read_csv(directory + file, delimiter=';')
-    # make timeline continuous and not overflow and change from [us] to [s]
+    # make timeline continuous (no overflow), change [us] to [s] convert sensor value to [mm]
     for i in range(len(df.iloc[:,3]) -1):
         if df.iloc[i,3] > df.iloc[i+1,3]:
             df.iloc[i+1:,3] = df.iloc[i+1:,3] + INTMAX
+    for i in range(len(df.iloc[:,3])):
+        df.iloc[i, 3] = df.iloc[i, 3] / 1000000  # convert to seconds
+        df.iloc[i,0] = df.iloc[i,0] / 1000  # convert reference to mm
+        # convert sensor values to mm
+        df.iloc[i,1] = sensor2dist(df.iloc[i,1], PHOTO_MIN_LEFT, PHOTO_MAX_LEFT)
+        df.iloc[i,2] = sensor2dist(df.iloc[i,2], PHOTO_MIN_RIGHT, PHOTO_MAX_RIGHT)
 
     # just to have an average us length of a step:
     if CALC_OPER_FREQ:
@@ -96,27 +113,28 @@ for file in os.listdir(directory):
         # avg_step_len = step_sum / len(df.iloc[:,3])  # more precise mean
         avg_step_len = (df.iloc[-1,3] - df.iloc[0,3]) / len(df.iloc[:,3])  # global mean
         print("average step length for " + frequency + "Hz is " + str(avg_step_len))
-        for i in range(len(df.iloc[:, 3])):
-            df.iloc[i, 3] = df.iloc[i, 3] / 1000000  # convert to seconds
-
 
     if PLOT_BOOL:
         print("plotting freq " + frequency)
         fig = plt.figure()
-        plt.plot(df.iloc[:, 3],df.iloc[:, 0])  # plot reference
+        plt.plot(df.iloc[:, 3], df.iloc[:, 0] )  # plot reference
         fig.suptitle('Frequency response (' + frequency + ' Hz)')
         plt.xlabel('Time [s]')
-        plt.ylabel('Distance [-]')
+        plt.ylabel('Compression [mm]')
         # plot left and right sensor data,zoom and save
-        plt.plot(df.iloc[:, 3], map_to_255(df.iloc[:, 1], PHOTO_MIN_LEFT, PHOTO_MAX_LEFT))
-        plt.plot(df.iloc[:, 3], map_to_255(df.iloc[:, 2], PHOTO_MIN_RIGHT, PHOTO_MAX_RIGHT))
-        plt.axis([2.9, 3.6, 0, 255])
-        plt.legend(["distance reference", "left sensor mapped", "right sensor mapped"])
+        plt.plot(df.iloc[:, 3], df.iloc[:, 1])
+        plt.plot(df.iloc[:, 3], df.iloc[:, 2])
+        plt.axis([2, 3.6, -0.05, 0.5])
+        plt.legend(["reference signal", "left sensor", "right sensor"])
         figure_directory = 'figs/f' + frequency
         if not os.path.exists(figure_directory):
             os.makedirs(figure_directory)
-        fig.savefig(figure_directory + '/plot_sensor_zoom.jpg')
-        plt.close(fig)
+        fig.savefig(figure_directory + '/' + frequency + 'plot_zoom_fixed_time.jpg')
+        plt.axis([2, 2 + 3 / frequency_float, -0.05, 0.5])
+        fig.savefig(figure_directory + '/' + frequency + 'plot_zoom.jpg')
+        with open(figure_directory + '/' + frequency + '_raw.pkl', "wb") as fp:
+            pickle.dump(fig, fp, protocol=4)
+        plt.close(fig)  # for not plotting all the pictures
 
     # frequency response analysis
     # input
@@ -125,16 +143,16 @@ for file in os.listdir(directory):
     (phaseEst_in, amplitudeEst_in, biasEst_in) = fitSine(tSamples, yMeasured_in, frequency_float)
 
     # output left
-    yMeasured_out_l = map_to_255(df.iloc[:, 1], PHOTO_MIN_LEFT, PHOTO_MAX_LEFT)#df.iloc[:, 1]
+    yMeasured_out_l = df.iloc[:, 1]
     (phaseEst_out_l, amplitudeEst_out_l, biasEst_out_l) = fitSine(tSamples, yMeasured_out_l, frequency_float)
 
     # output right
-    yMeasured_out_r = map_to_255(df.iloc[:, 2], PHOTO_MIN_RIGHT, PHOTO_MAX_RIGHT)#df.iloc[:, 2]
+    yMeasured_out_r = df.iloc[:, 2]
     (phaseEst_out_r, amplitudeEst_out_r, biasEst_out_r) = fitSine(tSamples, yMeasured_out_r, frequency_float)
     # magnitude and phase offset
-    phasediff_l.append(phaseEst_in - phaseEst_out_l)
+    phasediff_l.append(phaseEst_out_l - phaseEst_in)
     amplitude_factor_l.append(amplitudeEst_out_l / amplitudeEst_in)
-    phasediff_r.append(phaseEst_in - phaseEst_out_r)
+    phasediff_r.append(phaseEst_out_r - phaseEst_in)
     amplitude_factor_r.append(amplitudeEst_out_r / amplitudeEst_in)
     freq_vec.append(frequency_float)
 
@@ -146,39 +164,57 @@ print(phasediff_l)
 print(amplitude_factor_r)
 print(phasediff_r)
 """
+print("amplitude_factor_l = ")
 print(amplitude_factor_l)
+print("phasediff_l = " )
 print(phasediff_l)
+print("amplitude_factor_r = " )
 print(amplitude_factor_r)
+print("phasediff_r = ")
 print(phasediff_r)
 indices = np.argsort(freq_vec)
 amplitude_factor_l = 20 * np.log10(amplitude_factor_l)
 amplitude_factor_r = 20 * np.log10(amplitude_factor_r)
 
+
+
 left_bode, axarr_l = plt.subplots(2, sharex=True)
-axarr_l[0].semilogx([freq_vec[x] for x in indices], [amplitude_factor_l[x] for x in indices])
-axarr_l[0].set_title('Bode diagram - left side')
-axarr_l[1].semilogx([freq_vec[x] for x in indices], [phasediff_l[x] if phasediff_l[x] < 0 else phasediff_l[x] - 360 for x in indices])
+axarr_l[0].semilogx([freq_vec[x] for x in indices], [amplitude_factor_l[x] for x in indices], linewidth=5.0)
+axarr_l[0].set_title('Bode diagram - left side (reduction 33:1)', fontsize=25)
+axarr_l[1].semilogx([freq_vec[x] for x in indices], [phasediff_l[x] if phasediff_l[x] < 0 else phasediff_l[x] - 360 for x in indices], linewidth=5.0)
 #axarr_l[1].semilogx([freq_vec[x] for x in indices], [phasediff_l[x]  for x in indices])
-axarr_l[1].set_xlabel('Frequency [rad/sec]')
-axarr_l[0].set_ylabel('Magnitude [dB]')
-axarr_l[1].set_ylabel('Phase [deg]')
+axarr_l[1].set_xlabel('Frequency [Hz]', fontsize=25)
+axarr_l[0].set_ylabel('Magnitude [dB]', fontsize=25)
+axarr_l[1].set_ylabel('Phase [deg]', fontsize=25)
+axarr_l[0].tick_params(axis='x', labelsize=10)
+axarr_l[1].tick_params(axis='x', labelsize=10)
+axarr_l[0].tick_params(axis='y', labelsize=10)
+axarr_l[1].tick_params(axis='y', labelsize=10)
 axarr_l[0].grid()
 axarr_l[1].grid()
 figure_directory = 'figs/'
+mng = plt.get_current_fig_manager()
+mng.resize(*mng.window.maxsize())
+plt.show()
 left_bode.savefig(figure_directory + '/bode_left.jpg')
 
-
 right_bode, axarr_r = plt.subplots(2, sharex=True)
-axarr_r[0].semilogx([freq_vec[x] for x in indices], [amplitude_factor_r[x] for x in indices])
-axarr_r[0].set_title('Bode diagram - right side')
-axarr_r[1].semilogx([freq_vec[x] for x in indices], [phasediff_r[x] if phasediff_r[x] < 0 else phasediff_r[x] - 360 for x in indices])
+axarr_r[0].semilogx([freq_vec[x] for x in indices], [amplitude_factor_r[x] for x in indices], linewidth=5.0)
+axarr_r[0].set_title('Bode diagram - right side (reduction 112:1)', fontsize=25)
+axarr_r[1].semilogx([freq_vec[x] for x in indices], [phasediff_r[x] if phasediff_r[x] < 0 else phasediff_r[x] - 360 for x in indices], linewidth=5.0)
 #axarr_r[1].semilogx([freq_vec[x] for x in indices], [phasediff_r[x] for x in indices])
-axarr_r[1].set_xlabel('Frequency [rad/sec]')
-axarr_r[0].set_ylabel('Magnitude [dB]')
-axarr_r[1].set_ylabel('Phase [deg]')
+axarr_r[1].set_xlabel('Frequency [Hz]', fontsize=25)
+axarr_r[0].set_ylabel('Magnitude [dB]', fontsize=25)
+axarr_r[1].set_ylabel('Phase [deg]', fontsize=25)
+axarr_r[0].tick_params(axis='x', labelsize=10)
+axarr_r[1].tick_params(axis='x', labelsize=10)
+axarr_r[0].tick_params(axis='y', labelsize=10)
+axarr_r[1].tick_params(axis='y', labelsize=10)
 axarr_r[0].grid()
 axarr_r[1].grid()
 figure_directory = 'figs/'
+mng = plt.get_current_fig_manager()
+mng.resize(*mng.window.maxsize())
+plt.show()
 right_bode.savefig(figure_directory + '/bode_right.jpg')
 
-plt.show()

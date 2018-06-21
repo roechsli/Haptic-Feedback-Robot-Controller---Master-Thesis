@@ -14,8 +14,11 @@ import csv
 import numpy as np
 import matplotlib.pyplot as plt
 
-
+PLOT_BOOL = False
+CONVERT_TO_DEC = True
 PLOT_BOOL = True
+CONVERT_TO_DEC = False
+
 
 directory = "C:/Users/Oechslin/Documents/Haptic_Controller_Code/Data/Frequency response/20180620 - FRA4 Voltage follower\initial_tests/"
 INTMAX = 65535
@@ -23,6 +26,7 @@ PHOTO_MIN_LEFT = 650
 PHOTO_MAX_LEFT = 830
 PHOTO_MIN_RIGHT = 700
 PHOTO_MAX_RIGHT = 870
+MAX_DISPLACEMENT_UM = 1800
 
 def convert2dec(filename):
     source = open(directory + filename, "r")
@@ -44,20 +48,30 @@ def convert2dec(filename):
     destination.close()
     return filename[:-8] + "_dec" + ".csv"
 
-def map_to_255(receptor_value, min_val, max_val):
-    # this is the same function as in arduino code, that maps the measured value
-    # to the range [0..255] =  [normal..compressed]
-    converted = (receptor_value - min_val) * 51 / (max_val - min_val) * 5
-    converted = 255 - converted
-    return converted
+def sensor2dist(sensor_value, min_val, max_val):
+  # maps the measured value to the distance (assumed linearity) in micrometers
+  return (MAX_DISPLACEMENT_UM - (sensor_value - min_val) * MAX_DISPLACEMENT_UM / (max_val - min_val) ) / 1000
+
 
 
 for filename in os.listdir(directory):
-    if "hex" not in filename:
-        continue
     print(filename)
-    dec_file = convert2dec(filename)
+    if CONVERT_TO_DEC:
+        if "hex" in  filename:
+            print("converting " + filename)
+            dec_file = convert2dec(filename)
 
+    if PLOT_BOOL:
+        if "dec" in filename:
+            dec_file = filename
+        else:
+            continue
+
+    if "fourth" not in filename:  # skip all files except this one
+        continue
+
+    print ("plotting " + dec_file)
+    # plotting
     df = pd.read_csv(directory + dec_file, delimiter=';')
     # make timeline continuous and not overflow and change from [us] to [s]
     for i in range(len(df.iloc[:, 3]) - 1):
@@ -65,17 +79,20 @@ for filename in os.listdir(directory):
             df.iloc[i + 1:, 3] = df.iloc[i + 1:, 3] + INTMAX
     for i in range(len(df.iloc[:,3])):
         df.iloc[i, 3] = df.iloc[i, 3] / 1000000  # convert to seconds
+        df.iloc[i,0] = df.iloc[i,0] / 1000  # convert reference to mm
+        # convert sensor values to mm
+        df.iloc[i,1] = sensor2dist(df.iloc[i,1], PHOTO_MIN_LEFT, PHOTO_MAX_LEFT)
+        df.iloc[i,2] = sensor2dist(df.iloc[i,2], PHOTO_MIN_RIGHT, PHOTO_MAX_RIGHT)
 
     if PLOT_BOOL:
-        print("plotting")
         fig = plt.figure()
         plt.plot(df.iloc[:, 3],df.iloc[:, 0])  # plot reference
         fig.suptitle('Reference tracking with PID')
         plt.xlabel('Time [s]')
         plt.ylabel('Compression reference [-]')
         # plot left and right sensor data,zoom and save
-        plt.plot(df.iloc[:, 3], map_to_255(df.iloc[:, 1], PHOTO_MIN_LEFT, PHOTO_MAX_LEFT))
-        plt.plot(df.iloc[:, 3], map_to_255(df.iloc[:, 2], PHOTO_MIN_RIGHT, PHOTO_MAX_RIGHT))
+        plt.plot(df.iloc[:, 3], df.iloc[:, 1])
+        plt.plot(df.iloc[:, 3], df.iloc[:, 2])
         #plt.axis([2.9, 3.6, 0, 255])
         plt.legend(["distance reference", "left sensor", "right sensor"])
         """

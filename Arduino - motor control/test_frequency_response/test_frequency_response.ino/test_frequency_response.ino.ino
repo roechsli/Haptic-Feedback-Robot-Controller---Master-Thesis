@@ -92,7 +92,7 @@ void loop() {
   int pwmValueLeftSym = 128;
   int pwmValueRightSym = 128;
 
-  float k_p = 1.0; // k_p = 1; and k_i = 0.01; works as well
+  float k_p = 0.2; // k_p = 1; and k_i = 0.01; works as well
   float k_i = 0.0;
   float k_d = 0.0;
 
@@ -126,20 +126,19 @@ void loop() {
   p = mystrcat(p, itoa(TIME_BEGIN, buf, 16));
   p = mystrcat(p, semicolon);
   p = mystrcat(p, end_char);
-  //Serial.print(all); //TODO this is necessary for logging
+  Serial.print(all); //TODO this is necessary for logging
   // message format: dist ref | left val | right val | time stamp
+  /*
   Serial.print("ref = ");
   Serial.println(dist_ref);
-  Serial.print("photo_value_left_raw = ");
-  Serial.println(photo_value_left_raw);
-  Serial.print("left dist = ");
-  Serial.println(sensor2dist(photo_value_left_raw, PHOTO_MIN_LEFT, PHOTO_MAX_LEFT));
+  Serial.print("photo_value_right_raw = ");
+  Serial.println(photo_value_right_raw);
   Serial.print("error = ");
-  Serial.println(error_left);
-  Serial.print("des_mot_volt_left = ");
-  Serial.println(des_mot_volt_left);
-  Serial.print("pwmValueLeftSym = ");
-  Serial.println(pwmValueLeftSym);
+  Serial.println(error_right);
+  Serial.print("des_mot_volt_right = ");
+  Serial.println(des_mot_volt_right);
+  Serial.print("pwmValueRightSym = ");
+  Serial.println(pwmValueRightSym);*/
   
 
   while ((micros() - TIME_BEGIN) < TIME_CYCLE) {  } // do nothing until we reach the time step of TIME_CYCLE
@@ -177,7 +176,7 @@ int limit_value(int value, int lower, int upper) {
 int pid2pwm_sym(int des_voltage, int range) {
   // converts motor voltage to pwm output where 128-range/2 is full power in one direction and 128+range/2 is 
   // full power in the other
-  return limit_value(des_voltage, 128-range/2, 128+range/2) + 128;
+  return limit_value(des_voltage, -range/2, range/2) + 128;
 }
 
 
