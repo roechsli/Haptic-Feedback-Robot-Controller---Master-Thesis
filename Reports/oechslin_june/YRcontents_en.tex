@@ -100,21 +100,21 @@
 		F(s) = G_{PID}(s)G_{setup}(s) = \frac{V_{ardu}}{E}\frac{\Delta X}{V_{ardu}} = \frac{\Delta X(s)}{E(s)}
 		\label{eq:complete_tf}
 	\end{equation}
-	where $V_{ardu}$ is the voltage output of the arduino for controlling the motor. Using this form one can calculate the individual transfer functions and finally relate the compression of the springs $\Delta x$ to the compression given as reference $\Delta x_{ref}$.
+	where $V_{ardu}$ is the voltage output of the arduino for controlling the motors. Using this form one can calculate the individual transfer functions and finally relate the compression of the springs $\Delta x$ to the compression given as reference $\Delta x_{ref}$, since $\Delta X_{ref} / \Delta x = F/(1+F)$.
 	
 	\subsubsection{PID Transfer Function}
 	The transfer function given by the PID controller is very straight-forward and can be taken out of any control theory book \cite{Dutton1997}. 
-	Specific for this case is the multiplication factor $K_{PID2Va}$ to get from the PID value to the desired armature voltage level. The transfer function is given in equation \ref{eq:tf_pid}. 
+	Specific for this case is the multiplication factor $K_{\mu m}$ to get from the reference distance in meters to micrometers (to keep the PID gains consistent with the arduino file). Furthermore, an offset has been added $K_{bit-offset} = 128$ to allow for negative armature voltages and lastly the PID value has been converted to the arduino output voltage, where $255$ corresponds to $5$ V. The transfer function is given in equation \ref{eq:tf_pid}. 
 	\begin{equation}
-		G_{PID} (s) = \frac{V_{a}(s)}{E(s)} = K_{PID2Va} (K_P + \frac{K_I}{s} + K_Ds)
+		G_{PID} (s) = \frac{V_{ardu}(s)}{E(s)} = (K_{\mu m} (K_P + \frac{K_I}{s} + K_Ds) +K_{bit-offset}) K_{PID2Vardu}
 		\label{eq:tf_pid}
 	\end{equation}
-	Finally, there is also the gain of the amplifier in voltage mode, which converts the voltage of the Arduino into the voltage applied to the motors. This gain is $K_{ampl} = 10$Volt/Volt. To this voltage an offset voltage of $V_{offset} = -20$V is added.\\
+	Finally, there is also the gain of the amplifier in voltage mode, which converts the voltage of the Arduino into the voltage applied to the motors. This gain is $K_{ampl} = 10$Volt/Volt. To this voltage an offset voltage of $V_{offset} = -25$V is added.\\
 	
 	\subsubsection{Motor Equations}
 	The second transfer function relates the motor torque $T_m$ to the Arduino voltage as well as the output $\Delta x$ to $T_m$. Due to the back electromotive force these two parts are related and have to be treated as a whole.
 	
-	The output torque $T_m$ of the motor can be calculated using the sums of all torques and the conversion parameters intrinsic to the motor.\\
+	The output torque $T_m$ of the motor can be calculated using the sum of all torques and the conversion parameters intrinsic to the motor.\\
 	Similar to the setup and analysis in \cite{Junior2016} the equations of the motor are given as:
 	\begin{equation}
 		L_a \frac{di_a}{dt} + R_a i_a + K_{emf} \dot{\theta }_m = V_a
@@ -184,7 +184,7 @@
 	\end{equation}
 	
 	\begin{equation}
-		(K_P + K_D s + \frac{K_I}{s})E K_{PID2Va} = V_a
+		((K_P + K_D s + \frac{K_I}{s})E K_{\mu m} + K_{bit-offset}) K_{PID2Vardu} K_{ampl} + V_{offset}= V_a
 		\label{eq:PID}
 	\end{equation}
 	
@@ -206,20 +206,21 @@
 	In the case of the experimental setup the palm pad has been blocked and therefore $x_2$ has been forced to be constant. The last equation becomes thus: $\theta_m = - \frac{n}{L_{CL}} \Delta X$.
 	
 	\subsection{Analytical Transfer Function}
-	The analytical transfer function has only been calculated for a specific set of spring damping coefficients $b_{sp}$. The simulation result that was closest to the experimental setup can be seen in figure \ref{fig:bode_sp_damp215} and the corresponding transfer function is:
+	The analytical transfer function has only been calculated for a specific set of spring damping coefficients $b_{sp}$ (ie. 10 uniformly spaced values between $100$Ns/m and $1000$Ns/m). The simulation result that was closest to the experimental setup can be seen in figure \ref{fig:bode_sp_damp400} and the corresponding transfer function is:
 	\begin{equation}
-		\frac{\Delta X}{\Delta X_{ref}} = \frac{7.04\times 10^{-3} s^2 + 288 s + 2.94\times 10^{6}}{1.09\times 10^{-10}s^5 + 6.69\times 10^{-6}s^4 + 0.137 s^3 + 940s^2 +6.45 s + 2.95\times 10^{6}}
+		%\frac{\Delta X}{\Delta X_{ref}} = \frac{7.04\times 10^{-3} s^2 + 288 s + 2.94\times 10^{6}}{1.09\times 10^{-10}s^5 + 6.69\times 10^{-6}s^4 + 0.137 s^3 + 940s^2 +6.45 s + 2.95\times 10^{6}}
+		\frac{\Delta X}{\Delta X_{ref}} = \frac{1.23 \times 10^3}{3.24\times 10^{-6}s^3 + 6.67\times 10^{-2}s^2 + 8.48s + 1.23 \times 10^3}
 	\end{equation}
 	
 	
 	\begin{figure}[h!]
 		\centering
-		\includegraphics[width=0.6\linewidth]{Figs/bode_sp_damp215}
-		\caption{Bode plot of analytical transfer function for $b_{sp} = 215$Ns/m.}
-		\label{fig:bode_sp_damp215}
+		\includegraphics[width=0.6\linewidth]{Figs/bode_sp_damp400}
+		\caption{Bode plot of analytical transfer function for $b_{sp} = 400$Ns/m.}
+		\label{fig:bode_sp_damp400}
 	\end{figure}
 	
-	As it can be seen in figure \ref{fig:bode_sp_damp215} there is a constant gain of $1$ for lower frequencies and a slight resonance top becomes visible around $16.6$Hz. The phase shift is of around $140^\circ$ for the frequencies of interest. Due to the setup constraints, the analytical results of higher frequencies have not been considered.
+	As it can be seen in figure \ref{fig:bode_sp_damp400} there is a constant gain of $1$ for lower frequencies and a slight resonance top becomes visible around $16.6$Hz. The phase shift is of around $-140^\circ$ for the frequencies of interest. Due to the setup constraints, the analytical results of higher frequencies have not been considered.
 	
 	
 	

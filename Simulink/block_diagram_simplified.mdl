@@ -6,7 +6,7 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.149"
+    ComputedModelVersion    "1.152"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -54,8 +54,8 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "oechslin"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Fri Jun 22 11:17:06 2018"
-  ModelVersionFormat	  "1.%<AutoIncrement:149>"
+  LastModifiedDate	  "Fri Jun 22 19:34:27 2018"
+  ModelVersionFormat	  "1.%<AutoIncrement:152>"
   ConfigurationManager	  "None"
   LinearizationMsg	  "none"
   Profile		  off
@@ -598,7 +598,7 @@ Model {
   }
   System {
     Name		    "block_diagram_simplified"
-    Location		    [20, 146, 1364, 704]
+    Location		    [20, 146, 1347, 687]
     Open		    on
     ModelBrowserVisibility  off
     ModelBrowserWidth	    200
@@ -607,7 +607,7 @@ Model {
     PaperPositionMode	    "auto"
     PaperType		    "usletter"
     PaperUnits		    "inches"
-    ZoomFactor		    "100"
+    ZoomFactor		    "156"
     ReportName		    "simulink-default.rpt"
     Block {
       BlockType		      SubSystem
@@ -620,7 +620,7 @@ Model {
       MaskHideContents	      off
       System {
 	Name			"Arduino"
-	Location		[41, 184, 1207, 457]
+	Location		[41, 184, 1307, 584]
 	Open			off
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
@@ -629,17 +629,17 @@ Model {
 	PaperPositionMode	"auto"
 	PaperType		"usletter"
 	PaperUnits		"inches"
-	ZoomFactor		"100"
+	ZoomFactor		"156"
 	Block {
 	  BlockType		  Inport
 	  Name			  "Delta x voltage_ref"
-	  Position		  [70, 123, 100, 137]
+	  Position		  [130, 123, 160, 137]
 	  IconDisplay		  "Port number"
 	}
 	Block {
 	  BlockType		  Inport
 	  Name			  "Delta x"
-	  Position		  [70, 183, 100, 197]
+	  Position		  [130, 183, 160, 197]
 	  Port			  "2"
 	  IconDisplay		  "Port number"
 	}
@@ -655,7 +655,7 @@ Model {
 	Block {
 	  BlockType		  Gain
 	  Name			  "K_V2dist"
-	  Position		  [155, 115, 185, 145]
+	  Position		  [195, 115, 225, 145]
 	  Gain			  "K_V2dist"
 	  ParameterDataTypeMode	  "Inherit via internal rule"
 	  OutDataTypeMode	  "Inherit via internal rule"
@@ -678,10 +678,10 @@ Model {
 	  BlockType		  Scope
 	  Name			  "Scope1"
 	  Ports			  [3]
-	  Position		  [600, 18, 630, 52]
+	  Position		  [600, 63, 630, 97]
 	  Floating		  off
-	  Location		  [835, 113, 1362, 719]
-	  Open			  on
+	  Location		  [832, 113, 1359, 719]
+	  Open			  off
 	  NumInputPorts		  "3"
 	  ZoomMode		  "yonly"
 	  List {
@@ -749,6 +749,7 @@ Model {
 	Line {
 	  SrcBlock		  "Delta x voltage_ref"
 	  SrcPort		  1
+	  Points		  [0, 0]
 	  DstBlock		  "K_V2dist"
 	  DstPort		  1
 	}
@@ -761,13 +762,13 @@ Model {
 	Line {
 	  SrcBlock		  "K_V2dist"
 	  SrcPort		  1
-	  Points		  [70, 0]
+	  Points		  [30, 0]
 	  Branch {
 	    DstBlock		    "Sum"
 	    DstPort		    1
 	  }
 	  Branch {
-	    Points		    [0, -105]
+	    Points		    [0, -60]
 	    DstBlock		    "Scope1"
 	    DstPort		    1
 	  }
@@ -775,14 +776,14 @@ Model {
 	Line {
 	  SrcBlock		  "Delta x"
 	  SrcPort		  1
-	  Points		  [0, 0; 170, 0]
+	  Points		  [0, 0; 105, 0]
 	  Branch {
-	    Points		    [25, 0]
+	    Points		    [30, 0]
 	    DstBlock		    "Sum"
 	    DstPort		    2
 	  }
 	  Branch {
-	    Points		    [0, -155]
+	    Points		    [0, -110]
 	    DstBlock		    "Scope1"
 	    DstPort		    2
 	  }
@@ -808,7 +809,7 @@ Model {
 	    DstPort		    1
 	  }
 	  Branch {
-	    Points		    [0, -85]
+	    Points		    [0, -40]
 	    DstBlock		    "Scope1"
 	    DstPort		    3
 	  }
@@ -816,7 +817,6 @@ Model {
 	Line {
 	  SrcBlock		  "Sum1"
 	  SrcPort		  1
-	  Points		  [25, 0]
 	  DstBlock		  "K_PID2Vardu"
 	  DstPort		  1
 	}
@@ -828,7 +828,7 @@ Model {
 	}
 	Annotation {
 	  Name			  "DX ref"
-	  Position		  [230, 121]
+	  Position		  [235, 121]
 	  UseDisplayTextAsClickCallback	off
 	}
       }
@@ -837,27 +837,27 @@ Model {
       BlockType		      Integrator
       Name		      "Integrator"
       Ports		      [1, 1]
-      Position		      [980, 140, 1010, 170]
+      Position		      [870, 140, 900, 170]
       IgnoreLimit	      off
     }
     Block {
       BlockType		      Integrator
       Name		      "Integrator1"
       Ports		      [1, 1]
-      Position		      [905, 400, 935, 430]
+      Position		      [790, 400, 820, 430]
       IgnoreLimit	      off
     }
     Block {
       BlockType		      Integrator
       Name		      "Integrator2"
       Ports		      [1, 1]
-      Position		      [830, 140, 860, 170]
+      Position		      [720, 140, 750, 170]
       IgnoreLimit	      off
     }
     Block {
       BlockType		      Gain
       Name		      "K_emf"
-      Position		      [585, 465, 615, 495]
+      Position		      [560, 460, 590, 490]
       Orientation	      "left"
       Gain		      "K_emf"
       ParameterDataTypeMode   "Inherit via internal rule"
@@ -867,7 +867,7 @@ Model {
     Block {
       BlockType		      Gain
       Name		      "K_tau"
-      Position		      [610, 400, 640, 430]
+      Position		      [530, 400, 560, 430]
       Gain		      "K_tau"
       ParameterDataTypeMode   "Inherit via internal rule"
       OutDataTypeMode	      "Inherit via internal rule"
@@ -876,7 +876,7 @@ Model {
     Block {
       BlockType		      Gain
       Name		      "L_CL"
-      Position		      [665, 330, 695, 360]
+      Position		      [590, 350, 620, 380]
       Orientation	      "down"
       NamePlacement	      "alternate"
       Gain		      "L_CL"
@@ -887,7 +887,7 @@ Model {
     Block {
       BlockType		      Gain
       Name		      "L_CL1"
-      Position		      [1080, 400, 1110, 430]
+      Position		      [945, 400, 975, 430]
       Gain		      "L_CL"
       ParameterDataTypeMode   "Inherit via internal rule"
       OutDataTypeMode	      "Inherit via internal rule"
@@ -896,7 +896,7 @@ Model {
     Block {
       BlockType		      Gain
       Name		      "L_CL2"
-      Position		      [860, 295, 890, 325]
+      Position		      [750, 295, 780, 325]
       Orientation	      "up"
       Gain		      "L_CL"
       ParameterDataTypeMode   "Inherit via internal rule"
@@ -907,7 +907,7 @@ Model {
       BlockType		      Sin
       Name		      "Sine Wave"
       Ports		      [0, 1]
-      Position		      [45, 390, 75, 420]
+      Position		      [65, 390, 95, 420]
       SineType		      "Time based"
       Amplitude		      "0.3"
       Bias		      "0.35"
@@ -918,7 +918,7 @@ Model {
       BlockType		      Sum
       Name		      "Sum2"
       Ports		      [2, 1]
-      Position		      [455, 405, 475, 425]
+      Position		      [395, 405, 415, 425]
       ShowName		      off
       IconShape		      "round"
       Inputs		      "|+-"
@@ -930,7 +930,7 @@ Model {
       BlockType		      Sum
       Name		      "Sum3"
       Ports		      [2, 1]
-      Position		      [670, 405, 690, 425]
+      Position		      [595, 405, 615, 425]
       ShowName		      off
       IconShape		      "round"
       Inputs		      "++|"
@@ -942,7 +942,7 @@ Model {
       BlockType		      Sum
       Name		      "Sum4"
       Ports		      [3, 1]
-      Position		      [670, 145, 690, 165]
+      Position		      [595, 145, 615, 165]
       ShowName		      off
       IconShape		      "round"
       Inputs		      "---"
@@ -954,7 +954,7 @@ Model {
       BlockType		      Sum
       Name		      "Sum5"
       Ports		      [2, 1]
-      Position		      [1120, 210, 1140, 230]
+      Position		      [975, 210, 995, 230]
       Orientation	      "left"
       NamePlacement	      "alternate"
       ShowName		      off
@@ -968,7 +968,7 @@ Model {
       BlockType		      Sum
       Name		      "Sum6"
       Ports		      [2, 1]
-      Position		      [865, 255, 885, 275]
+      Position		      [755, 255, 775, 275]
       Orientation	      "left"
       NamePlacement	      "alternate"
       ShowName		      off
@@ -982,7 +982,7 @@ Model {
       BlockType		      Sum
       Name		      "Sum7"
       Ports		      [2, 1]
-      Position		      [755, 210, 775, 230]
+      Position		      [655, 210, 675, 230]
       Orientation	      "left"
       NamePlacement	      "alternate"
       ShowName		      off
@@ -995,34 +995,34 @@ Model {
     Block {
       BlockType		      TransferFcn
       Name		      "Transfer Fcn"
-      Position		      [500, 397, 560, 433]
+      Position		      [435, 397, 495, 433]
       Denominator	      "[L_a R_a]"
     }
     Block {
       BlockType		      TransferFcn
       Name		      "Transfer Fcn1"
-      Position		      [745, 137, 805, 173]
+      Position		      [640, 137, 700, 173]
       Denominator	      "[m_2]"
     }
     Block {
       BlockType		      TransferFcn
       Name		      "Transfer Fcn2"
-      Position		      [710, 397, 770, 433]
+      Position		      [635, 397, 695, 433]
       Denominator	      "[J_T 0]"
     }
     Block {
       BlockType		      SubSystem
       Name		      "amplifier\n"
       Ports		      [1, 1]
-      Position		      [330, 393, 395, 437]
+      Position		      [295, 393, 360, 437]
       TreatAsAtomicUnit	      off
       MinAlgLoopOccurrences   off
       RTWSystemCode	      "Auto"
       MaskHideContents	      off
       System {
 	Name			"amplifier\n"
-	Location		[430, 494, 928, 794]
-	Open			on
+	Location		[349, 284, 945, 592]
+	Open			off
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
 	ScreenColor		"white"
@@ -1030,7 +1030,7 @@ Model {
 	PaperPositionMode	"auto"
 	PaperType		"usletter"
 	PaperUnits		"inches"
-	ZoomFactor		"100"
+	ZoomFactor		"156"
 	Block {
 	  BlockType		  Inport
 	  Name			  "V_ardu"
@@ -1102,7 +1102,7 @@ Model {
     Block {
       BlockType		      Gain
       Name		      "b_op"
-      Position		      [805, 70, 835, 100]
+      Position		      [665, 90, 695, 120]
       Orientation	      "left"
       Gain		      "b_op"
       ParameterDataTypeMode   "Inherit via internal rule"
@@ -1112,7 +1112,7 @@ Model {
     Block {
       BlockType		      Gain
       Name		      "b_spring"
-      Position		      [800, 250, 830, 280]
+      Position		      [705, 250, 735, 280]
       Orientation	      "left"
       Gain		      "b_spring"
       ParameterDataTypeMode   "Inherit via internal rule"
@@ -1123,7 +1123,7 @@ Model {
       BlockType		      Scope
       Name		      "delta x"
       Ports		      [1]
-      Position		      [1135, 64, 1165, 96]
+      Position		      [870, 74, 900, 106]
       Floating		      off
       Location		      [263, 268, 672, 639]
       Open		      off
@@ -1140,7 +1140,7 @@ Model {
     Block {
       BlockType		      Gain
       Name		      "k_eq"
-      Position		      [800, 205, 830, 235]
+      Position		      [705, 205, 735, 235]
       Orientation	      "left"
       Gain		      "k_eq"
       ParameterDataTypeMode   "Inherit via internal rule"
@@ -1150,7 +1150,7 @@ Model {
     Block {
       BlockType		      Gain
       Name		      "k_op"
-      Position		      [805, 25, 835, 55]
+      Position		      [665, 45, 695, 75]
       Orientation	      "left"
       Gain		      "k_op"
       ParameterDataTypeMode   "Inherit via internal rule"
@@ -1160,7 +1160,7 @@ Model {
     Block {
       BlockType		      Gain
       Name		      "reduction ratio"
-      Position		      [1005, 400, 1035, 430]
+      Position		      [880, 400, 910, 430]
       Gain		      "1/n"
       ParameterDataTypeMode   "Inherit via internal rule"
       OutDataTypeMode	      "Inherit via internal rule"
@@ -1169,7 +1169,7 @@ Model {
     Block {
       BlockType		      Gain
       Name		      "reduction ratio1"
-      Position		      [665, 265, 695, 295]
+      Position		      [590, 295, 620, 325]
       Orientation	      "down"
       NamePlacement	      "alternate"
       Gain		      "1/n"
@@ -1180,34 +1180,13 @@ Model {
     Block {
       BlockType		      Gain
       Name		      "reduction ratio2"
-      Position		      [858, 350, 892, 380]
+      Position		      [748, 350, 782, 380]
       Orientation	      "up"
       NamePlacement	      "alternate"
       Gain		      "1/n"
       ParameterDataTypeMode   "Inherit via internal rule"
       OutDataTypeMode	      "Inherit via internal rule"
       SaturateOnIntegerOverflow	off
-    }
-    Block {
-      BlockType		      Scope
-      Name		      "test"
-      Ports		      [1]
-      Position		      [465, 309, 495, 341]
-      Floating		      off
-      Location		      [784, 388, 1193, 759]
-      Open		      off
-      NumInputPorts	      "1"
-      ZoomMode		      "xonly"
-      List {
-	ListType		AxesTitles
-	axes1			"%<SignalLabel>"
-      }
-      TimeRange		      "10"
-      YMin		      "-1000"
-      SaveName		      "ScopeData3"
-      DataFormat	      "StructureWithTime"
-      LimitDataPoints	      off
-      SampleTime	      "0"
     }
     Line {
       SrcBlock		      "Arduino"
@@ -1218,16 +1197,8 @@ Model {
     Line {
       SrcBlock		      "amplifier\n"
       SrcPort		      1
-      Points		      [30, 0]
-      Branch {
-	DstBlock		"Sum2"
-	DstPort			1
-      }
-      Branch {
-	Points			[0, -90]
-	DstBlock		"test"
-	DstPort			1
-      }
+      DstBlock		      "Sum2"
+      DstPort		      1
     }
     Line {
       SrcBlock		      "Sum2"
@@ -1238,19 +1209,20 @@ Model {
     Line {
       SrcBlock		      "Transfer Fcn"
       SrcPort		      1
+      Points		      [15, 0]
       DstBlock		      "K_tau"
       DstPort		      1
     }
     Line {
       SrcBlock		      "L_CL"
       SrcPort		      1
-      Points		      [0, 25]
       DstBlock		      "Sum3"
       DstPort		      1
     }
     Line {
       SrcBlock		      "K_tau"
       SrcPort		      1
+      Points		      [15, 0]
       DstBlock		      "Sum3"
       DstPort		      2
     }
@@ -1265,31 +1237,31 @@ Model {
       SrcPort		      1
       Points		      [0, 0; 40, 0]
       Branch {
-	Points			[0, -115]
+	Points			[0, -95]
 	DstBlock		"k_op"
 	DstPort			1
       }
       Branch {
-	Points			[75, 0]
+	Points			[40, 0]
 	DstBlock		"Sum5"
 	DstPort			1
       }
     }
     Line {
-      Labels		      [2, 0]
+      Labels		      [1, 0]
       SrcBlock		      "Sum5"
       SrcPort		      1
-      Points		      [0, 0; -155, 0]
+      Points		      [-130, 0]
       Branch {
 	Points			[0, 0]
 	Branch {
 	  Labels		  [1, 0]
-	  Points		  [0, 305; -865, 0; 0, -100]
+	  Points		  [0, 285; -730, 0; 0, -80]
 	  DstBlock		  "Arduino"
 	  DstPort		  2
 	}
 	Branch {
-	  Points		  [0, -140]
+	  Points		  [0, -130]
 	  DstBlock		  "delta x"
 	  DstPort		  1
 	}
@@ -1302,7 +1274,7 @@ Model {
     Line {
       SrcBlock		      "L_CL1"
       SrcPort		      1
-      Points		      [15, 0]
+      Points		      [5, 0]
       DstBlock		      "Sum5"
       DstPort		      2
     }
@@ -1315,9 +1287,9 @@ Model {
     Line {
       SrcBlock		      "Transfer Fcn2"
       SrcPort		      1
-      Points		      [0, 0; 60, 0]
+      Points		      [0, 0; 10, 0]
       Branch {
-	Points			[40, 0]
+	Points			[55, 0]
 	Branch {
 	  DstBlock		  "Integrator1"
 	  DstPort		  1
@@ -1328,7 +1300,7 @@ Model {
 	}
       }
       Branch {
-	Points			[0, 65]
+	Points			[0, 60]
 	DstBlock		"K_emf"
 	DstPort			1
       }
@@ -1342,7 +1314,7 @@ Model {
     Line {
       SrcBlock		      "K_emf"
       SrcPort		      1
-      Points		      [-115, 0]
+      Points		      [-150, 0]
       DstBlock		      "Sum2"
       DstPort		      2
     }
@@ -1355,6 +1327,7 @@ Model {
     Line {
       SrcBlock		      "reduction ratio"
       SrcPort		      1
+      Points		      [15, 0]
       DstBlock		      "L_CL1"
       DstPort		      1
     }
@@ -1367,27 +1340,27 @@ Model {
     Line {
       SrcBlock		      "Sum6"
       SrcPort		      1
-      Points		      [0, 0]
       DstBlock		      "b_spring"
       DstPort		      1
     }
     Line {
       SrcBlock		      "b_spring"
       SrcPort		      1
-      Points		      [-30, 0]
+      Points		      [-35, 0]
       DstBlock		      "Sum7"
       DstPort		      2
     }
     Line {
       SrcBlock		      "k_eq"
       SrcPort		      1
+      Points		      [0, 0]
       DstBlock		      "Sum7"
       DstPort		      1
     }
     Line {
       SrcBlock		      "Sum7"
       SrcPort		      1
-      Points		      [-70, 0]
+      Points		      [0, 0; -45, 0]
       Branch {
 	DstBlock		"Sum4"
 	DstPort			3
@@ -1412,39 +1385,43 @@ Model {
     Line {
       SrcBlock		      "reduction ratio1"
       SrcPort		      1
+      Points		      [0, 0]
       DstBlock		      "L_CL"
       DstPort		      1
     }
     Line {
       SrcBlock		      "k_op"
       SrcPort		      1
-      Points		      [-150, 0; 0, 115]
+      Points		      [-85, 0; 0, 95]
       DstBlock		      "Sum4"
       DstPort		      2
     }
     Line {
       SrcBlock		      "b_op"
       SrcPort		      1
-      Points		      [-120, 0]
+      Points		      [-55, 0]
       DstBlock		      "Sum4"
       DstPort		      1
     }
     Line {
       SrcBlock		      "Integrator2"
       SrcPort		      1
-      Points		      [0, 0; 10, 0]
+      Points		      [10, 0]
       Branch {
+	Points			[90, 0]
 	DstBlock		"Integrator"
 	DstPort			1
       }
       Branch {
+	Labels			[1, 0]
 	Points			[0, 0]
 	Branch {
+	  Points		  [0, 0]
 	  DstBlock		  "Sum6"
 	  DstPort		  1
 	}
 	Branch {
-	  Points		  [0, -70]
+	  Points		  [0, 0; 0, -50]
 	  DstBlock		  "b_op"
 	  DstPort		  1
 	}
@@ -1457,62 +1434,67 @@ Model {
     }
     Annotation {
       Name		      "x_2"
-      Position		      [1029, 146]
+      Position		      [919, 146]
       UseDisplayTextAsClickCallback off
     }
     Annotation {
       Name		      "Delta x"
-      Position		      [985, 212]
+      Position		      [875, 212]
       UseDisplayTextAsClickCallback off
     }
     Annotation {
       Name		      "x_1"
-      Position		      [1149, 381]
+      Position		      [969, 356]
       UseDisplayTextAsClickCallback off
     }
     Annotation {
       Name		      "dtheta_m / dt"
-      Position		      [815, 403]
+      Position		      [730, 403]
       UseDisplayTextAsClickCallback off
     }
     Annotation {
       Name		      "theta_m"
-      Position		      [962, 402]
+      Position		      [852, 402]
       UseDisplayTextAsClickCallback off
     }
     Annotation {
       Name		      "back_emf"
-      Position		      [496, 471]
+      Position		      [436, 461]
       UseDisplayTextAsClickCallback off
     }
     Annotation {
       Name		      "V_a"
-      Position		      [415, 407]
+      Position		      [375, 407]
       UseDisplayTextAsClickCallback off
     }
     Annotation {
       Name		      "V_ardu"
-      Position		      [281, 405]
+      Position		      [276, 405]
       UseDisplayTextAsClickCallback off
     }
     Annotation {
       Name		      "Delta x"
-      Position		      [123, 514]
+      Position		      [138, 494]
       UseDisplayTextAsClickCallback off
     }
     Annotation {
       Name		      "theta"
-      Position		      [1052, 402]
+      Position		      [922, 407]
       UseDisplayTextAsClickCallback off
     }
     Annotation {
       Name		      "dx_2 / dt"
-      Position		      [916, 141]
+      Position		      [796, 146]
       UseDisplayTextAsClickCallback off
     }
     Annotation {
       Name		      "i_a"
-      Position		      [578, 405]
+      Position		      [513, 405]
+      UseDisplayTextAsClickCallback off
+    }
+    Annotation {
+      Name		      "T_m"
+      Position		      [572, 407]
       UseDisplayTextAsClickCallback off
     }
   }
