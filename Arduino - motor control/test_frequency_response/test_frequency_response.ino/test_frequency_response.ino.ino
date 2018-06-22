@@ -155,7 +155,8 @@ char* mystrcat( char* dest, char* src )
 }
 
 int sine2dist(int sine){
-  return (((sine / 4) * (MAX_DISPLACEMENT_UM / 15) / 16) * 15) / 16;
+  return (((sine / 4) * (MAX_DISPLACEMENT_UM / 15) / 16) * 15) / 16; 
+  // sine / 1024 * MAX_DISPLACEMENT_UM had to be rewritten due to overflow
 }
 
 int sensor2dist(int sensor_value, int min_val, int max_val) {
