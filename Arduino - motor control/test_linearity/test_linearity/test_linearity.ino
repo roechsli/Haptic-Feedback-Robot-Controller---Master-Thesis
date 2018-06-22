@@ -111,7 +111,7 @@ void loop() {
     pwmValueRightSym = output2pwm_sym(motor_output_right, RIGHT_HAND_AMPLIFIER_GAIN);
 
   }
-  analogWrite(motorPinLowGain, pwmValueLeftSym);//pwmValueLeftSym
+  analogWrite(motorPinLowGain, 230);//pwmValueLeftSym
   analogWrite(motorPinHighGain, pwmValueRightSym); //pwmValueRightSym
 
 /*

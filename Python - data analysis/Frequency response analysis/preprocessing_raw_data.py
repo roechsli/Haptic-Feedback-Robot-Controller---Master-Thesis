@@ -10,7 +10,8 @@ Master Thesis - University of Tokyo
 """
 
 import shutil
-directory = "20180529_fra_logs/raw_data/"
+#directory = "20180529_fra_logs/raw_data/"
+directory = "20180621_fra_logs/raw_data/"
 #shutil.move( myfile + ".txt", myfile+"new" + ".txt")
 import os
 
@@ -18,7 +19,8 @@ for filename in os.listdir(directory):
     print(filename)
 
     source= open(directory + filename, "r")
-    destination= open("20180529_fra_logs/" + filename[:-4] + "_csv" + ".csv", "w")
+    #destination= open("20180529_fra_logs/" + filename[:-4] + "_csv" + ".csv", "w")
+    destination= open("20180621_fra_logs/" + filename[:-4] + "_csv" + ".csv", "w")
     count = 0
     num_lines = sum(1 for line in open(directory + filename))
     print(num_lines)

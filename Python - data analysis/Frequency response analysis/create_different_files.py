@@ -23,7 +23,7 @@ print("number of lines in file = " + str(num_lines))
 iter_len = num_lines / len(freq_vec)
 print("iter len = " + str(iter_len))
 loop = 0
-ignore_lines = 500
+ignore_lines = 1500
 
 for frequency in freq_vec:
     print(frequency)
