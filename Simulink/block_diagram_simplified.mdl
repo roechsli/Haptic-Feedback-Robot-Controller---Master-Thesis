@@ -6,7 +6,7 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.119"
+    ComputedModelVersion    "1.149"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -54,8 +54,8 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "oechslin"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Tue Jun 19 11:37:08 2018"
-  ModelVersionFormat	  "1.%<AutoIncrement:119>"
+  LastModifiedDate	  "Fri Jun 22 11:17:06 2018"
+  ModelVersionFormat	  "1.%<AutoIncrement:149>"
   ConfigurationManager	  "None"
   LinearizationMsg	  "none"
   Profile		  off
@@ -598,7 +598,7 @@ Model {
   }
   System {
     Name		    "block_diagram_simplified"
-    Location		    [16, 83, 1360, 641]
+    Location		    [20, 146, 1364, 704]
     Open		    on
     ModelBrowserVisibility  off
     ModelBrowserWidth	    200
@@ -611,7 +611,7 @@ Model {
     ReportName		    "simulink-default.rpt"
     Block {
       BlockType		      SubSystem
-      Name		      "Arduino read out"
+      Name		      "Arduino"
       Ports		      [2, 1]
       Position		      [130, 394, 255, 436]
       TreatAsAtomicUnit	      off
@@ -619,8 +619,8 @@ Model {
       RTWSystemCode	      "Auto"
       MaskHideContents	      off
       System {
-	Name			"Arduino read out"
-	Location		[358, 343, 1087, 622]
+	Name			"Arduino"
+	Location		[41, 184, 1207, 457]
 	Open			off
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
@@ -633,21 +633,21 @@ Model {
 	Block {
 	  BlockType		  Inport
 	  Name			  "Delta x voltage_ref"
-	  Position		  [35, 123, 65, 137]
+	  Position		  [70, 123, 100, 137]
 	  IconDisplay		  "Port number"
 	}
 	Block {
 	  BlockType		  Inport
 	  Name			  "Delta x"
-	  Position		  [35, 208, 65, 222]
+	  Position		  [70, 183, 100, 197]
 	  Port			  "2"
 	  IconDisplay		  "Port number"
 	}
 	Block {
 	  BlockType		  Gain
-	  Name			  "K_PID2Va"
-	  Position		  [410, 115, 440, 145]
-	  Gain			  "K_PID2Va"
+	  Name			  "K_PID2Vardu"
+	  Position		  [530, 115, 560, 145]
+	  Gain			  "K_PID2Vardu"
 	  ParameterDataTypeMode	  "Inherit via internal rule"
 	  OutDataTypeMode	  "Inherit via internal rule"
 	  SaturateOnIntegerOverflow off
@@ -655,148 +655,35 @@ Model {
 	Block {
 	  BlockType		  Gain
 	  Name			  "K_V2dist"
-	  Position		  [130, 115, 160, 145]
+	  Position		  [155, 115, 185, 145]
 	  Gain			  "K_V2dist"
 	  ParameterDataTypeMode	  "Inherit via internal rule"
 	  OutDataTypeMode	  "Inherit via internal rule"
 	  SaturateOnIntegerOverflow off
 	}
 	Block {
-	  BlockType		  SubSystem
-	  Name			  "K_Va2Vardu\n"
-	  Ports			  [1, 1]
-	  Position		  [475, 109, 575, 151]
-	  NamePlacement		  "alternate"
-	  ShowName		  off
-	  TreatAsAtomicUnit	  off
-	  MinAlgLoopOccurrences	  off
-	  RTWSystemCode		  "Auto"
-	  MaskHideContents	  off
-	  System {
-	    Name		    "K_Va2Vardu\n"
-	    Location		    [430, 494, 928, 794]
-	    Open		    off
-	    ModelBrowserVisibility  off
-	    ModelBrowserWidth	    200
-	    ScreenColor		    "white"
-	    PaperOrientation	    "landscape"
-	    PaperPositionMode	    "auto"
-	    PaperType		    "usletter"
-	    PaperUnits		    "inches"
-	    ZoomFactor		    "100"
-	    Block {
-	      BlockType		      Inport
-	      Name		      "Va_des"
-	      Position		      [110, 103, 140, 117]
-	      IconDisplay	      "Port number"
-	    }
-	    Block {
-	      BlockType		      Gain
-	      Name		      "K_ampl"
-	      Position		      [255, 95, 285, 125]
-	      Gain		      "1/K_ampl"
-	      ParameterDataTypeMode   "Inherit via internal rule"
-	      OutDataTypeMode	      "Inherit via internal rule"
-	      SaturateOnIntegerOverflow	off
-	    }
-	    Block {
-	      BlockType		      Sum
-	      Name		      "Sum"
-	      Ports		      [2, 1]
-	      Position		      [195, 100, 215, 120]
-	      ShowName		      off
-	      IconShape		      "round"
-	      Inputs		      "++|"
-	      InputSameDT	      off
-	      OutDataTypeMode	      "Inherit via internal rule"
-	      SaturateOnIntegerOverflow	off
-	    }
-	    Block {
-	      BlockType		      Constant
-	      Name		      "V_offset"
-	      Position		      [190, 15, 220, 45]
-	      Orientation	      "down"
-	      NamePlacement	      "alternate"
-	      Value		      "-V_offset"
-	    }
-	    Block {
-	      BlockType		      Outport
-	      Name		      "V_ardu"
-	      Position		      [360, 103, 390, 117]
-	      IconDisplay	      "Port number"
-	      BusOutputAsStruct	      off
-	    }
-	    Line {
-	      SrcBlock		      "V_offset"
-	      SrcPort		      1
-	      DstBlock		      "Sum"
-	      DstPort		      1
-	    }
-	    Line {
-	      SrcBlock		      "Va_des"
-	      SrcPort		      1
-	      DstBlock		      "Sum"
-	      DstPort		      2
-	    }
-	    Line {
-	      SrcBlock		      "Sum"
-	      SrcPort		      1
-	      DstBlock		      "K_ampl"
-	      DstPort		      1
-	    }
-	    Line {
-	      SrcBlock		      "K_ampl"
-	      SrcPort		      1
-	      DstBlock		      "V_ardu"
-	      DstPort		      1
-	    }
-	  }
-	}
-	Block {
 	  BlockType		  Reference
 	  Name			  "PID Controller"
 	  Ports			  [1, 1]
-	  Position		  [335, 115, 365, 145]
+	  Position		  [400, 115, 430, 145]
 	  SourceBlock		  "simulink_extras/Additional\nLinear/PID Cont"
 "roller"
 	  SourceType		  "PID Controller"
 	  ShowPortLabels	  on
-	  P			  "1"
+	  P			  "0.2"
 	  I			  "0"
 	  D			  "0"
 	}
 	Block {
 	  BlockType		  Scope
-	  Name			  "PID val"
-	  Ports			  [1]
-	  Position		  [390, 54, 420, 86]
-	  Floating		  off
-	  Location		  [751, 277, 1160, 648]
-	  Open			  off
-	  NumInputPorts		  "1"
-	  ZoomMode		  "xonly"
-	  List {
-	    ListType		    AxesTitles
-	    axes1		    "%<SignalLabel>"
-	  }
-	  TimeRange		  "10"
-	  YMin			  "-20"
-	  YMax			  "20"
-	  SaveName		  "ScopeData16"
-	  DataFormat		  "StructureWithTime"
-	  LimitDataPoints	  off
-	  SampleTime		  "0"
-	}
-	Block {
-	  BlockType		  Scope
 	  Name			  "Scope1"
 	  Ports			  [3]
-	  Position		  [635, 18, 665, 52]
+	  Position		  [600, 18, 630, 52]
 	  Floating		  off
-	  Location		  [1060, 295, 1587, 858]
-	  Open			  off
+	  Location		  [835, 113, 1362, 719]
+	  Open			  on
 	  NumInputPorts		  "3"
-	  ZoomMode		  "xonly"
+	  ZoomMode		  "yonly"
 	  List {
 	    ListType		    AxesTitles
 	    axes1		    "%<SignalLabel>"
@@ -804,8 +691,8 @@ Model {
 	    axes3		    "%<SignalLabel>"
 	  }
 	  TimeRange		  "5"
-	  YMin			  "-4.06576e-020~-5e-005~-2.5"
-	  YMax			  "0.00075~0.0005~0"
+	  YMin			  "-4.06576e-020~-0.0003~-2.5"
+	  YMax			  "0.00075~0~0"
 	  SaveName		  "ScopeData2"
 	  DataFormat		  "StructureWithTime"
 	  LimitDataPoints	  off
@@ -815,7 +702,7 @@ Model {
 	  BlockType		  Sum
 	  Name			  "Sum"
 	  Ports			  [2, 1]
-	  Position		  [280, 120, 300, 140]
+	  Position		  [290, 120, 310, 140]
 	  ShowName		  off
 	  IconShape		  "round"
 	  Inputs		  "|+-"
@@ -824,31 +711,30 @@ Model {
 	  SaturateOnIntegerOverflow off
 	}
 	Block {
-	  BlockType		  Scope
-	  Name			  "Va des"
-	  Ports			  [1]
-	  Position		  [495, 194, 525, 226]
-	  Floating		  off
-	  Location		  [751, 277, 1160, 648]
-	  Open			  off
-	  NumInputPorts		  "1"
-	  ZoomMode		  "xonly"
-	  List {
-	    ListType		    AxesTitles
-	    axes1		    "%<SignalLabel>"
-	  }
-	  TimeRange		  "10"
-	  YMin			  "-20"
-	  YMax			  "20"
-	  SaveName		  "ScopeData17"
-	  DataFormat		  "StructureWithTime"
-	  LimitDataPoints	  off
-	  SampleTime		  "0"
+	  BlockType		  Sum
+	  Name			  "Sum1"
+	  Ports			  [2, 1]
+	  Position		  [465, 120, 485, 140]
+	  ShowName		  off
+	  IconShape		  "round"
+	  Inputs		  "|++"
+	  InputSameDT		  off
+	  OutDataTypeMode	  "Inherit via internal rule"
+	  SaturateOnIntegerOverflow off
+	}
+	Block {
+	  BlockType		  Constant
+	  Name			  "bit_offset"
+	  Position		  [460, 175, 490, 205]
+	  Orientation		  "up"
+	  NamePlacement		  "alternate"
+	  Value			  "bit_offset"
 	}
 	Block {
 	  BlockType		  Gain
-	  Name			  "minus1"
-	  Position		  [130, 200, 160, 230]
+	  Name			  "um_gain"
+	  Position		  [335, 115, 365, 145]
+	  Gain			  "um_gain"
 	  ParameterDataTypeMode	  "Inherit via internal rule"
 	  OutDataTypeMode	  "Inherit via internal rule"
 	  SaturateOnIntegerOverflow off
@@ -856,7 +742,7 @@ Model {
 	Block {
 	  BlockType		  Outport
 	  Name			  "V_ardu"
-	  Position		  [625, 123, 655, 137]
+	  Position		  [615, 123, 645, 137]
 	  IconDisplay		  "Port number"
 	  BusOutputAsStruct	  off
 	}
@@ -869,21 +755,8 @@ Model {
 	Line {
 	  SrcBlock		  "Sum"
 	  SrcPort		  1
-	  DstBlock		  "PID Controller"
+	  DstBlock		  "um_gain"
 	  DstPort		  1
-	}
-	Line {
-	  SrcBlock		  "PID Controller"
-	  SrcPort		  1
-	  Points		  [5, 0]
-	  Branch {
-	    DstBlock		    "K_PID2Va"
-	    DstPort		    1
-	  }
-	  Branch {
-	    DstBlock		    "PID val"
-	    DstPort		    1
-	  }
 	}
 	Line {
 	  SrcBlock		  "K_V2dist"
@@ -900,28 +773,38 @@ Model {
 	  }
 	}
 	Line {
-	  SrcBlock		  "K_Va2Vardu\n"
-	  SrcPort		  1
-	  DstBlock		  "V_ardu"
-	  DstPort		  1
-	}
-	Line {
 	  SrcBlock		  "Delta x"
 	  SrcPort		  1
-	  DstBlock		  "minus1"
+	  Points		  [0, 0; 170, 0]
+	  Branch {
+	    Points		    [25, 0]
+	    DstBlock		    "Sum"
+	    DstPort		    2
+	  }
+	  Branch {
+	    Points		    [0, -155]
+	    DstBlock		    "Scope1"
+	    DstPort		    2
+	  }
+	}
+	Line {
+	  SrcBlock		  "PID Controller"
+	  SrcPort		  1
+	  DstBlock		  "Sum1"
 	  DstPort		  1
 	}
 	Line {
-	  SrcBlock		  "K_PID2Va"
+	  SrcBlock		  "um_gain"
 	  SrcPort		  1
-	  Points		  [0, 0]
+	  DstBlock		  "PID Controller"
+	  DstPort		  1
+	}
+	Line {
+	  SrcBlock		  "K_PID2Vardu"
+	  SrcPort		  1
+	  Points		  [10, 0]
 	  Branch {
-	    DstBlock		    "K_Va2Vardu\n"
-	    DstPort		    1
-	  }
-	  Branch {
-	    Points		    [0, 80]
-	    DstBlock		    "Va des"
+	    DstBlock		    "V_ardu"
 	    DstPort		    1
 	  }
 	  Branch {
@@ -931,19 +814,22 @@ Model {
 	  }
 	}
 	Line {
-	  SrcBlock		  "minus1"
+	  SrcBlock		  "Sum1"
 	  SrcPort		  1
-	  Points		  [80, 0]
-	  Branch {
-	    Points		    [45, 0]
-	    DstBlock		    "Sum"
-	    DstPort		    2
-	  }
-	  Branch {
-	    Points		    [0, -180]
-	    DstBlock		    "Scope1"
-	    DstPort		    2
-	  }
+	  Points		  [25, 0]
+	  DstBlock		  "K_PID2Vardu"
+	  DstPort		  1
+	}
+	Line {
+	  SrcBlock		  "bit_offset"
+	  SrcPort		  1
+	  DstBlock		  "Sum1"
+	  DstPort		  2
+	}
+	Annotation {
+	  Name			  "DX ref"
+	  Position		  [230, 121]
+	  UseDisplayTextAsClickCallback	off
 	}
       }
     }
@@ -967,95 +853,6 @@ Model {
       Ports		      [1, 1]
       Position		      [830, 140, 860, 170]
       IgnoreLimit	      off
-    }
-    Block {
-      BlockType		      SubSystem
-      Name		      "K_V_ardu2V_a\n"
-      Ports		      [1, 1]
-      Position		      [320, 393, 385, 437]
-      TreatAsAtomicUnit	      off
-      MinAlgLoopOccurrences   off
-      RTWSystemCode	      "Auto"
-      MaskHideContents	      off
-      System {
-	Name			"K_V_ardu2V_a\n"
-	Location		[430, 494, 928, 794]
-	Open			off
-	ModelBrowserVisibility	off
-	ModelBrowserWidth	200
-	ScreenColor		"white"
-	PaperOrientation	"landscape"
-	PaperPositionMode	"auto"
-	PaperType		"usletter"
-	PaperUnits		"inches"
-	ZoomFactor		"100"
-	Block {
-	  BlockType		  Inport
-	  Name			  "V_ardu"
-	  Position		  [110, 103, 140, 117]
-	  IconDisplay		  "Port number"
-	}
-	Block {
-	  BlockType		  Gain
-	  Name			  "K_ampl"
-	  Position		  [180, 95, 210, 125]
-	  Gain			  "K_ampl"
-	  ParameterDataTypeMode	  "Inherit via internal rule"
-	  OutDataTypeMode	  "Inherit via internal rule"
-	  SaturateOnIntegerOverflow off
-	}
-	Block {
-	  BlockType		  Sum
-	  Name			  "Sum"
-	  Ports			  [2, 1]
-	  Position		  [245, 100, 265, 120]
-	  ShowName		  off
-	  IconShape		  "round"
-	  Inputs		  "++|"
-	  InputSameDT		  off
-	  OutDataTypeMode	  "Inherit via internal rule"
-	  SaturateOnIntegerOverflow off
-	}
-	Block {
-	  BlockType		  Constant
-	  Name			  "V_offset"
-	  Position		  [240, 15, 270, 45]
-	  Orientation		  "down"
-	  NamePlacement		  "alternate"
-	  Value			  "V_offset"
-	}
-	Block {
-	  BlockType		  Outport
-	  Name			  "V_a"
-	  Position		  [360, 103, 390, 117]
-	  IconDisplay		  "Port number"
-	  BusOutputAsStruct	  off
-	}
-	Line {
-	  SrcBlock		  "V_offset"
-	  SrcPort		  1
-	  DstBlock		  "Sum"
-	  DstPort		  1
-	}
-	Line {
-	  SrcBlock		  "V_ardu"
-	  SrcPort		  1
-	  DstBlock		  "K_ampl"
-	  DstPort		  1
-	}
-	Line {
-	  SrcBlock		  "K_ampl"
-	  SrcPort		  1
-	  DstBlock		  "Sum"
-	  DstPort		  2
-	}
-	Line {
-	  SrcBlock		  "Sum"
-	  SrcPort		  1
-	  DstBlock		  "V_a"
-	  DstPort		  1
-	}
-      }
     }
     Block {
       BlockType		      Gain
@@ -1110,9 +907,10 @@ Model {
       BlockType		      Sin
       Name		      "Sine Wave"
       Ports		      [0, 1]
-      Position		      [15, 390, 45, 420]
+      Position		      [45, 390, 75, 420]
       SineType		      "Time based"
-      Bias		      "1"
+      Amplitude		      "0.3"
+      Bias		      "0.35"
       Frequency		      "freq * 2*3.1416"
       SampleTime	      "0"
     }
@@ -1213,6 +1011,95 @@ Model {
       Denominator	      "[J_T 0]"
     }
     Block {
+      BlockType		      SubSystem
+      Name		      "amplifier\n"
+      Ports		      [1, 1]
+      Position		      [330, 393, 395, 437]
+      TreatAsAtomicUnit	      off
+      MinAlgLoopOccurrences   off
+      RTWSystemCode	      "Auto"
+      MaskHideContents	      off
+      System {
+	Name			"amplifier\n"
+	Location		[430, 494, 928, 794]
+	Open			on
+	ModelBrowserVisibility	off
+	ModelBrowserWidth	200
+	ScreenColor		"white"
+	PaperOrientation	"landscape"
+	PaperPositionMode	"auto"
+	PaperType		"usletter"
+	PaperUnits		"inches"
+	ZoomFactor		"100"
+	Block {
+	  BlockType		  Inport
+	  Name			  "V_ardu"
+	  Position		  [110, 103, 140, 117]
+	  IconDisplay		  "Port number"
+	}
+	Block {
+	  BlockType		  Gain
+	  Name			  "K_ampl"
+	  Position		  [180, 95, 210, 125]
+	  Gain			  "K_ampl"
+	  ParameterDataTypeMode	  "Inherit via internal rule"
+	  OutDataTypeMode	  "Inherit via internal rule"
+	  SaturateOnIntegerOverflow off
+	}
+	Block {
+	  BlockType		  Sum
+	  Name			  "Sum"
+	  Ports			  [2, 1]
+	  Position		  [245, 100, 265, 120]
+	  ShowName		  off
+	  IconShape		  "round"
+	  Inputs		  "++|"
+	  InputSameDT		  off
+	  OutDataTypeMode	  "Inherit via internal rule"
+	  SaturateOnIntegerOverflow off
+	}
+	Block {
+	  BlockType		  Constant
+	  Name			  "V_offset"
+	  Position		  [240, 15, 270, 45]
+	  Orientation		  "down"
+	  NamePlacement		  "alternate"
+	  Value			  "V_offset"
+	}
+	Block {
+	  BlockType		  Outport
+	  Name			  "V_a"
+	  Position		  [305, 103, 335, 117]
+	  IconDisplay		  "Port number"
+	  BusOutputAsStruct	  off
+	}
+	Line {
+	  SrcBlock		  "V_offset"
+	  SrcPort		  1
+	  DstBlock		  "Sum"
+	  DstPort		  1
+	}
+	Line {
+	  SrcBlock		  "V_ardu"
+	  SrcPort		  1
+	  DstBlock		  "K_ampl"
+	  DstPort		  1
+	}
+	Line {
+	  SrcBlock		  "K_ampl"
+	  SrcPort		  1
+	  DstBlock		  "Sum"
+	  DstPort		  2
+	}
+	Line {
+	  SrcBlock		  "Sum"
+	  SrcPort		  1
+	  DstBlock		  "V_a"
+	  DstPort		  1
+	}
+      }
+    }
+    Block {
       BlockType		      Gain
       Name		      "b_op"
       Position		      [805, 70, 835, 100]
@@ -1301,17 +1188,46 @@ Model {
       OutDataTypeMode	      "Inherit via internal rule"
       SaturateOnIntegerOverflow	off
     }
+    Block {
+      BlockType		      Scope
+      Name		      "test"
+      Ports		      [1]
+      Position		      [465, 309, 495, 341]
+      Floating		      off
+      Location		      [784, 388, 1193, 759]
+      Open		      off
+      NumInputPorts	      "1"
+      ZoomMode		      "xonly"
+      List {
+	ListType		AxesTitles
+	axes1			"%<SignalLabel>"
+      }
+      TimeRange		      "10"
+      YMin		      "-1000"
+      SaveName		      "ScopeData3"
+      DataFormat	      "StructureWithTime"
+      LimitDataPoints	      off
+      SampleTime	      "0"
+    }
     Line {
-      SrcBlock		      "Arduino read out"
+      SrcBlock		      "Arduino"
       SrcPort		      1
-      DstBlock		      "K_V_ardu2V_a\n"
+      DstBlock		      "amplifier\n"
       DstPort		      1
     }
     Line {
-      SrcBlock		      "K_V_ardu2V_a\n"
+      SrcBlock		      "amplifier\n"
       SrcPort		      1
-      DstBlock		      "Sum2"
-      DstPort		      1
+      Points		      [30, 0]
+      Branch {
+	DstBlock		"Sum2"
+	DstPort			1
+      }
+      Branch {
+	Points			[0, -90]
+	DstBlock		"test"
+	DstPort			1
+      }
     }
     Line {
       SrcBlock		      "Sum2"
@@ -1369,7 +1285,7 @@ Model {
 	Branch {
 	  Labels		  [1, 0]
 	  Points		  [0, 305; -865, 0; 0, -100]
-	  DstBlock		  "Arduino read out"
+	  DstBlock		  "Arduino"
 	  DstPort		  2
 	}
 	Branch {
@@ -1433,7 +1349,7 @@ Model {
     Line {
       SrcBlock		      "Sine Wave"
       SrcPort		      1
-      DstBlock		      "Arduino read out"
+      DstBlock		      "Arduino"
       DstPort		      1
     }
     Line {
