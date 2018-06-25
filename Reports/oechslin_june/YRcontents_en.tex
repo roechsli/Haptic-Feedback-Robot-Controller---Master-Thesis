@@ -220,8 +220,15 @@
 		\label{fig:bode_sp_damp400}
 	\end{figure}
 	
-	As it can be seen in figure \ref{fig:bode_sp_damp400} there is a constant gain of $1$ for lower frequencies and a slight resonance top becomes visible around $16.6$Hz. The phase shift is of around $-140^\circ$ for the frequencies of interest. Due to the setup constraints, the analytical results of higher frequencies have not been considered.
+	As it can be seen in figure \ref{fig:bode_sp_damp400} there is a constant gain of $1$ for lower frequencies and a slight resonance top becomes visible around $20$Hz. The phase shift is of around $-140^\circ$ for the frequencies of interest. Due to the setup constraints, the analytical results of higher frequencies have not been considered.
 	
+	\subsection{Motor Comparison}
+	When one goes back to the experimental results where the two motors with different reduction gear ratio have been compared, %TODO make reference here, put up to date photos
+	one canconclude that the motor with the higher reduction ratio has a higher output force with a tradeoff of speed. Since one of the critical elements of the SEA system is its actuation speed, it is essential to push the boundaries as far as possible. However, the high gain frequency response in the experimental setup starts to drop at much higher frequencies than the actual operating frequency. This is namely determined by the slow communication speed between the robot and the control device.\\
+	Due to the fact that even with the stronger reduction gear motor, the springs cannot be compressed to their limits, a higher possible output force has been favoured and therefore the stronger motor seems more appropriate.
+	
+	\subsection{Tracking Behavior}
+	%show picture, explain problem of steady state offset, find PID values
 	
 	
 		
