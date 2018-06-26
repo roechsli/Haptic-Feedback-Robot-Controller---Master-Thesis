@@ -22,6 +22,7 @@
 int motorPinLowGain = 3;    // Motor connected to digital pin 3 (PWM)
 int motorPinHighGain = 11;    // Motor connected to digital pin 11 (PWM)
 int testPin = 13; // Used for testing the speed of Arduino
+int controlPin = 6; // Used for checking the distance
 
 int sine_signal = 0;
 int photo_value_left_raw = 0;
@@ -35,16 +36,16 @@ int RIGHT_HAND_AMPLIFIER_GAIN = 10;
 const int OUTPUT_RANGE_L = 2 * MOTOR_MAX_VOLTAGE * OUTPUT_PER_VOLT / LEFT_HAND_AMPLIFIER_GAIN;
 const int OUTPUT_RANGE_R = 2 * MOTOR_MAX_VOLTAGE * OUTPUT_PER_VOLT / RIGHT_HAND_AMPLIFIER_GAIN;
 
-int error_left = 0;
-int last_error_left = 0;
+float error_left = 0;
+float last_error_left = 0;
 float sum_error_left = 0;
-int error_right = 0;
-int last_error_right = 0;
+float error_right = 0;
+float last_error_right = 0;
 float sum_error_right = 0;
-const int PHOTO_MIN_LEFT = 650;
-const int PHOTO_MAX_LEFT = 830;
-const int PHOTO_MIN_RIGHT = 700;
-const int PHOTO_MAX_RIGHT = 870;
+const int PHOTO_MIN_LEFT = 640;//650;
+const int PHOTO_MAX_LEFT = 840;//830;
+const int PHOTO_MIN_RIGHT = 690;//700;
+const int PHOTO_MAX_RIGHT = 880;//870;
 const int MAX_DISPLACEMENT_UM = 1800; // [um], has been measured
 
 char buf[16];
@@ -58,7 +59,8 @@ unsigned long TIME_BEGIN = 0;
 unsigned long TIME_NOW = 0;
 unsigned long TIME_CYCLE = 1000; // this is the time_step in [us] that determines the running frequency
 
-
+//trial:
+int test_valpid = 0;
 void setup() {
   Serial.begin(250000);
   pinMode(motorPinLowGain, OUTPUT);
@@ -70,6 +72,9 @@ void setup() {
   pinMode(joystick_right_pin, INPUT);
   pinMode(photo_right_pin, INPUT);
   pinMode(testPin, OUTPUT);
+  pinMode(controlPin, OUTPUT);
+
+  
 
   TCCR2B = TCCR2B & B11111000 | B00000001; // for PWM frequency of 31372.55 Hz
 
@@ -92,9 +97,9 @@ void loop() {
   int pwmValueLeftSym = 128;
   int pwmValueRightSym = 128;
 
-  float k_p = 0.2; // k_p = 1; and k_i = 0.01; works as well
-  float k_i = 0.0;
-  float k_d = 0.0;
+  float k_p = 1; // k_p = 1; and k_i = 0.01; k_d = 0.1; works as well
+  float k_i = 0.008;
+  float k_d = 5;
 
   // ignore Serial and read sine wave signal as reference
   dist_ref = sine2dist(sine_signal);
@@ -140,9 +145,10 @@ void loop() {
   Serial.print("pwmValueRightSym = ");
   Serial.println(pwmValueRightSym);*/
   
-
   while ((micros() - TIME_BEGIN) < TIME_CYCLE) {  } // do nothing until we reach the time step of TIME_CYCLE
   digitalWrite(testPin, LOW); //instructions in between take roughly 640 microseconds
+  analogWrite(controlPin, 255-map(photo_value_right_raw,PHOTO_MIN_RIGHT, PHOTO_MAX_RIGHT, 0, 255)); 
+  //analogWrite(controlPin, 255-map(photo_value_left_raw,PHOTO_MIN_LEFT, PHOTO_MAX_LEFT, 0, 255));  
 }
 
 
@@ -164,6 +170,10 @@ int sensor2dist(int sensor_value, int min_val, int max_val) {
   return MAX_DISPLACEMENT_UM - (sensor_value - min_val) * (MAX_DISPLACEMENT_UM /15) / (max_val - min_val) * 15;
 }
 
+int sensor2(int dist_value, int min_val, int max_val) {
+  // maps the measured value to the distance (assumed linearity) in micrometers
+  return (MAX_DISPLACEMENT_UM - dist_value) * (max_val - min_val) / MAX_DISPLACEMENT_UM + min_val;
+}
 
 int limit_value(int value, int lower, int upper) {
   if (value < lower) {
