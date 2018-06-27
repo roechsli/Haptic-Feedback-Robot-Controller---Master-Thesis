@@ -4,6 +4,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import pickle
+from scipy import signal
 
 from pylab import *
 from math import atan2
@@ -14,12 +15,19 @@ SHORT_CUT = True
 only_this_file = "f"  # change this to "f" if all frequencies shall be tested, otherwise "f2_csv"
 
 INTMAX = 65535
+"""
 PHOTO_MIN_LEFT = 650
 PHOTO_MAX_LEFT = 830
 PHOTO_MIN_RIGHT = 700
 PHOTO_MAX_RIGHT = 870
 MAX_DISPLACEMENT_UM = 1800
-directory = "20180621_fra_logs/"  # TODO change this if new data shall be analyzed
+"""
+PHOTO_MIN_LEFT = 640
+PHOTO_MAX_LEFT = 840
+PHOTO_MIN_RIGHT = 690
+PHOTO_MAX_RIGHT = 880
+MAX_DISPLACEMENT_UM = 1800
+directory = "20180626_fra_logs_pid_impl/"  # TODO change this if new data shall be analyzed
 
 def get_freq_from_filename(filename):
     if filename[0] == "f" and filename[-8:] == "_csv.csv":
@@ -57,29 +65,26 @@ freq_vec = []
 for file in os.listdir(directory):
     if SHORT_CUT:  # TODO change this, if you want to skip all the calculation
         freq_vec = [1.25, 1.6, 100, 10, 12.6, 16, 1, 2.5, 20, 25, 2, 3.17, 32, 40, 4, 50, 5, 6.3, 63, 80, 8]
-        amplitude_factor_l = [0.42398913976097446, 0.4282153912079033, 0.12378284313044466, 0.711221069409896,
-                               0.7225816897317351, 0.7646527825863285, 0.40112267357697934, 0.42743202148716863,
-                               0.9914095813817145, 1.2222055794324236, 0.4284915596303108, 0.42862587415289155,
-                               1.6182794339223205, 1.264568245831212, 0.4311669676245879, 0.5462780686764698,
-                               0.44415703547915164, 0.5944384653289748, 0.2708103187351025, 0.170468881007046,
-                               0.6476744573446083]
-        phasediff_l = [-29.67419316918162, 329.3954574722484, 151.77595893442785, -34.1606097854003,
-                       -37.606370641125956, -40.36468813694745, -30.36855317966672, -31.3116501593979,
-                       -47.26522334530678, 306.8163968335256, -30.42922969682391, -32.857491878311464,
-                       -97.71371390960005, 201.5446736191579, -33.54162038250308, 190.83991403280896,
-                       -34.409877680170055, 329.51955549109414, -178.44505217712023, -191.64710085535776,
-                       -31.420544562906162]
-        amplitude_factor_r = [0.682529120529401, 0.6881751766721432, 0.0022154853818361154, 0.9234556155923191,
-                              0.8826716111054062, 0.6589189142362378, 0.6824321178608364, 0.7149014578498121,
-                              0.4682488094473188, 0.2899691163444707, 0.6985377868987559, 0.7410563355373039,
-                              0.14053263238672217, 0.05085633307181245, 0.7602497656273546, 0.0258420423441291,
-                              0.8079029768733247, 0.8547492932126076, 0.011593031609452593, 0.005914752729396196,
-                              0.8929581931654754]
-        phasediff_r = [-20.266230280843104, 338.87333291671956, 104.73683443996734, -68.027983641311, -93.7109757424358,
-                       238.84336015384935, -19.797341054607188, -24.148441334186202, -140.83812403663828,
-                       201.01499505958088, -22.34252685864527, -26.849042440608443, 191.0566801899678,
-                       178.3109527558047, -30.078416184330564, 172.97924637960566, -35.34272693855357,
-                       317.35253460336855, -176.6359639822056, -204.16704226303582, -52.8252198134289]
+        amplitude_factor_l = [1.0052839216458749, 0.9991405271561531, 0.14759776628322555, 1.0465191593492096, 1.0880642215979706,
+         1.1522190802910368, 1.0046439550041986, 0.9932151356657599, 1.2600947273486607, 1.2842520641164805,
+         1.0020329809714894, 1.0014693485131245, 1.0150402929231659, 0.7383722966339016, 1.0079895873881333,
+         0.4908444452676763, 0.9951146354026693, 1.0162473027018177, 0.3248091089212081, 0.21395810442150892,
+         1.0190435893115852]
+        phasediff_l = [-2.075830318502497, -2.8844488303323885, 169.60207402532274, -12.596392094963633, -16.551435436977613,
+         -22.312023532948942, -2.142449369453317, -4.4456858870760385, -32.42034397864422, -58.04021679762169,
+         -3.8675024925421297, -4.9991477731368335, -88.79867703452486, 247.1661435303339, -6.019898453018541,
+         -139.14671090346013, -7.620669651037105, -8.855829105472651, 207.42648196699372, 189.67814591921086,
+         -11.574912105096871]
+        amplitude_factor_r = [1.01528252648064, 1.0061854783791677, 0.06653250415394932, 1.0902513430697414, 1.14045066153976,
+         1.2004736909239189, 1.0181444949090879, 1.0103853848652116, 1.162145265952185, 0.8688050902240192,
+         1.0054167780929026, 1.0006278159816782, 0.5739997987858684, 0.39934203430159093, 0.9952954766920439,
+         0.2651356660318484, 1.0089711572251487, 1.014906857520811, 0.1662665532311567, 0.10588404052157428,
+         1.0486193030968416]
+        phasediff_r = [-3.9462055759644983, -4.794697605862581, 170.31264264153552, -20.92739519520042, -28.56990446690955,
+         -42.04673253830194, -2.981093827020544, -6.916031863159901, -63.98332976383682, -93.45599243577922,
+         -5.522214079974674, -8.009198022882693, -115.88709982628073, 228.4711130111851, -9.51822676960225,
+         -144.62395382557736, -11.736703802647355, -14.388214287698673, 199.8738652541653, 186.94808894493073,
+         -17.185092593521006]
 
         continue
 
@@ -117,20 +122,20 @@ for file in os.listdir(directory):
     if PLOT_BOOL:
         print("plotting freq " + frequency)
         fig = plt.figure()
+        # plot left and right sensor data,zoom and save
+        plt.plot(df.iloc[:, 3], df.iloc[:, 1])
+        plt.plot(df.iloc[:, 3], df.iloc[:, 2])
         plt.plot(df.iloc[:, 3], df.iloc[:, 0] )  # plot reference
         fig.suptitle('Frequency response (' + frequency + ' Hz)')
         plt.xlabel('Time [s]')
         plt.ylabel('Compression [mm]')
-        # plot left and right sensor data,zoom and save
-        plt.plot(df.iloc[:, 3], df.iloc[:, 1])
-        plt.plot(df.iloc[:, 3], df.iloc[:, 2])
         plt.axis([2, 3.6, -0.05, 0.5])
-        plt.legend(["reference signal", "left sensor", "right sensor"])
+        plt.legend(["left sensor", "right sensor", "reference signal"])
         figure_directory = 'figs/f' + frequency
         if not os.path.exists(figure_directory):
             os.makedirs(figure_directory)
         fig.savefig(figure_directory + '/' + frequency + 'plot_zoom_fixed_time.jpg')
-        plt.axis([2, 2 + 3 / frequency_float, -0.05, 0.5])
+        plt.axis([2, 2 + 3 / frequency_float, -0.05, 0.7])
         fig.savefig(figure_directory + '/' + frequency + 'plot_zoom.jpg')
         with open(figure_directory + '/' + frequency + '_raw.pkl', "wb") as fp:
             pickle.dump(fig, fp, protocol=4)
@@ -179,9 +184,15 @@ amplitude_factor_r = 20 * np.log10(amplitude_factor_r)
 
 
 left_bode, axarr_l = plt.subplots(2, sharex=True)
-axarr_l[0].semilogx([freq_vec[x] for x in indices], [amplitude_factor_l[x] for x in indices], linewidth=5.0)
-axarr_l[0].set_title('Bode diagram - left side (reduction 33:1)', fontsize=25)
-axarr_l[1].semilogx([freq_vec[x] for x in indices], [phasediff_l[x] if phasediff_l[x] < 0 else phasediff_l[x] - 360 for x in indices], linewidth=5.0)
+left_lines = axarr_l[0].semilogx([freq_vec[x] for x in indices], [amplitude_factor_l[x] for x in indices], linewidth=5.0, label='Left side')
+axarr_l[0].set_title('Bode diagram - left side (reduction 112:1)', fontsize=25)
+"""
+right_lines = axarr_l[0].semilogx([freq_vec[x] for x in indices], [amplitude_factor_r[x] for x in indices], linewidth=5.0, label='Right side')
+axarr_l[0].legend()
+axarr_l[1].semilogx([freq_vec[x] for x in indices], [phasediff_r[x] if phasediff_r[x] < 0 else phasediff_r[x] - 360 for x in indices], linewidth=5.0, label='Right side')
+axarr_l[0].set_title('Bode diagram (reduction 112:1)', fontsize=25)
+"""
+axarr_l[1].semilogx([freq_vec[x] for x in indices], [phasediff_l[x] if phasediff_l[x] < 0 else phasediff_l[x] - 360 for x in indices], linewidth=5.0, label='Left side')
 #axarr_l[1].semilogx([freq_vec[x] for x in indices], [phasediff_l[x]  for x in indices])
 axarr_l[1].set_xlabel('Frequency [Hz]', fontsize=25)
 axarr_l[0].set_ylabel('Magnitude [dB]', fontsize=25)
@@ -190,8 +201,8 @@ axarr_l[0].tick_params(axis='x', labelsize=10)
 axarr_l[1].tick_params(axis='x', labelsize=10)
 axarr_l[0].tick_params(axis='y', labelsize=10)
 axarr_l[1].tick_params(axis='y', labelsize=10)
-axarr_l[0].set_ylim(-55,10)
-axarr_l[1].set_ylim(-270,0)
+axarr_l[0].set_ylim(-25,10)
+axarr_l[1].set_ylim(-200,0)
 axarr_l[0].grid()
 axarr_l[1].grid()
 figure_directory = 'figs/'
@@ -212,8 +223,8 @@ axarr_r[0].tick_params(axis='x', labelsize=10)
 axarr_r[1].tick_params(axis='x', labelsize=10)
 axarr_r[0].tick_params(axis='y', labelsize=10)
 axarr_r[1].tick_params(axis='y', labelsize=10)
-axarr_r[0].set_ylim(-55,10)
-axarr_r[1].set_ylim(-270,0)
+axarr_l[0].set_ylim(-25,10)
+axarr_l[1].set_ylim(-200,0)
 axarr_r[0].grid()
 axarr_r[1].grid()
 figure_directory = 'figs/'
@@ -222,3 +233,30 @@ mng.resize(*mng.window.maxsize())
 plt.show()
 right_bode.savefig(figure_directory + '/bode_right.jpg')
 
+
+#======================= trial with bode plot
+#sys = signal.TransferFunction([9.6e10, -2.8e11, 2.7e11, -8.6e10, 0, 0, 0, 0, 0, 0, 0], [1.9e10, -6.3e11, 7.7e11, -4.1e11, 8.3e10, -3.2e5, 0, 0, 0, 0, 0], dt=0.001)
+sys = signal.TransferFunction([9.6e10, -2.8e11, 2.7e11, -8.6e10, 0, 0], [1.9e10, -6.3e11, 7.7e11, -4.1e11, 8.3e10, -3.2e5], dt=0.001)
+w, mag, phase = sys.bode()
+comp_bode, axarr_comp = plt.subplots(2, sharex=True)
+axarr_comp[0].semilogx([freq_vec[x] for x in indices], [amplitude_factor_r[x] for x in indices], linewidth=5.0)
+axarr_comp[0].semilogx(w, mag)    # Bode magnitude plot
+axarr_comp[0].set_title('Bode diagram - comparison', fontsize=25)
+axarr_comp[1].semilogx([freq_vec[x] for x in indices], [phasediff_r[x] if phasediff_r[x] < 0 else phasediff_r[x] - 360 for x in indices], linewidth=5.0)
+#axarr_r[1].semilogx([freq_vec[x] for x in indices], [phasediff_r[x] for x in indices])
+axarr_comp[1].set_xlabel('Frequency [Hz]', fontsize=25)
+axarr_comp[0].set_ylabel('Magnitude [dB]', fontsize=25)
+axarr_comp[1].set_ylabel('Phase [deg]', fontsize=25)
+axarr_comp[0].tick_params(axis='x', labelsize=10)
+axarr_comp[1].tick_params(axis='x', labelsize=10)
+axarr_comp[0].tick_params(axis='y', labelsize=10)
+axarr_comp[1].tick_params(axis='y', labelsize=10)
+#axarr_comp[0].set_ylim(-25,10)
+#axarr_comp[1].set_ylim(-200,0)
+axarr_comp[0].grid()
+axarr_comp[1].grid()
+figure_directory = 'figs/'
+mng = plt.get_current_fig_manager()
+mng.resize(*mng.window.maxsize())
+plt.show()
+comp_bode.savefig(figure_directory + '/bode_comp.jpg')

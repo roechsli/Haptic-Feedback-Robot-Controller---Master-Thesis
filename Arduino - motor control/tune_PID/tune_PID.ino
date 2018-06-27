@@ -42,6 +42,16 @@ float sum_error_left = 0;
 float error_right = 0;
 float last_error_right = 0;
 float sum_error_right = 0;
+float dT = 0.001;
+float filter_coeff = 0.05;
+float photo_value_left_filtered = 0;
+float photo_value_right_filtered = 0;
+float last_photo_value_left_filtered = 0;
+float last_photo_value_right_filtered = 0;
+float error_left_filtered = 0;
+float error_right_filtered = 0;
+float last_error_left_filtered = 0;
+float last_error_right_filtered = 0;
 const int PHOTO_MIN_LEFT = 640;//650;
 const int PHOTO_MAX_LEFT = 840;//830;
 const int PHOTO_MIN_RIGHT = 690;//700;
@@ -97,17 +107,25 @@ void loop() {
   int pwmValueLeftSym = 128;
   int pwmValueRightSym = 128;
 
-  float k_p = 1; // k_p = 1; and k_i = 0.01; k_d = 0.1; works as well
-  float k_i = 0.008;
-  float k_d = 5;
+  float k_p = 1.6; // k_p = 0.8; and k_i = 0.01; k_d = 0.008; works as well
+  float k_i = 0.001; // k_p = 1.0; and k_i = 0.01; k_d = 0.05; works as well
+  float k_d = 0.014;
 
   // ignore Serial and read sine wave signal as reference
   dist_ref = sine2dist(sine_signal);
   error_left = dist_ref - sensor2dist(photo_value_left_raw, PHOTO_MIN_LEFT, PHOTO_MAX_LEFT);
   error_right = dist_ref - sensor2dist(photo_value_right_raw, PHOTO_MIN_RIGHT, PHOTO_MAX_RIGHT);
 
-  int des_mot_volt_left = k_p * error_left + k_i * sum_error_left + k_d * (error_left - last_error_left);
-  int des_mot_volt_right =  k_p * error_right + k_i * sum_error_right + k_d * (error_right - last_error_right);//FIXME need two different control parameters?
+  photo_value_left_filtered = last_photo_value_left_filtered * (1- filter_coeff) + photo_value_left_raw * filter_coeff;
+  photo_value_right_filtered = last_photo_value_right_filtered * (1- filter_coeff) + photo_value_right_raw * filter_coeff;
+  error_left_filtered = dist_ref - sensor2dist(photo_value_left_filtered, PHOTO_MIN_LEFT, PHOTO_MAX_LEFT);
+  error_right_filtered = dist_ref - sensor2dist(photo_value_right_filtered, PHOTO_MIN_RIGHT, PHOTO_MAX_RIGHT);
+  float derror_left = (error_left_filtered - last_error_left_filtered);
+  float derror_right = (error_right_filtered - last_error_right_filtered);
+  last_error_left_filtered = error_left_filtered;
+  last_error_right_filtered = error_right_filtered;
+  int des_mot_volt_left = k_p * error_left + k_i * sum_error_left + k_d * derror_left/dT;
+  int des_mot_volt_right =  k_p * error_right + k_i * sum_error_right + k_d * derror_right/dT;
   sum_error_left = error_left + sum_error_left;
   last_error_left = error_left;
   sum_error_right = error_right + sum_error_right;
