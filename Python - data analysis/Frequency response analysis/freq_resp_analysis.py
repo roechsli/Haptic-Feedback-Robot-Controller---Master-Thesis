@@ -233,7 +233,7 @@ mng.resize(*mng.window.maxsize())
 plt.show()
 right_bode.savefig(figure_directory + '/bode_right.jpg')
 
-
+"""
 #======================= trial with bode plot
 #sys = signal.TransferFunction([9.6e10, -2.8e11, 2.7e11, -8.6e10, 0, 0, 0, 0, 0, 0, 0], [1.9e10, -6.3e11, 7.7e11, -4.1e11, 8.3e10, -3.2e5, 0, 0, 0, 0, 0], dt=0.001)
 sys = signal.TransferFunction([9.6e10, -2.8e11, 2.7e11, -8.6e10, 0, 0], [1.9e10, -6.3e11, 7.7e11, -4.1e11, 8.3e10, -3.2e5], dt=0.001)
@@ -260,3 +260,4 @@ mng = plt.get_current_fig_manager()
 mng.resize(*mng.window.maxsize())
 plt.show()
 comp_bode.savefig(figure_directory + '/bode_comp.jpg')
+"""
