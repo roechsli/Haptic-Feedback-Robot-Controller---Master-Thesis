@@ -73,7 +73,33 @@
 		\caption{Simplifying mechanical schematic of the actuation system with the stimulator.}
 		\label{fig:mechanical_schematic}
 	\end{figure}
-	The equations of motion can be formulated with the major parameters defined in the schematic. A full explanation of all parameters can be seen in table \ref{}. The variables with subscript $1$ refer to the first mass element, the carriage in its guideway, whereas variables with subscript $2$ refer to the stimulator, the palm pad. For the motor the subscript $m$ has been used.\\ %TODO make this table
+	The equations of motion can be formulated with the major parameters defined in the schematic. A full explanation of all parameters can be seen in table \ref{tab:setup_params}. The variables with subscript $1$ refer to the first mass element, the carriage in its guideway, whereas variables with subscript $2$ refer to the stimulator, the palm pad. For the motor the subscript $m$ has been used.\\ %TODO make this table
+	
+	\begin{figure}[h!]
+		\centering
+		\begin{tabular}{|l|c|c|}%designator | explanation | unit
+			\hline
+			 Designator & Explanation & Unit \\ \hline \hline
+			$T_m$ & Motor torque & [Nm]\\ 
+			$T$ & Output torque acting on carriage& [Nm]\\
+			$\theta_m$ & Motor angle & [rad]\\
+			$\theta$ & Clamp link angle & [rad]\\  
+			$L_{CL}$ & Clamp link length & [m]\\
+			$m_{1}$ & Mass of the carriage in its guideway & [kg]\\
+			$m_{2}$ & Mass of the stimulator & [kg]\\
+			$x_{1}$ & Position of the carriage in its guideway & [m]\\
+			$x_{2}$ & Position of the stimulator & [m]\\
+			$k_{eq}$ & Equivalent spring constant & [N/m]\\
+			$b_{sp}$ & Spring damping coefficient & [Ns/m]\\
+			$n$ & Reduction gear ratio & [-]\\
+			$k_{op}$ & Spring constant of the operator & [N/m]\\
+			$b_{op}$ & Damping coefficient of the operator & [Ns/m]\\
+			$J_T$ & Total inertia of mechanical setup & [$\textit{kgm}^2$]\\
+			\hline
+		\end{tabular}
+		\caption{Setup parameters}
+		\label{tab:setup_params}
+	\end{figure}
 	
 	\subsection{Assumptions}
 	First of all, it is important to mention that the transfer function is non-linear, due to the motor angle $\theta_m$ that determines the force acting on the carriage $c_1$. As an initial approach however, this effect has been neglected. More specifically, it is assumed that $\theta \ll 1$ and $\cos{(\theta)} \frac{T_m}{L_{CL} } = F_{carr} $ becomes $\frac{T_m}{L_{CL} } \simeq F_{carr} $. Here the angle $\theta$ is the angle of the lever, pushing the carriage (ie. $\theta_m = n \theta$). \\
@@ -125,25 +151,32 @@
 		J_{T} \ddot{\theta }_m - \frac{k_{eq} L_{CL}}{n} \Delta x - \frac{b_{sp} L_{CL}}{n} (\dot{x}_2 - \dot{x}_1)  = T_m = K_{\tau} i_a
 		\label{eq:torques}
 	\end{equation}
-	In equation \ref{eq:torques} the parameter $J_{T}$ stands for the total equivalent inertia of the motor and the clamping link and $K_{\tau}$ is the proportional current torque gain constant. The moment of inertia can either be calculated as the sum of all inertias seen by the motor shaft, or measured in a simple test.\\ %TODO state what method I used, maybe compare both?
+	In equation \ref{eq:torques} the parameter $J_{T}$ stands for the total equivalent inertia of the motor and the clamping link and mass $m_1$ and $K_{\tau}$ is the proportional current torque gain constant. The moment of inertia can either be calculated as the sum of all inertias seen by the motor shaft, or measured in a simple test.\\ 
 	
-	The total inertia of the system is determined by the inertia of the rotor $J_m$, the gear inertia $J_g$, the inertia of the clamp link $J_{CL}$ as well as the inertia of the carriage assembly with mass $m_1$. The last one can be found by simplifying the load to a point mass at distance of the clamp link length $L_{CL}$, which is given by $J_{carr} = m_1 L_{CL}^2$.
+	\subsection{Analytical Inertia Identification}
+	The total inertia of the system is determined by the inertia of the rotor and gears $J_m$, the inertia of the clamp link $J_{CL}$ as well as the inertia of the carriage assembly with mass $m_1$. The last one can be found by simplifying the load to a point mass at distance of the clamp link length $L_{CL}$, which is given by $J_{carr} = m_1 L_{CL}^2$.
 	The gear box increases the inertia seen by the motor shaft by the square of its ratio $n$:
 	\begin{equation}
-		J_{load,\ motor\ side} = n^2 J_{load}
+		J_{reflected} = \frac{ J_{load}}{n^2}
 	\end{equation}
-	%TODO do I need to take into account the rotor inertia J_m and the gear inertia J_g?
+
 	We therefore have a total inertia of:
 	\begin{equation}
-		J_T = J_m + J_g + n^2 J_{CL} + n_2^2 m_1 L_{CL}^2
+		J_T = J_m + \frac{J_{CL}}{n^2} + \frac{ m_1 L_{CL}^2}{n^2}
 	\end{equation}
-	where $J_{CL}$ can be calculated by approximating it as a cantilever with an off-center axis of distance $l$ \footnote{(2018, June 19th) retrieved from \url{http://www.orientalmotor.com/technology/motor-sizing-calculations.html}}: %Source: http://www.orientalmotor.com/technology/motor-sizing-calculations.html
+	where $J_{CL}$ can be calculated by approximating it as a cantilever with an off-center axis of distance $L_{CL} /2$ \footnote{(2018, June 19th) retrieved from \url{http://www.orientalmotor.com/technology/motor-sizing-calculations.html}}: %Source: http://www.orientalmotor.com/technology/motor-sizing-calculations.html
 	
 	\begin{equation}
 		J_{CL} = \frac{1}{12}m_{CL}(A^2 + B^2 + 12l^2)
 	\end{equation}
 	where $A$ and $B$ are the width and length respectively.\\
+	The calculated total moment of inertia is $J_T = 6.87 \times 10^{-8}$ $\textit{kgm}^2$.
 	
+	\subsection{Experimental Inertia Identification}
+	Alternatively, one can approximate the total moment of inertia by applying a constant current on the motor and measuring the acceleration. In this case the traveled distance has been derivated twice to find the acceleration, which is why the result has to be handled with a grain of salt. The results of these experiments lead to the following findings:
+	$$ J_T = \frac{1.25 \times 10^{-4}}{n^2} = 9.97 \times 10^{-8} \textit{ kgm}^2$$ 
+	
+	\subsection{Relating $\Delta X$ to $\theta$}
 	The conversion between the angle $\theta$ and the distance $x$ can be found by assuming that the horizontal displacement of the carriage is given by $L_{CL} sin(\theta) = x$. For small angles of $\theta$ the Taylor expansion gives:
 	\begin{equation}
 		L_{CL} \theta \simeq x_1
@@ -203,10 +236,10 @@
 	\label{eq:theta}
 	\end{equation}
 	
-	In the case of the experimental setup the palm pad has been blocked and therefore $x_2$ has been forced to be constant. The last equation becomes thus: $\theta_m = - \frac{n}{L_{CL}} \Delta X$.
+	Note that the constant offsets in equation \ref{eq:PID} are for pure symmetrical reasons and will cancel each other out, since $K_{bit-offset} K_{PID2Vardu} K_{ampl} + V_{offset} = 0$ and the equation becomes $ ((K_P + K_D s + \frac{K_I}{s})E K_{\mu m} ) K_{PID2Vardu} K_{ampl}= V_a$. This is the equivalent to a standard PID form with gains $K'_P$, $K'_D$ and $K'_I$. In the case of the experimental setup the palm pad has been blocked and therefore $x_2$ has been forced to be constant. The last equation becomes thus: $\theta_m = - \frac{n}{L_{CL}} \Delta X$.
 	
 	\subsection{Analytical Transfer Function}
-	The analytical transfer function has only been calculated for a specific set of spring damping coefficients $b_{sp}$ (ie. 10 uniformly spaced values between $100$Ns/m and $1000$Ns/m). The simulation result that was closest to the experimental setup can be seen in figure \ref{fig:bode_sp_damp400} and the corresponding transfer function is:
+	The analytical transfer function has only been calculated for a specific set of spring damping coefficients $b_{sp}$ (ie. 10 uniformly spaced values between $100$Ns/m and $1000$Ns/m). The gains that have been used are for a P-controller, it was namely $K_P' = 39.2 \frac{\textit{V}}{\textit{mm}}$. The simulation result that was closest to the experimental setup can be seen in figure \ref{fig:bode_sp_damp400} and the corresponding transfer function is:
 	\begin{equation}
 		%\frac{\Delta X}{\Delta X_{ref}} = \frac{7.04\times 10^{-3} s^2 + 288 s + 2.94\times 10^{6}}{1.09\times 10^{-10}s^5 + 6.69\times 10^{-6}s^4 + 0.137 s^3 + 940s^2 +6.45 s + 2.95\times 10^{6}}
 		\frac{\Delta X}{\Delta X_{ref}} = \frac{1.23 \times 10^3}{3.24\times 10^{-6}s^3 + 6.67\times 10^{-2}s^2 + 8.48s + 1.23 \times 10^3}
@@ -220,12 +253,34 @@
 		\label{fig:bode_sp_damp400}
 	\end{figure}
 	
-	As it can be seen in figure \ref{fig:bode_sp_damp400} there is a constant gain of $1$ for lower frequencies and a slight resonance top becomes visible around $20$Hz. The phase shift is of around $-140^\circ$ for the frequencies of interest. Due to the setup constraints, the analytical results of higher frequencies have not been considered.
+	As it can be seen in figure \ref{fig:bode_sp_damp400} there is a constant gain of $1$ for lower frequencies and a slight resonance top becomes visible around $20$Hz. The phase shift is of around $-180^\circ$ for the tested frequencies, and the lag does not increase more than $45 ^\circ$ for the frequencies of interest. Due to the setup constraints, the analytical results of higher frequencies have not been considered.
 	
 	\subsection{Motor Comparison}
-	When one goes back to the experimental results where the two motors with different reduction gear ratio have been compared, %TODO make reference here, put up to date photos
-	one canconclude that the motor with the higher reduction ratio has a higher output force with a tradeoff of speed. Since one of the critical elements of the SEA system is its actuation speed, it is essential to push the boundaries as far as possible. However, the high gain frequency response in the experimental setup starts to drop at much higher frequencies than the actual operating frequency. This is namely determined by the slow communication speed between the robot and the control device.\\
+	When one goes back to the experimental results where the two motors with different reduction gear ratios have been compared (previous report), %TODO make reference here, put up to date photos
+	one can conclude that the motor with the higher reduction ratio has a higher output force with a tradeoff of speed. Since one of the critical elements of the SEA system is its actuation speed, it is essential to push the boundaries as far as possible. However, the high gain frequency response in the experimental setup starts to drop at much higher frequencies than the actual operating frequency (which is given by the rather slow communication speed between the robot and the control device of $f_{op} \simeq 2-5$ Hz.\\
 	Due to the fact that even with the stronger reduction gear motor, the springs cannot be compressed to their limits, a higher possible output force has been favoured and therefore the stronger motor seems more appropriate.
+	
+	\subsection{Experimental PID Tuning}
+	At first, the Ziegler Nichols tuning method has been used to identify the PID gains for the setup. However, due to the rather non-linear behaviour, these gains resulted in a rather poor tracking performance of the reference signal.\\
+	Since an educated tuning of the gains is the very core problem of all control engineering, a lot of different approaches exist of finding optimal or sub-optimal gain values. Given the complexity of the setup, it seems reasonable to go for the simple trial and error approach, where the gains are tuned and the tracking performance is tested in real-time. This approach led to the following gain coefficients:
+
+%TODO discuss the fact of neglected efficiency, what is backdriveability exactly, redo bode plot with new pid settings 
+	\begin{figure}[h!]
+		\centering
+		\begin{tabular}{|l|c|c|}
+			\hline
+			Designator & Explanation & Unit \\ \hline \hline
+			$K'_P$ & $1.6$ & [V/mm]\\ 
+			$K'_I$ & $0.001$ & [asdf]\\
+			$K'_D$ & $0.014$ & [rad]\\
+			\hline
+		\end{tabular}
+		\caption{Trial and error PID tuning.}
+		\label{tab:trial_error_pid}
+	\end{figure}
+	% talk about filter and filter impact, problem of discretization, results
+
+	\subsection{Analytical PID Implementation}
 	
 	\subsection{Tracking Behavior}
 	%show picture, explain problem of steady state offset, find PID values
