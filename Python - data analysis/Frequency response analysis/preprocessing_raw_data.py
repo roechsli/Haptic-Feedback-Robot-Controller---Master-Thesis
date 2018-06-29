@@ -12,7 +12,8 @@ Master Thesis - University of Tokyo
 import shutil
 #directory = "20180529_fra_logs/raw_data/"
 #directory = "20180621_fra_logs/raw_data/"
-directory = "20180626_fra_logs_pid_impl/raw_data/"
+#directory = "20180626_fra_logs_pid_impl/raw_data/"
+directory = "20180629_fra_logs_p_02/raw_data/"
 #shutil.move( myfile + ".txt", myfile+"new" + ".txt")
 import os
 
@@ -22,10 +23,11 @@ for filename in os.listdir(directory):
     source= open(directory + filename, "r")
     #destination= open("20180529_fra_logs/" + filename[:-4] + "_csv" + ".csv", "w")
     #destination= open("20180621_fra_logs/" + filename[:-4] + "_csv" + ".csv", "w")
-    destination= open("20180626_fra_logs_pid_impl/" + filename[:-4] + "_csv" + ".csv", "w")
+    #destination= open("20180626_fra_logs_pid_impl/" + filename[:-4] + "_csv" + ".csv", "w")
+    destination= open("20180629_fra_logs_p_02/" + filename[:-4] + "_csv" + ".csv", "w")
     count = 0
     num_lines = sum(1 for line in open(directory + filename))
-    print(num_lines)
+    #print(num_lines)
     for line in source:
         count = count + 1
         if (count > 100 and count < num_lines - 2):

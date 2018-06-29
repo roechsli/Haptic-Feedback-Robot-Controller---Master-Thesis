@@ -6,7 +6,7 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.152"
+    ComputedModelVersion    "1.153"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -54,8 +54,8 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "oechslin"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Fri Jun 22 19:34:27 2018"
-  ModelVersionFormat	  "1.%<AutoIncrement:152>"
+  LastModifiedDate	  "Tue Jun 26 16:12:30 2018"
+  ModelVersionFormat	  "1.%<AutoIncrement:153>"
   ConfigurationManager	  "None"
   LinearizationMsg	  "none"
   Profile		  off
@@ -598,7 +598,7 @@ Model {
   }
   System {
     Name		    "block_diagram_simplified"
-    Location		    [20, 146, 1347, 687]
+    Location		    [10, 112, 1354, 670]
     Open		    on
     ModelBrowserVisibility  off
     ModelBrowserWidth	    200
@@ -607,7 +607,7 @@ Model {
     PaperPositionMode	    "auto"
     PaperType		    "usletter"
     PaperUnits		    "inches"
-    ZoomFactor		    "156"
+    ZoomFactor		    "100"
     ReportName		    "simulink-default.rpt"
     Block {
       BlockType		      SubSystem
@@ -621,7 +621,7 @@ Model {
       System {
 	Name			"Arduino"
 	Location		[41, 184, 1307, 584]
-	Open			off
+	Open			on
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
 	ScreenColor		"white"
@@ -670,9 +670,9 @@ Model {
 "roller"
 	  SourceType		  "PID Controller"
 	  ShowPortLabels	  on
-	  P			  "0.2"
-	  I			  "0"
-	  D			  "0"
+	  P			  "1"
+	  I			  "0.008"
+	  D			  "5"
 	}
 	Block {
 	  BlockType		  Scope
@@ -1209,7 +1209,6 @@ Model {
     Line {
       SrcBlock		      "Transfer Fcn"
       SrcPort		      1
-      Points		      [15, 0]
       DstBlock		      "K_tau"
       DstPort		      1
     }
@@ -1222,7 +1221,6 @@ Model {
     Line {
       SrcBlock		      "K_tau"
       SrcPort		      1
-      Points		      [15, 0]
       DstBlock		      "Sum3"
       DstPort		      2
     }
@@ -1327,7 +1325,6 @@ Model {
     Line {
       SrcBlock		      "reduction ratio"
       SrcPort		      1
-      Points		      [15, 0]
       DstBlock		      "L_CL1"
       DstPort		      1
     }
@@ -1353,7 +1350,7 @@ Model {
     Line {
       SrcBlock		      "k_eq"
       SrcPort		      1
-      Points		      [0, 0]
+      Points		      [-10, 0]
       DstBlock		      "Sum7"
       DstPort		      1
     }
@@ -1408,7 +1405,6 @@ Model {
       SrcPort		      1
       Points		      [10, 0]
       Branch {
-	Points			[90, 0]
 	DstBlock		"Integrator"
 	DstPort			1
       }
@@ -1416,7 +1412,7 @@ Model {
 	Labels			[1, 0]
 	Points			[0, 0]
 	Branch {
-	  Points		  [0, 0]
+	  Points		  [0, 85]
 	  DstBlock		  "Sum6"
 	  DstPort		  1
 	}

@@ -11,7 +11,7 @@ from math import atan2
 
 PLOT_BOOL = True
 CALC_OPER_FREQ = False
-SHORT_CUT = True
+SHORT_CUT = False
 only_this_file = "f"  # change this to "f" if all frequencies shall be tested, otherwise "f2_csv"
 
 INTMAX = 65535
@@ -27,7 +27,7 @@ PHOTO_MAX_LEFT = 840
 PHOTO_MIN_RIGHT = 690
 PHOTO_MAX_RIGHT = 880
 MAX_DISPLACEMENT_UM = 1800
-directory = "20180626_fra_logs_pid_impl/"  # TODO change this if new data shall be analyzed
+directory = "20180629_fra_logs_p_02/"  # TODO change this if new data shall be analyzed
 
 def get_freq_from_filename(filename):
     if filename[0] == "f" and filename[-8:] == "_csv.csv":
@@ -85,7 +85,7 @@ for file in os.listdir(directory):
          -5.522214079974674, -8.009198022882693, -115.88709982628073, 228.4711130111851, -9.51822676960225,
          -144.62395382557736, -11.736703802647355, -14.388214287698673, 199.8738652541653, 186.94808894493073,
          -17.185092593521006]
-
+        #freq_vec = 	   [1.25, 1.6, 1, 10, 100, 13, 16, 2.5, 2, 20, 25, 3, 32, 4, 40, 5, 50, 6.3, 63, 8, 80]
         continue
 
     if ".csv" not in file:
@@ -169,6 +169,8 @@ print(phasediff_l)
 print(amplitude_factor_r)
 print(phasediff_r)
 """
+print("freq_vec = ")
+print(freq_vec)
 print("amplitude_factor_l = ")
 print(amplitude_factor_l)
 print("phasediff_l = " )

@@ -107,9 +107,9 @@ void loop() {
   int pwmValueLeftSym = 128;
   int pwmValueRightSym = 128;
 
-  float k_p = 1.6; // k_p = 0.8; and k_i = 0.01; k_d = 0.008; works as well
-  float k_i = 0.001; // k_p = 1.0; and k_i = 0.01; k_d = 0.05; works as well
-  float k_d = 0.014;
+  float k_p = 0.2;//1.6; // k_p = 0.8; and k_i = 0.01; k_d = 0.008; works as well
+  float k_i = 0.0;//10; // k_p = 1.0; and k_i = 0.01; k_d = 0.05; works as well
+  float k_d = 0.0;//0.014;
 
   // ignore Serial and read sine wave signal as reference
   dist_ref = sine2dist(sine_signal);
@@ -126,9 +126,9 @@ void loop() {
   last_error_right_filtered = error_right_filtered;
   int des_mot_volt_left = k_p * error_left + k_i * sum_error_left + k_d * derror_left/dT;
   int des_mot_volt_right =  k_p * error_right + k_i * sum_error_right + k_d * derror_right/dT;
-  sum_error_left = error_left + sum_error_left;
+  sum_error_left = error_left*dt + sum_error_left;
   last_error_left = error_left;
-  sum_error_right = error_right + sum_error_right;
+  sum_error_right = error_right*dt + sum_error_right;
   last_error_right = error_right;
 
   // symmetric feedback left and right, (allowing for negative motor values)
