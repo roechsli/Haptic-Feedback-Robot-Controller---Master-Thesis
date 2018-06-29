@@ -173,8 +173,8 @@
 	The calculated total moment of inertia is $J_T = 6.87 \times 10^{-8}$ $\textit{kgm}^2$.
 	
 	\subsection{Experimental Inertia Identification}
-	Alternatively, one can approximate the total moment of inertia by applying a constant current on the motor and measuring the acceleration. In this case the traveled distance has been derivated twice to find the acceleration, which is why the result has to be handled with a grain of salt. The results of these experiments lead to the following findings:
-	$$ J_T = \frac{1.25 \times 10^{-4}}{n^2} = 9.97 \times 10^{-8} \textit{ kgm}^2$$ 
+	Alternatively, one can approximate the total moment of inertia by applying a constant current on the motor and measuring the acceleration. In this case the traveled distance has been derivated twice to find the acceleration, which results in an amplification of errors. Furthermore, the constant current has been kept very low, (between 20 and 100 $A$), which led to a slow movement and therefore higher friction impact on the measurements. However, the results are consistent with the theoretically calculated values:
+	$$ J_T = \frac{7.5 \times 10^{-4}}{n^2} = 5.98 \times 10^{-8} \textit{ kgm}^2$$ 
 	
 	\subsection{Relating $\Delta X$ to $\theta$}
 	The conversion between the angle $\theta$ and the distance $x$ can be found by assuming that the horizontal displacement of the carriage is given by $L_{CL} sin(\theta) = x$. For small angles of $\theta$ the Taylor expansion gives:
@@ -258,7 +258,7 @@
 	\subsection{Motor Comparison}
 	When one goes back to the experimental results where the two motors with different reduction gear ratios have been compared (previous report), %TODO make reference here, put up to date photos
 	one can conclude that the motor with the higher reduction ratio has a higher output force with a tradeoff of speed. Since one of the critical elements of the SEA system is its actuation speed, it is essential to push the boundaries as far as possible. However, the high gain frequency response in the experimental setup starts to drop at much higher frequencies than the actual operating frequency (which is given by the rather slow communication speed between the robot and the control device of $f_{op} \simeq 2-5$ Hz.\\
-	Due to the fact that even with the stronger reduction gear motor, the springs cannot be compressed to their limits, a higher possible output force has been favoured and therefore the stronger motor seems more appropriate.
+	Due to the fact that even with the stronger reduction gear motor, the springs cannot be compressed to their limits, a higher possible output force has been favored and therefore the stronger motor seems more appropriate.
 	
 	\subsection{Experimental PID Tuning}
 	At first, the Ziegler Nichols tuning method has been used to identify the PID gains for the setup. However, due to the rather non-linear behaviour, these gains resulted in a rather poor tracking performance of the reference signal.\\

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6630 64-bit) (preloaded format=latex 2018.4.26)  28 JUN 2018 14:50
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6630 64-bit) (preloaded format=latex 2018.4.26)  29 JUN 2018 11:12
 entering extended mode
 **./YReport_en.tex
 (YReport_en.tex
@@ -292,12 +292,12 @@ Underfull \hbox (badness 10000) has occurred while \output is active
 
 [8] (YReport_en.aux) ) 
 Here is how much of TeX's memory you used:
- 1833 strings out of 493306
- 23331 string characters out of 3128523
- 133495 words of memory out of 3000000
- 5363 multiletter control sequences out of 15000+200000
+ 1834 strings out of 493306
+ 23352 string characters out of 3128523
+ 135683 words of memory out of 3000000
+ 5364 multiletter control sequences out of 15000+200000
  14458 words of font info for 55 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  34i,19n,28p,761b,312s stack positions out of 5000i,500n,10000p,200000b,50000s
 
-Output written on YReport_en.dvi (8 pages, 254604 bytes).
+Output written on YReport_en.dvi (8 pages, 256376 bytes).
