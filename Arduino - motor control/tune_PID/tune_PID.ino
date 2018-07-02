@@ -37,13 +37,14 @@ const int OUTPUT_RANGE_L = 2 * MOTOR_MAX_VOLTAGE * OUTPUT_PER_VOLT / LEFT_HAND_A
 const int OUTPUT_RANGE_R = 2 * MOTOR_MAX_VOLTAGE * OUTPUT_PER_VOLT / RIGHT_HAND_AMPLIFIER_GAIN;
 
 float error_left = 0;
-float last_error_left = 0;
+//float last_error_left = 0;
 float sum_error_left = 0;
 float error_right = 0;
-float last_error_right = 0;
+//float last_error_right = 0;
 float sum_error_right = 0;
 float dT = 0.001;
-float filter_coeff = 0.05;
+float filter_coeff = 0.1;
+/*
 float photo_value_left_filtered = 0;
 float photo_value_right_filtered = 0;
 float last_photo_value_left_filtered = 0;
@@ -51,10 +52,15 @@ float last_photo_value_right_filtered = 0;
 float error_left_filtered = 0;
 float error_right_filtered = 0;
 float last_error_left_filtered = 0;
-float last_error_right_filtered = 0;
+float last_error_right_filtered = 0;*/
+float error_left_last = 0;
+float error_right_last = 0;
+float numerator_l_last_f = 0;
+float numerator_r_last_f = 0;
+
 const int PHOTO_MIN_LEFT = 640;//650;
 const int PHOTO_MAX_LEFT = 840;//830;
-const int PHOTO_MIN_RIGHT = 690;//700;
+const int PHOTO_MIN_RIGHT = 700;//700;
 const int PHOTO_MAX_RIGHT = 880;//870;
 const int MAX_DISPLACEMENT_UM = 1800; // [um], has been measured
 
@@ -107,29 +113,39 @@ void loop() {
   int pwmValueLeftSym = 128;
   int pwmValueRightSym = 128;
 
-  float k_p = 0.2;//1.6; // k_p = 0.8; and k_i = 0.01; k_d = 0.008; works as well
-  float k_i = 0.0;//10; // k_p = 1.0; and k_i = 0.01; k_d = 0.05; works as well
-  float k_d = 0.0;//0.014;
+  // k_p = 0.243; k_i = 0.63; k_d =0.00126
+  float k_p = 0.243;//1.6; // k_p = 0.8; and k_i = 0.01; k_d = 0.008; works as well
+  float k_i = 0.63; // k_p = 1.0; and k_i = 0.01; k_d = 0.05; works as well
+  float k_d = 0.00126;//0.014;
 
   // ignore Serial and read sine wave signal as reference
   dist_ref = sine2dist(sine_signal);
   error_left = dist_ref - sensor2dist(photo_value_left_raw, PHOTO_MIN_LEFT, PHOTO_MAX_LEFT);
   error_right = dist_ref - sensor2dist(photo_value_right_raw, PHOTO_MIN_RIGHT, PHOTO_MAX_RIGHT);
 
-  photo_value_left_filtered = last_photo_value_left_filtered * (1- filter_coeff) + photo_value_left_raw * filter_coeff;
+  /*photo_value_left_filtered = last_photo_value_left_filtered * (1- filter_coeff) + photo_value_left_raw * filter_coeff;
   photo_value_right_filtered = last_photo_value_right_filtered * (1- filter_coeff) + photo_value_right_raw * filter_coeff;
   error_left_filtered = dist_ref - sensor2dist(photo_value_left_filtered, PHOTO_MIN_LEFT, PHOTO_MAX_LEFT);
   error_right_filtered = dist_ref - sensor2dist(photo_value_right_filtered, PHOTO_MIN_RIGHT, PHOTO_MAX_RIGHT);
   float derror_left = (error_left_filtered - last_error_left_filtered);
   float derror_right = (error_right_filtered - last_error_right_filtered);
   last_error_left_filtered = error_left_filtered;
-  last_error_right_filtered = error_right_filtered;
-  int des_mot_volt_left = k_p * error_left + k_i * sum_error_left + k_d * derror_left/dT;
-  int des_mot_volt_right =  k_p * error_right + k_i * sum_error_right + k_d * derror_right/dT;
-  sum_error_left = error_left*dt + sum_error_left;
-  last_error_left = error_left;
-  sum_error_right = error_right*dt + sum_error_right;
-  last_error_right = error_right;
+  last_error_right_filtered = error_right_filtered;*/
+  sum_error_left = error_left*dT + sum_error_left;
+  sum_error_right = error_right*dT + sum_error_right;
+  float numerator_l = error_left - error_left_last;
+  float numerator_r = error_right - error_right_last;
+  float numerator_l_f = numerator_l*filter_coeff + numerator_l_last_f * (1-filter_coeff);
+  float numerator_r_f = numerator_r*filter_coeff + numerator_r_last_f * (1-filter_coeff);
+
+ 
+  numerator_l_last_f = numerator_l_f;
+  numerator_r_last_f = numerator_r_f;
+  error_left_last = error_left;
+  error_right_last = error_right;
+  
+  int des_mot_volt_left = k_p * error_left + k_i * sum_error_left + k_d * numerator_l_f/dT;
+  int des_mot_volt_right =  k_p * error_right + k_i * sum_error_right + k_d * numerator_r_f/dT;
 
   // symmetric feedback left and right, (allowing for negative motor values)
   pwmValueLeftSym = pid2pwm_sym(des_mot_volt_left, OUTPUT_RANGE_L);
@@ -149,19 +165,34 @@ void loop() {
   p = mystrcat(p, itoa(TIME_BEGIN, buf, 16));
   p = mystrcat(p, semicolon);
   p = mystrcat(p, end_char);
-  Serial.print(all); //TODO this is necessary for logging
+  //Serial.print(all); //TODO this is necessary for logging
   // message format: dist ref | left val | right val | time stamp
+
   /*
   Serial.print("ref = ");
   Serial.println(dist_ref);
   Serial.print("photo_value_right_raw = ");
-  Serial.println(photo_value_right_raw);
+  Serial.println(photo_value_right_raw)
   Serial.print("error = ");
   Serial.println(error_right);
   Serial.print("des_mot_volt_right = ");
   Serial.println(des_mot_volt_right);
   Serial.print("pwmValueRightSym = ");
-  Serial.println(pwmValueRightSym);*/
+  Serial.println(pwmValueRightSym);
+
+  Serial.print("measured dist = ");
+  Serial.println(sensor2dist(photo_value_right_raw, PHOTO_MIN_RIGHT, PHOTO_MAX_RIGHT));*/
+  Serial.print("error right = ");
+  Serial.println( error_right);
+  Serial.print("proportional term = ");
+  Serial.println(k_p * error_right);/*
+  Serial.print("integral term = ");
+  Serial.println( k_i * sum_error_right);*/
+  Serial.print("derivative term = ");
+  Serial.println(k_d * numerator_r_f/dT);
+  Serial.print("numerator_r = ");
+  Serial.println( numerator_r);
+  
   
   while ((micros() - TIME_BEGIN) < TIME_CYCLE) {  } // do nothing until we reach the time step of TIME_CYCLE
   digitalWrite(testPin, LOW); //instructions in between take roughly 640 microseconds
