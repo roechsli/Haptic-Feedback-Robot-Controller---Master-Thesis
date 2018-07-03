@@ -1,0 +1,32 @@
+\begin{thebibliography}{}
+
+\bibitem[Dutton et~al., 1997]{Dutton1997}
+Dutton, K., Thompson, S., and Barraclough, B. (1997).
+\newblock {\em The art of control engineering}.
+\newblock Addison Wesley Harlow.
+
+\bibitem[Junior et~al., 2016]{Junior2016}
+Junior, A. G.~L., de~Andrade, R.~M., and Bento~Filho, A. (2016).
+\newblock Series elastic actuator: Design, analysis and comparison.
+\newblock In {\em Recent Advances in Robotic Systems}. InTech.
+
+\bibitem[Kuchenbecker et~al., 2003]{Kuchenbecker2003}
+Kuchenbecker, K.~J., Park, J.~G., and Niemeyer, G. (2003).
+\newblock Characterizing the human wrist for improved haptic interaction.
+\newblock In {\em ASME 2003 International Mechanical Engineering Congress and
+  Exposition}, pages 591--598. American Society of Mechanical Engineers.
+
+\bibitem[Park et~al., 2014]{Park2014}
+Park, J., Pa{\v{z}}in, N., Friedman, J., Zatsiorsky, V.~M., and Latash, M.~L.
+  (2014).
+\newblock Mechanical properties of the human hand digits: Age-related
+  differences.
+\newblock {\em Clinical Biomechanics}, 29(2):129--137.
+
+\bibitem[Speich et~al., 2005]{Speich2005}
+Speich, J.~E., Shao, L., and Goldfarb, M. (2005).
+\newblock Modeling the human hand as it interacts with a telemanipulation
+  system.
+\newblock {\em Mechatronics}, 15(9):1127--1142.
+
+\end{thebibliography}
