@@ -66,7 +66,6 @@ unsigned long TIME_BEGIN = 0;
 unsigned long TIME_NOW = 0;
 unsigned long TIME_CYCLE = 1000; // this is the time_step in [us] that determines the running frequency
 
-//trial:
 int test_valpid = 0;
 void setup() {
   Serial.begin(250000);
@@ -80,8 +79,6 @@ void setup() {
   pinMode(photo_right_pin, INPUT);
   pinMode(testPin, OUTPUT);
   pinMode(controlPin, OUTPUT);
-
-  
 
   TCCR2B = TCCR2B & B11111000 | B00000001; // for PWM frequency of 31372.55 Hz
 
@@ -176,7 +173,6 @@ void loop() {
   Serial.print("numerator_r = ");
   Serial.println( numerator_r);*/
   
-  
   while ((micros() - TIME_BEGIN) < TIME_CYCLE) {  } // do nothing until we reach the time step of TIME_CYCLE
   digitalWrite(testPin, LOW); //instructions in between take roughly 640 microseconds
   analogWrite(controlPin, 255-map(photo_value_right_raw,PHOTO_MIN_RIGHT, PHOTO_MAX_RIGHT, 0, 255)); 
@@ -202,10 +198,6 @@ int sensor2dist(int sensor_value, int min_val, int max_val) {
   return MAX_DISPLACEMENT_UM - (sensor_value - min_val) * (MAX_DISPLACEMENT_UM /15) / (max_val - min_val) * 15;
 }
 
-int sensor2(int dist_value, int min_val, int max_val) {
-  // maps the measured value to the distance (assumed linearity) in micrometers
-  return (MAX_DISPLACEMENT_UM - dist_value) * (max_val - min_val) / MAX_DISPLACEMENT_UM + min_val;
-}
 
 int limit_value(int value, int lower, int upper) {
   if (value < lower) {
