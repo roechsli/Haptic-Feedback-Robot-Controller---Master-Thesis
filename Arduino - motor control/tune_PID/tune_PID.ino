@@ -43,7 +43,7 @@ float error_right = 0;
 //float last_error_right = 0;
 float sum_error_right = 0;
 float dT = 0.001;
-float filter_coeff = 0.1;
+float filter_coeff = 0.05;
 /*
 float photo_value_left_filtered = 0;
 float photo_value_right_filtered = 0;
@@ -113,10 +113,11 @@ void loop() {
   int pwmValueLeftSym = 128;
   int pwmValueRightSym = 128;
 
-  // k_p = 0.243; k_i = 0.63; k_d =0.00126
-  float k_p = 0.243;//1.6; // k_p = 0.8; and k_i = 0.01; k_d = 0.008; works as well
-  float k_i = 0.63; // k_p = 1.0; and k_i = 0.01; k_d = 0.05; works as well
-  float k_d = 0.00126;//0.014;
+  // k_p = 0.243; k_i = 0.63; k_d =0.00126; works well
+  //1.6; // k_p = 0.8; and k_i = 0.01; k_d = 0.008; works not so well
+  float k_p = 0.243;
+  float k_i = 0.63;
+  float k_d = 0.00126;*
 
   // ignore Serial and read sine wave signal as reference
   dist_ref = sine2dist(sine_signal);
@@ -131,8 +132,8 @@ void loop() {
   float derror_right = (error_right_filtered - last_error_right_filtered);
   last_error_left_filtered = error_left_filtered;
   last_error_right_filtered = error_right_filtered;*/
-  sum_error_left = error_left*dT + sum_error_left;
-  sum_error_right = error_right*dT + sum_error_right;
+  sum_error_left = error_left + sum_error_left;
+  sum_error_right = error_right + sum_error_right;
   float numerator_l = error_left - error_left_last;
   float numerator_r = error_right - error_right_last;
   float numerator_l_f = numerator_l*filter_coeff + numerator_l_last_f * (1-filter_coeff);
@@ -144,8 +145,8 @@ void loop() {
   error_left_last = error_left;
   error_right_last = error_right;
   
-  int des_mot_volt_left = k_p * error_left + k_i * sum_error_left + k_d * numerator_l_f/dT;
-  int des_mot_volt_right =  k_p * error_right + k_i * sum_error_right + k_d * numerator_r_f/dT;
+  int des_mot_volt_left = k_p * error_left + k_i * sum_error_left*dT + k_d * numerator_l_f/dT;
+  int des_mot_volt_right =  k_p * error_right + k_i * sum_error_right*dT + k_d * numerator_r_f/dT;
 
   // symmetric feedback left and right, (allowing for negative motor values)
   pwmValueLeftSym = pid2pwm_sym(des_mot_volt_left, OUTPUT_RANGE_L);
@@ -165,7 +166,7 @@ void loop() {
   p = mystrcat(p, itoa(TIME_BEGIN, buf, 16));
   p = mystrcat(p, semicolon);
   p = mystrcat(p, end_char);
-  //Serial.print(all); //TODO this is necessary for logging
+  Serial.print(all); //TODO this is necessary for logging
   // message format: dist ref | left val | right val | time stamp
 
   /*
@@ -181,17 +182,17 @@ void loop() {
   Serial.println(pwmValueRightSym);
 
   Serial.print("measured dist = ");
-  Serial.println(sensor2dist(photo_value_right_raw, PHOTO_MIN_RIGHT, PHOTO_MAX_RIGHT));*/
+  Serial.println(sensor2dist(photo_value_right_raw, PHOTO_MIN_RIGHT, PHOTO_MAX_RIGHT));
   Serial.print("error right = ");
   Serial.println( error_right);
   Serial.print("proportional term = ");
-  Serial.println(k_p * error_right);/*
+  Serial.println(k_p * error_right);
   Serial.print("integral term = ");
-  Serial.println( k_i * sum_error_right);*/
+  Serial.println( k_i * sum_error_right);
   Serial.print("derivative term = ");
   Serial.println(k_d * numerator_r_f/dT);
   Serial.print("numerator_r = ");
-  Serial.println( numerator_r);
+  Serial.println( numerator_r);*/
   
   
   while ((micros() - TIME_BEGIN) < TIME_CYCLE) {  } // do nothing until we reach the time step of TIME_CYCLE

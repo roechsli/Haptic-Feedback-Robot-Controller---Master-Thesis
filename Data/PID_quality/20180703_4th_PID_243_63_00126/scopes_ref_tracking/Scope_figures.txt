@@ -1,0 +1,27 @@
+PID after filter implementation of derivative partK_P = 0.2 K_I = 10 K_D = 0.014 (filter coefficient is 10%)
+scope15 : filter is: R = 22kOhm C = 0.22uF, 2V, offset 1.25V, f 500mHz, square signal
+scope16 : filter is: R = 22kOhm C = 0.22uF, 0.5V, offset 1.25V, f 500mHz, square signal
+scope17 : filter is: R = 22kOhm C = 0.22uF, 2V, offset 1.25V, f 5Hz, sine signal
+scope18 : filter is: R = 22kOhm C = 0.22uF, 0.5V, offset 1.25V, f 5Hz, sine signal
+
+PID after filter implementation of derivative partK_P = 0.2 K_I = 10 K_D = 0.014 (filter coefficient is 5%)
+scope19 : filter is: R = 22kOhm C = 0.22uF, 2V, offset 1.25V, f 500mHz, square signal
+scope20 : filter is: R = 22kOhm C = 0.22uF, 0.5V, offset 1.25V, f 500mHz, square signal
+scope21 : filter is: R = 22kOhm C = 0.22uF, 2V, offset 1.25V, f 5Hz, sine signal
+scope22 : filter is: R = 22kOhm C = 0.22uF, 0.5V, offset 1.25V, f 5Hz, sine signal
+
+PID after filter implementation of derivative partK_P = 0.2 K_I = 10 K_D = 0.014 (filter coefficient is 1%)
+scope23 : filter is: R = 22kOhm C = 0.22uF, 2V, offset 1.25V, f 500mHz, square signal
+scope24 : filter is: R = 22kOhm C = 0.22uF, 0.5V, offset 1.25V, f 500mHz, square signal
+scope25 : filter is: R = 22kOhm C = 0.22uF, 2V, offset 1.25V, f 5Hz, sine signal
+scope26 : filter is: R = 22kOhm C = 0.22uF, 0.5V, offset 1.25V, f 5Hz, sine signal
+
+const int PHOTO_MIN_LEFT = 640;//650;
+const int PHOTO_MAX_LEFT = 840;//830;
+const int PHOTO_MIN_RIGHT = 700;//700;
+const int PHOTO_MAX_RIGHT = 880;//870;
+const int MAX_DISPLACEMENT_UM = 1800; // [um], has been measured
+
+  float k_p = 0.243;
+  float k_i = 0.63; 
+  float k_d = 0.00126;
