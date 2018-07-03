@@ -31,17 +31,15 @@ const int OUTPUT_RANGE_L = 2 * MOTOR_MAX_VOLTAGE * OUTPUT_PER_VOLT / LEFT_HAND_A
 const int OUTPUT_RANGE_R = 2 * MOTOR_MAX_VOLTAGE * OUTPUT_PER_VOLT / RIGHT_HAND_AMPLIFIER_GAIN;
 
 float error_left = 0;
-//float last_error_left = 0;
+float error_left_last = 0;
 float sum_error_left = 0;
+float numerator_l_last_f = 0;
 float error_right = 0;
-//float last_error_right = 0;
+float error_right_last = 0;
 float sum_error_right = 0;
+float numerator_r_last_f = 0;
 float dT = 0.001;
 float filter_coeff = 0.05;
-float error_left_last = 0;
-float error_right_last = 0;
-float numerator_l_last_f = 0;
-float numerator_r_last_f = 0;
 
 const int PHOTO_MIN_LEFT = 640;//650;
 const int PHOTO_MAX_LEFT = 840;//830;
@@ -88,11 +86,10 @@ void loop() {
     
   int pwmValueLeftSym = 128;
   int pwmValueRightSym = 128;
-  
 
-  float k_p = 0.2; // k_p = 1; and k_i = 0.01; works as well
-  float k_i = 0.0;
-  float k_d = 0.0;
+  float k_p = 0.243;
+  float k_i = 0.63;
+  float k_d = 0.00126;
 
   //Writing to Processing file
   Serial.write(joy_val_left);
@@ -104,15 +101,25 @@ void loop() {
   } else {
     dist_ref = 0.99*dist_ref;// FIXME tune this param
   }
+
   error_left = dist_ref - sensor2dist(photo_value_left_raw, PHOTO_MIN_LEFT, PHOTO_MAX_LEFT);
   error_right = dist_ref - sensor2dist(photo_value_right_raw, PHOTO_MIN_RIGHT, PHOTO_MAX_RIGHT);
-      
-  int motor_output_left = k_p * error_left + k_i * sum_error_left * dt + k_d * (error_left - last_error_left);
-  int motor_output_right =  k_p * error_right + k_i * sum_error_right * dt + k_d * (error_right - last_error_right);//FIXME need two different control parameters?
+  
   sum_error_left = error_left + sum_error_left;
-  last_error_left = error_left;
   sum_error_right = error_right + sum_error_right;
-  last_error_right = error_right;
+  float numerator_l = error_left - error_left_last;
+  float numerator_r = error_right - error_right_last;
+  float numerator_l_f = numerator_l*filter_coeff + numerator_l_last_f * (1-filter_coeff);
+  float numerator_r_f = numerator_r*filter_coeff + numerator_r_last_f * (1-filter_coeff);
+
+  numerator_l_last_f = numerator_l_f;
+  numerator_r_last_f = numerator_r_f;
+  error_left_last = error_left;
+  error_right_last = error_right;
+  
+  int des_mot_volt_left = k_p * error_left + k_i * sum_error_left*dT + k_d * numerator_l_f/dT;
+  int des_mot_volt_right =  k_p * error_right + k_i * sum_error_right*dT + k_d * numerator_r_f/dT;
+
   // symmetric feedback left and right, (allowing for negative motor values)
   pwmValueLeftSym = pid2pwm_sym(des_mot_volt_left, OUTPUT_RANGE_L);
   pwmValueRightSym = pid2pwm_sym(des_mot_volt_right, OUTPUT_RANGE_R);
