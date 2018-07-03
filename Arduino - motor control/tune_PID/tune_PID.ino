@@ -44,15 +44,6 @@ float error_right = 0;
 float sum_error_right = 0;
 float dT = 0.001;
 float filter_coeff = 0.05;
-/*
-float photo_value_left_filtered = 0;
-float photo_value_right_filtered = 0;
-float last_photo_value_left_filtered = 0;
-float last_photo_value_right_filtered = 0;
-float error_left_filtered = 0;
-float error_right_filtered = 0;
-float last_error_left_filtered = 0;
-float last_error_right_filtered = 0;*/
 float error_left_last = 0;
 float error_right_last = 0;
 float numerator_l_last_f = 0;
@@ -117,21 +108,13 @@ void loop() {
   //1.6; // k_p = 0.8; and k_i = 0.01; k_d = 0.008; works not so well
   float k_p = 0.243;
   float k_i = 0.63;
-  float k_d = 0.00126;*
+  float k_d = 0.00126;
 
   // ignore Serial and read sine wave signal as reference
   dist_ref = sine2dist(sine_signal);
   error_left = dist_ref - sensor2dist(photo_value_left_raw, PHOTO_MIN_LEFT, PHOTO_MAX_LEFT);
   error_right = dist_ref - sensor2dist(photo_value_right_raw, PHOTO_MIN_RIGHT, PHOTO_MAX_RIGHT);
-
-  /*photo_value_left_filtered = last_photo_value_left_filtered * (1- filter_coeff) + photo_value_left_raw * filter_coeff;
-  photo_value_right_filtered = last_photo_value_right_filtered * (1- filter_coeff) + photo_value_right_raw * filter_coeff;
-  error_left_filtered = dist_ref - sensor2dist(photo_value_left_filtered, PHOTO_MIN_LEFT, PHOTO_MAX_LEFT);
-  error_right_filtered = dist_ref - sensor2dist(photo_value_right_filtered, PHOTO_MIN_RIGHT, PHOTO_MAX_RIGHT);
-  float derror_left = (error_left_filtered - last_error_left_filtered);
-  float derror_right = (error_right_filtered - last_error_right_filtered);
-  last_error_left_filtered = error_left_filtered;
-  last_error_right_filtered = error_right_filtered;*/
+  
   sum_error_left = error_left + sum_error_left;
   sum_error_right = error_right + sum_error_right;
   float numerator_l = error_left - error_left_last;
@@ -139,7 +122,6 @@ void loop() {
   float numerator_l_f = numerator_l*filter_coeff + numerator_l_last_f * (1-filter_coeff);
   float numerator_r_f = numerator_r*filter_coeff + numerator_r_last_f * (1-filter_coeff);
 
- 
   numerator_l_last_f = numerator_l_f;
   numerator_r_last_f = numerator_r_f;
   error_left_last = error_left;
