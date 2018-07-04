@@ -152,7 +152,7 @@ void loop() {
   Serial.print("ref = ");
   Serial.println(dist_ref);
   Serial.print("photo_value_right_raw = ");
-  Serial.println(photo_value_right_raw)
+  Serial.println(photo_value_right_raw);
   Serial.print("error = ");
   Serial.println(error_right);
   Serial.print("des_mot_volt_right = ");
