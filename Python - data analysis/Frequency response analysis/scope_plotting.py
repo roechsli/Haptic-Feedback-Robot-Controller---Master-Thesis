@@ -12,6 +12,8 @@ import matplotlib.pyplot as plt
 import pickle
 import pandas as pd
 
+PLOT_ALL_IN_ONE = True
+
 directory = "../../Data/PID_quality/20180703_4th_PID_243_63_00126/ardu_ref_tracking/"
 destination = "tmp_ardu_ref_plots/"
 
@@ -48,6 +50,8 @@ for filename in os.listdir(directory):
     destination_file.close()
 
 counter = 0
+if PLOT_ALL_IN_ONE:
+    fig = plt.figure(1)
 for filename in os.listdir(destination):
     if ".csv" not in filename:
         continue
@@ -63,22 +67,38 @@ for filename in os.listdir(destination):
         df.iloc[i,1] = sensor2dist(df.iloc[i,1], PHOTO_MIN_LEFT, PHOTO_MAX_LEFT)
         df.iloc[i,2] = sensor2dist(df.iloc[i,2], PHOTO_MIN_RIGHT, PHOTO_MAX_RIGHT)
     print("plotting file " + filename[:-4])
-    fig = plt.figure()
+
+    if PLOT_ALL_IN_ONE:
+        plt.subplot(3, 4, counter + 1)
+        fig.suptitle('Tracking behavior - Filters: 1.6 Hz (Up), 4.2 Hz (Middle) and 8.8 Hz (Down)')
+    else:
+        fig = plt.figure()
+        fig.suptitle('Tracking behavior - Filter: ' + str(filter_value[counter]) + 'Hz')
     # plot left and right sensor data,zoom and save
     plt.plot(df.iloc[:, 3], df.iloc[:, 1])
     plt.plot(df.iloc[:, 3], df.iloc[:, 2])
     plt.plot(df.iloc[:, 3], df.iloc[:, 0])  # plot reference
-    fig.suptitle('Tracking behavior - Filter: ' + str (filter_value[counter]) + 'Hz')
     plt.xlabel('Time [s]')
     plt.ylabel('Compression [mm]')
     # plt.axis([2, 3.6, -0.05, 0.5])
     plt.axis([2.2, 4, 0, 2])
-    plt.legend(["left sensor", "right sensor", "reference signal"])
     figure_directory = destination + 'figs/'
     if not os.path.exists(figure_directory):
         os.makedirs(figure_directory)
-    fig.savefig(figure_directory + '/' + filename[:-8] + 'plot_zoom.jpg')
-    with open(figure_directory + '/' + filename[:-8] + '_raw.pkl', "wb") as fp:
-        pickle.dump(fig, fp, protocol=4)
-    plt.close(fig)  # for not plotting all the pictures
+    if PLOT_ALL_IN_ONE:
+        if counter == 11:
+            plt.legend(["left sensor", "right sensor", "reference signal"])
+            mng = plt.get_current_fig_manager()
+            mng.resize(*mng.window.maxsize())
+            fig.savefig(figure_directory + '/' + 'all_in_one.jpg')
+            with open(figure_directory + '/' + '_all_in_one_raw.pkl', "wb") as fp:
+                pickle.dump(fig, fp, protocol=4)
+            #plt.close(fig)  # for not plotting all the pictures
+    else:
+        plt.legend(["left sensor", "right sensor", "reference signal"])
+        fig.savefig(figure_directory + '/' + filename[:-8] + 'plot_zoom.jpg')
+        with open(figure_directory + '/' + filename[:-8] + '_raw.pkl', "wb") as fp:
+            pickle.dump(fig, fp, protocol=4)
+        plt.close(fig)  # for not plotting all the pictures
     counter = counter + 1
+plt.show()
