@@ -1,16 +1,19 @@
-spring_damping_vec = [1 10 50 100 200 300 350];%linspace(0,10000,10000/100+1);%[200 250 300 350 400];% [1 10 100 1000 10000 100000];%
-BOOL_SEVERAL_PLOTS = 1;
+spring_damping_vec = [50 100 150 200 250 300 350 400];%linspace(0,10000,10000/100+1);%[200 250 300 350 400];% [1 10 100 1000 10000 100000];%
+spring_stiffness_vec = [6 60 600 6000 60000 600000];
+
+BOOL_SEVERAL_PLOTS = 0;
+BOOL_ITERATE_KEQ = 1;
 
 %k_op = 200
 %b_op = 20
 K_P = 0.243%0.2
 K_I = 0.63%0.0
 K_D = 0.00126%0.0
+
+
 K_PID2Vardu = 1/51 % [V]
 um_gain = -1000000 % [um/m]
 K_ampl = 10
-V_offset = -25
-bit_offset = 128
 n = 112
 J_T = 1.25E-3 / n / n % without efficiency coeff 7.5E-4 / n / n%
 %J_T =  0.1  % kg*m^2
@@ -41,15 +44,22 @@ phasediff_l = [-13.338637077482488, -14.09045739088748, -215.85673669598538, -48
 amplitude_factor_r = [0.7259689909042475, 0.735561475713898, 0.011847747061743118, 0.7807616430080885, 0.6652857160264002, 0.4684605400670259, 0.7127722160221738, 0.7461571487258002, 0.28422778003510263, 0.18648071556469148, 0.7439708501454618, 0.10739962887725536, 0.7525359007020068, 0.07014225593098215, 0.7786568428021221, 0.04585663312767849, 0.8100457909516678, 0.8245672101098731, 0.02640620952087805, 0.017672001900720043, 0.8172666256439353]
 phasediff_r = [-16.647751016192103, -18.17293749217521, -237.48339557890603, -84.206485995129, -110.7789491948499, -133.2352471671927, -15.490775194720683, -22.931547230698484, -154.12969771290278, 194.1127967504471, -20.088130391155154, -178.43503982578886, 334.0056876428433, 172.21922748081028, 327.9483761537956, -190.87105537800483, -39.46722121664876, -49.247314509247005, 153.90271170189118, 138.0318425466486, -64.3717766560425]
 
-%experim3 K_P = 0.243; K_I = 63; K_D = 0.00126;
+%experim3 K_P = 0.243; K_I = 63; K_D = 0.00126; // this experiment had a
+%problem with the motor
 freq_vec = [1.25, 1.6, 100.0, 10.0, 13.0, 16.0, 1.0, 2.5, 20.0, 25.0, 2.0, 32.0, 3.0, 40.0, 4.0, 50.0, 5.0, 6.3, 63.0, 80.0, 8.0]
 amplitude_factor_l = [0.7468197147592547, 0.7223049582715653, 0.01134059287959758, 0.9597935285794396, 1.1069392325529555, 1.3096501575943056, 0.7409990636749128, 0.7203192146125251, 1.9204454142023692, 1.8803719127374965, 0.7201847678979995, 0.6820411928539929, 0.7189018855230074, 0.29001765156384585, 0.703057110473106, 0.1398260776047106, 0.6834897792219328, 0.7379994762549241, 0.04100110817213898, 0.018514619402346808,0.8350284985740517]
 phasediff_l = [-37.17151138165795, -36.98317267379829, 147.51156502648428, -40.99876187141817, -49.243360351959296, -53.38597267568498, -39.43527753631507, -35.49124534152608, -72.72834489892725, -130.88075650308778, -35.6365707620987, 191.06682009038568, 324.3782398664332, 176.434086756868, -36.02858994809966, 159.9558443418352, -35.880825154172896, -35.981024365223355, 155.94042318459518, -198.97949546160703, -37.69844491016808]
 amplitude_factor_r = [0.23155443928238997, 0.25719521333028933, 0.004085784148821673, 0.8584005624036407, 0.9166469382316295, 1.0994336713066262, 0.25843819747210384, 0.315103904527081, 1.058301894067365, 0.5924584612333482, 0.2787584252111436, 0.18522989719869465, 0.3377563609708831, 0.08040886010001755, 0.39762580929269137, 0.04423209682100556, 0.47321687812980734, 0.6134641905492975, 0.023908026931854707, 0.008553727703199765, 0.7879292077789765]
 phasediff_r = [-58.14244272618344, -53.36077181815497, 152.87712275538172, -59.338736168523894, 290.0045644779693, -83.18134863110892, -61.96344318580766, 312.3545193677646, -114.31641823764821, -140.80672952520592, -51.00976121068149, 210.4057431530286, 313.1020226062128, 209.43303102307283, -46.94524593854692, 207.74290713728726, -47.6878716484522, -48.569968991896765, -171.69190727185887, -142.94666727168223, -52.22034274036116]
 
-        
+%experim4 K_P = 0.243; K_I = 63; K_D = 0.00126;
+freq_vec = [1.25, 1.6, 100.0, 10.0, 13.0, 16.0, 1.0, 2.5, 20.0, 25.0, 2.0, 32.0, 3.0, 40.0, 4.0, 50.0, 5.0, 6.3, 63.0, 80.0, 8.0]
+amplitude_factor_l = [0.7601896652627596, 0.744343848109167, 0.007951997355989955, 0.8550712064038017, 0.9661471221820586, 1.1336734397483565, 0.7750527091865916, 0.7045265998811632, 1.5910843452341281, 2.232869271026134, 0.7238940008521587, 1.1701038845395058, 0.6933593325946599, 0.45486120775583777, 0.6934159970289575, 0.17023098271826864, 0.7028216272421962, 0.719649955213483, 0.07137902432654318, 0.02015130350108083, 0.7692242649389266]
+phasediff_l = [-31.70998717394236, -30.997229961071668, 178.71648406608347, -38.9593250415772, -40.71144281092042, -44.773124817912084, -33.68977306592595, -28.780400415112638, -56.23587584823737, -105.48693487751852, -30.092770250653615, 200.42078921821667, -28.243049588774838, 178.61588021261676, -26.85340089109842, -209.41666148132595, -26.5848015560761, -26.700004175701906, 143.85613219256902, -214.36946988114835, -27.907238612122665]
+amplitude_factor_r = [0.5689989395716576, 0.5617325101772804, 0.007776265258003794, 0.8029992123311501, 0.9464257370896573, 1.1526341426969926, 0.5785204419285449, 0.5532277313962409, 1.3447645633183067, 0.8824941058460577, 0.5614300301366614, 0.3641910481977869, 0.559547748476853, 0.15015302509012513, 0.5775600081766765, 0.06253738840283483, 0.6203363631335826, 0.7162023153846844, 0.030795999786399905, 0.01799758810505321, 0.8649445483391283]
+phasediff_r = [-37.92212835769355, -35.92458858071234, 170.56374297883235, -53.33463407055997, -58.99421538328227, -69.60421091852015, -39.68418166137866, -33.94187467637505, -98.4018128491575, -137.08806777246366, -35.02207449587998, 200.3900476873477, -32.65067485764229, 191.89839514220412, -31.894944065586596, -170.6386923024231, -32.63408572631705, -34.7105469868994, -175.79833248234146, -191.51265666131337, -38.095308266568296]
 
+        
 
 phasediff_l = -(phasediff_l>0)*360 + phasediff_l;
 phasediff_r = -(phasediff_r>0)*360 + phasediff_r;
@@ -57,34 +67,127 @@ phasediff_r = -(phasediff_r>0)*360 + phasediff_r;
 
 
 if BOOL_SEVERAL_PLOTS
-    for k = 1:length(spring_damping_vec)
-        b_sp = spring_damping_vec(k)
-        s = tf('s');
-        %z = tf('z',dT)
-        %s = (1-z^-1)/dT
-        
-        % operator:
-        % blocked by walls
-        %my_transfer = tf(um_gain*(K_P + K_D*s +K_I/s)*K_PID2Vardu*K_ampl*K_tau/(-J_T*s^2*n/L_CL*(L_a*s+R_a) - (k_eq + b_sp*s)*L_CL/n*(L_a*s+R_a) - K_emf*s*n/L_CL*K_tau  + um_gain*(K_P + K_D*s +K_I/s)*K_PID2Vardu*K_ampl*K_tau))
-        a = um_gain*(K_P + K_D*s + K_I/s);
-        b = K_PID2Vardu*K_ampl;
-        c = -n/L_CL;
-        d = (L_a*s + R_a);
-        e = (k_eq + b_sp*s)*L_CL/n;
-        my_transfer = tf(K_tau*a*b/(c*d*s^2*J_T - e*d + K_emf*K_tau*c*s + a*b*K_tau))
-        %Plot figure and save
+    if BOOL_ITERATE_KEQ
+        for k = 1:length(spring_stiffness_vec)
+            k_eq = spring_stiffness_vec(k)
+            b_sp = 300
+            s = tf('s');
+            %z = tf('z',dT)
+            %s = (1-z^-1)/dT
+
+            % operator:
+            % blocked by walls
+            %my_transfer = tf(um_gain*(K_P + K_D*s +K_I/s)*K_PID2Vardu*K_ampl*K_tau/(-J_T*s^2*n/L_CL*(L_a*s+R_a) - (k_eq + b_sp*s)*L_CL/n*(L_a*s+R_a) - K_emf*s*n/L_CL*K_tau  + um_gain*(K_P + K_D*s +K_I/s)*K_PID2Vardu*K_ampl*K_tau))
+            a = um_gain*(K_P + K_D*s + K_I/s);
+            b = K_PID2Vardu*K_ampl;
+            c = -n/L_CL;
+            d = (L_a*s + R_a);
+            e = (k_eq + b_sp*s)*L_CL/n;
+            my_transfer = tf(K_tau*a*b/(c*d*s^2*J_T - e*d + K_emf*K_tau*c*s + a*b*K_tau))
+            %Plot figure and save
+            fig = figure('units','normalized','outerposition',[0 0 1 1]);%,'DefaultAxesFontSize',36
+            %semilogx(f_sort, 20*log10(amplitude_factor_l(I')), '*-', 'Color', 'r')
+            %hold on
+            %semilogx(f_sort, 20*log10(amplitude_factor_r(I')), '*-', 'Color', 'k')
+            PlotHandle= bodeplot(my_transfer);
+            %semilogx(f_sort, phasediff_l(I'), '*-', 'Color', 'r')
+            %semilogx(f_sort, phasediff_r(I'), '*-', 'Color', 'k')
+            %title(['Spring damping: ' num2str(spring_damping_vec(k))
+            %'Ns/m'],'fontsize',20)
+            h = gcr
+            ylims{1} = [-50, 10];
+            ylims{2} = [-250, 10];
+            setoptions(h,'FreqUnits','Hz','YLimMode','manual','YLim',ylims);
+            set(findall(fig, 'type','axes'),'fontsize',16)
+            PlotOptions= getoptions(PlotHandle);
+            PlotOptions.Title.String= '';
+            PlotOptions.XLabel.FontSize= 20;
+            PlotOptions.YLabel.FontSize= 20;
+            PlotHandle.setoptions(PlotOptions)
+            legend(strcat('Analytical: k_{eq} = ', num2str(spring_stiffness_vec(k)), 'N/m'), 'Location', 'SouthWest')
+
+            set(findall(gcf,'Type','line'),'LineWidth',4)
+            xlim([1 120])
+            grid on
+            hold on
+            filename = ['figures/bode_sp_stiff' num2str(spring_stiffness_vec(k))];%backward_
+            saveas(gcf, [filename  '.jpg'])
+            dot_pos = strfind(filename,'.');
+            if (dot_pos)
+                saveas(gcf, [filename(1:dot_pos-1) filename(dot_pos+1:end)  '.m'])
+            else
+                saveas(gcf, [filename  '.m'])
+            end
+            close(fig)
+        end
+    else
+              
+        for k = 1:length(spring_damping_vec)
+            b_sp = spring_damping_vec(k)
+            s = tf('s');
+            %z = tf('z',dT)
+            %s = (1-z^-1)/dT
+
+            % operator:
+            % blocked by walls
+            %my_transfer = tf(um_gain*(K_P + K_D*s +K_I/s)*K_PID2Vardu*K_ampl*K_tau/(-J_T*s^2*n/L_CL*(L_a*s+R_a) - (k_eq + b_sp*s)*L_CL/n*(L_a*s+R_a) - K_emf*s*n/L_CL*K_tau  + um_gain*(K_P + K_D*s +K_I/s)*K_PID2Vardu*K_ampl*K_tau))
+            a = um_gain*(K_P + K_D*s + K_I/s);
+            b = K_PID2Vardu*K_ampl;
+            c = -n/L_CL;
+            d = (L_a*s + R_a);
+            e = (k_eq + b_sp*s)*L_CL/n;
+            my_transfer = tf(K_tau*a*b/(c*d*s^2*J_T - e*d + K_emf*K_tau*c*s + a*b*K_tau))
+            %Plot figure and save
+            fig = figure('units','normalized','outerposition',[0 0 1 1]);%,'DefaultAxesFontSize',36
+            semilogx(f_sort, 20*log10(amplitude_factor_l(I')), '*-', 'Color', 'r')
+            hold on
+            semilogx(f_sort, 20*log10(amplitude_factor_r(I')), '*-', 'Color', 'k')
+            PlotHandle= bodeplot(my_transfer);
+            semilogx(f_sort, phasediff_l(I'), '*-', 'Color', 'r')
+            semilogx(f_sort, phasediff_r(I'), '*-', 'Color', 'k')
+            %title(['Spring damping: ' num2str(spring_damping_vec(k))
+            %'Ns/m'],'fontsize',20)
+            h = gcr
+            ylims{1} = [-50, 10];
+            ylims{2} = [-250, 10];
+            setoptions(h,'FreqUnits','Hz','YLimMode','manual','YLim',ylims);
+            set(findall(fig, 'type','axes'),'fontsize',16)
+            PlotOptions= getoptions(PlotHandle);
+            PlotOptions.Title.String= '';
+            PlotOptions.XLabel.FontSize= 20;
+            PlotOptions.YLabel.FontSize= 20;
+            PlotHandle.setoptions(PlotOptions)
+            legend(strcat('Analytical: b_{sp} = ', num2str(spring_damping_vec(k)), 'Ns/m'), 'Experimental data left','Experimental data right', 'Location', 'SouthWest')
+
+            set(findall(gcf,'Type','line'),'LineWidth',4)
+            xlim([1 120])
+            grid on
+            hold on
+            filename = ['figures/bode_sp_damp' num2str(spring_damping_vec(k))];%backward_
+            saveas(gcf, [filename  '.jpg'])
+            dot_pos = strfind(filename,'.');
+            if (dot_pos)
+                saveas(gcf, [filename(1:dot_pos-1) filename(dot_pos+1:end)  '.m'])
+            else
+                saveas(gcf, [filename  '.m'])
+            end
+            close(fig)
+        end 
+    end
+else
+    if BOOL_ITERATE_KEQ
+        k =1;
+        b_sp = 300
+        k_eq = spring_stiffness_vec(k)
+        my_transfer = tf(um_gain*(K_P + K_D*s +K_I/s)*K_PID2Vardu*K_ampl*K_tau/(-J_T*s^2*n/L_CL*(L_a*s+R_a) - (k_eq + b_sp*s)*L_CL/n*(L_a*s+R_a) - K_emf*s*n/L_CL*K_tau  + um_gain*(K_P + K_D*s +K_I/s)*K_PID2Vardu*K_ampl*K_tau));
         fig = figure('units','normalized','outerposition',[0 0 1 1]);%,'DefaultAxesFontSize',36
-        semilogx(f_sort, 20*log10(amplitude_factor_l(I')), '*-', 'Color', 'r')
+        semilogx(f_sort, 20*log10(amplitude_factor_l(I')), '*-', 'Color', 'k')
         hold on
-        semilogx(f_sort, 20*log10(amplitude_factor_r(I')), '*-', 'Color', 'k')
         PlotHandle= bodeplot(my_transfer);
-        semilogx(f_sort, phasediff_l(I'), '*-', 'Color', 'r')
-        semilogx(f_sort, phasediff_r(I'), '*-', 'Color', 'k')
-        %title(['Spring damping: ' num2str(spring_damping_vec(k))
-        %'Ns/m'],'fontsize',20)
+        semilogx(f_sort, phasediff_l(I'), '*-', 'Color', 'k')
         h = gcr
-        ylims{1} = [-50, 10];
-        ylims{2} = [-225, 10];
+        ylims{1} = [-40, 10];
+        ylims{2} = [-225, 0];
         setoptions(h,'FreqUnits','Hz','YLimMode','manual','YLim',ylims);
         set(findall(fig, 'type','axes'),'fontsize',16)
         PlotOptions= getoptions(PlotHandle);
@@ -92,59 +195,63 @@ if BOOL_SEVERAL_PLOTS
         PlotOptions.XLabel.FontSize= 20;
         PlotOptions.YLabel.FontSize= 20;
         PlotHandle.setoptions(PlotOptions)
-        legend(strcat('Analytical: b_{sp} = ', num2str(spring_damping_vec(k)), 'Ns/m'), 'Experimental data left','Experimental data right', 'Location', 'SouthWest')
-        
-        set(findall(gcf,'Type','line'),'LineWidth',4)
-        xlim([1 120])
-        grid on
-        hold on
-        filename = ['figures/bode_sp_damp' num2str(spring_damping_vec(k))];%backward_
-        saveas(gcf, [filename  '.png'])
-        dot_pos = strfind(filename,'.');
-        if (dot_pos)
-            saveas(gcf, [filename(1:dot_pos-1) filename(dot_pos+1:end)  '.m'])
-        else
-            saveas(gcf, [filename  '.m'])
-        end
-        close(fig)
-    end 
-else
-    k =1;
-    b_sp = spring_damping_vec(k)
-    my_transfer = tf(um_gain*(K_P + K_D*s +K_I/s)*K_PID2Vardu*K_ampl*K_tau/(-J_T*s^2*n/L_CL*(L_a*s+R_a) - (k_eq + b_sp*s)*L_CL/n*(L_a*s+R_a) - K_emf*s*n/L_CL*K_tau  + um_gain*(K_P + K_D*s +K_I/s)*K_PID2Vardu*K_ampl*K_tau));
-    fig = figure('units','normalized','outerposition',[0 0 1 1]);%,'DefaultAxesFontSize',36
-    semilogx(f_sort, 20*log10(amplitude_factor_l(I')), '*-', 'Color', 'k')
-    hold on
-    PlotHandle= bodeplot(my_transfer);
-    semilogx(f_sort, phasediff_l(I'), '*-', 'Color', 'k')
-    h = gcr
-    ylims{1} = [-40, 10];
-    ylims{2} = [-225, 0];
-    setoptions(h,'FreqUnits','Hz','YLimMode','manual','YLim',ylims);
-    set(findall(fig, 'type','axes'),'fontsize',16)
-    PlotOptions= getoptions(PlotHandle);
-    PlotOptions.Title.String= '';
-    PlotOptions.XLabel.FontSize= 20;
-    PlotOptions.YLabel.FontSize= 20;
-    PlotHandle.setoptions(PlotOptions)
 
-    xlim([1 120])
-    grid on 
-    %hold on
-    s = tf('s');
-    for k = 2:length(spring_damping_vec)
+        xlim([1 120])
+        grid on 
+        %hold on
+        s = tf('s');
+        for k = 2:length(spring_stiffness_vec)
+            k_eq = spring_stiffness_vec(k)
+            % operator:
+            % blocked by walls
+            my_transfer = tf(um_gain*(K_P + K_D*s +K_I/s)*K_PID2Vardu*K_ampl*K_tau/(-J_T*s^2*n/L_CL*(L_a*s+R_a) - (k_eq + b_sp*s)*L_CL/n*(L_a*s+R_a) - K_emf*s*n/L_CL*K_tau  + um_gain*(K_P + K_D*s +K_I/s)*K_PID2Vardu*K_ampl*K_tau))
+            bodeplot(my_transfer);
+        end
+        legendCell = cellstr(num2str(spring_stiffness_vec', 'k_{eq}=%-d N/m'))
+        legend([legendCell(1)', 'Experimental Data', legendCell(2:end)']', 'Location', 'southwest')
+        set(findall(gcf,'Type','line'),'LineWidth',4)
+        %Plot figure and save
+        filename = ['figures/bode_all_combined'];
+        saveas(gcf, [filename  '.jpg'])
+        saveas(gcf, [filename  '.m'])
+    else
+        k =1;
         b_sp = spring_damping_vec(k)
-        % operator:
-        % blocked by walls
-        my_transfer = tf(um_gain*(K_P + K_D*s +K_I/s)*K_PID2Vardu*K_ampl*K_tau/(-J_T*s^2*n/L_CL*(L_a*s+R_a) - (k_eq + b_sp*s)*L_CL/n*(L_a*s+R_a) - K_emf*s*n/L_CL*K_tau  + um_gain*(K_P + K_D*s +K_I/s)*K_PID2Vardu*K_ampl*K_tau))
-        bodeplot(my_transfer);
+        my_transfer = tf(um_gain*(K_P + K_D*s +K_I/s)*K_PID2Vardu*K_ampl*K_tau/(-J_T*s^2*n/L_CL*(L_a*s+R_a) - (k_eq + b_sp*s)*L_CL/n*(L_a*s+R_a) - K_emf*s*n/L_CL*K_tau  + um_gain*(K_P + K_D*s +K_I/s)*K_PID2Vardu*K_ampl*K_tau));
+        fig = figure('units','normalized','outerposition',[0 0 1 1]);%,'DefaultAxesFontSize',36
+        semilogx(f_sort, 20*log10(amplitude_factor_l(I')), '*-', 'Color', 'k')
+        hold on
+        PlotHandle= bodeplot(my_transfer);
+        semilogx(f_sort, phasediff_l(I'), '*-', 'Color', 'k')
+        h = gcr
+        ylims{1} = [-40, 10];
+        ylims{2} = [-225, 0];
+        setoptions(h,'FreqUnits','Hz','YLimMode','manual','YLim',ylims);
+        set(findall(fig, 'type','axes'),'fontsize',16)
+        PlotOptions= getoptions(PlotHandle);
+        PlotOptions.Title.String= '';
+        PlotOptions.XLabel.FontSize= 20;
+        PlotOptions.YLabel.FontSize= 20;
+        PlotHandle.setoptions(PlotOptions)
+
+        xlim([1 120])
+        grid on 
+        %hold on
+        s = tf('s');
+        for k = 2:length(spring_damping_vec)
+            b_sp = spring_damping_vec(k)
+            % operator:
+            % blocked by walls
+            my_transfer = tf(um_gain*(K_P + K_D*s +K_I/s)*K_PID2Vardu*K_ampl*K_tau/(-J_T*s^2*n/L_CL*(L_a*s+R_a) - (k_eq + b_sp*s)*L_CL/n*(L_a*s+R_a) - K_emf*s*n/L_CL*K_tau  + um_gain*(K_P + K_D*s +K_I/s)*K_PID2Vardu*K_ampl*K_tau))
+            bodeplot(my_transfer);
+        end
+        legend( [int2str(spring_damping_vec(1)); 'Exp'; int2str(spring_damping_vec(2:end)')], 'Location', 'southwest')
+        set(findall(gcf,'Type','line'),'LineWidth',4)
+        %Plot figure and save
+        filename = ['figures/bode_all_combined'];
+        saveas(gcf, [filename  '.jpg'])
+        saveas(gcf, [filename  '.m'])
     end
-    legend( [int2str(spring_damping_vec(1)); 'Exp'; int2str(spring_damping_vec(2:end)')], 'Location', 'southwest')
-    set(findall(gcf,'Type','line'),'LineWidth',4)
-    %Plot figure and save
-    filename = ['figures/bode_all_combined'];
-    saveas(gcf, [filename  '.png'])
-    saveas(gcf, [filename  '.m'])
 end
 
 
