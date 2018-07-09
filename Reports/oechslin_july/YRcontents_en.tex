@@ -61,8 +61,28 @@
 \newcommand{\YRachievement}{
 	
 	\section{Introduction}
-	This report is the continuation of the first two reports about the project "Haptic Feedback Controller with Palm Pressurization". The last report has left off with the idea of implementing a voltage follower and suggested to retake measurements to create a Bode diagram. Furthermore, it has been suggested to create an analytical model and analysis of the setup in order to run simulations to identify setup parameters such as the equivalent spring constant, gain values or motor parameters.
-	
+	This report is the continuation of the first two reports about the project "Haptic Feedback Controller with Palm Pressurization". The last report has stated the tracking behavior of a simple P- and PID-controlled device for a sine reference of various frequencies. Furthermore, it has suggested an experimentally identified equivalent spring damping coefficient which can be used to model the setup analytically.\\
+This report is first introducing a thorough literature research into the haptic teleoperated field of study. Then it will discuss the results of the tested controller and give advice on how to choose system and setup parameters for future and related work. 
+
+\section{Project Introduction}
+\subsection{Haptics}
+The Oxford Dictionaries defines haptics as 
+
+%\begin{displayquote}
+"Relating to the sense of touch, in particular relating to the perception and manipulation of objects using the senses of touch and proprioception." \cite{Oxford}
+%\end{displayquote}
+It dates the term back to the late 19th century	and states its origin from the greek words \textit{haptikos} meaning 'able to touch or grasp' and \textit{haptein}, 'fasten'.\\
+In engineering, the research in the haptic field has started to emerge in late nineteen-eighties \cite{srinivasan1995haptics}. Before that, man-machine interaction was mainly limited to keyboard and mouse input, which is rather unidirectional and passive and it soon has become clear that this requires a more skilled user for all kinds of operations. This directly leads to limitations in performance. Haptics can extend this unilateral interaction by providing tactile or kinesthetic information. This combination can overcome the users limitations and improve performances of high-precision tasks or high-force tasks drastically.\\
+\cite{hayward2004haptic} states, that even though the research in the haptic domain in the past ten years has significantly increased, further investigations are necessary for the "quest for realism", especially in medical telesurgical applications where realism is key to performance. Other application domains include space operations, manufacturing, physical rehabilitation, arts or simply entertainment related devices.\\
+\cite{adams1998stability} states the critical elements for stability of haptic setups, mainly focusing on haptic simulations. It also motivates exploration of alternative control techniques due to the unpredictability of the human operator and the environment model.
+%why haptics and what is it, needs identification
+
+%TODO stated already in april \subsection{Previous Research at Yamamoto's Lab}
+%what are the problems of the research before i came
+%TODO stated already in april \subsection{Literature Review}
+%what are some similar applications
+%TODO stated already in april \subsection{Project Scope}
+%what are my goals
 
 %	\begin{figure}[h!]
 %		\centering
@@ -86,6 +106,14 @@
 %		\caption{Setup parameters}
 %		\label{tab:setup_params}
 %	\end{figure}
+
+\section{Stability and Transparency Trade-Off}
+Even though the controller cannot be seen as a master-slave teleoperation setup, the problem settings of stability and transparency still apply. They are the main problems related to haptics and haptic teleoperation applications \cite{christiansson2007hard}. Often, the stability issues arise from master-slave mass mismatch and stiffness of the environment. But high inertia also poses problems for higher frequencies. In this research however, the masses and frequencies are relatively low. \\
+The stability of this controller can not only be affected by the control scheme and the mechanical setup, but also by the operator, whose grasp can render a system stable or unstable \cite{enayati2016haptics}. Additionally, communication delays can also cause instability.\\
+To gain insight of the stability, literature uses for example the root-locus method \cite{christiansson2006slave} or the notion of passivity. For haptics, it can generally be assumed that the operator is passive \cite{hogan1989controlling}. Alternatively, one can also use the real data of the implementation to subjectively feel the stability. Here, the latter approach has been chosen.
+
+%Hannaford shows that a cable driven hand-controller has similar frequency characteristics, where the resonance frequency is slightly more elevated than the SEA device.
+
 	
 
 \section{Discussion}	
