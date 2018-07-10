@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6630 64-bit) (preloaded format=latex 2018.4.26)  3 JUL 2018 17:09
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6630 64-bit) (preloaded format=latex 2018.4.26)  10 JUL 2018 09:36
 entering extended mode
 **./YReport_en.tex
 (YReport_en.tex
@@ -208,21 +208,33 @@ Underfull \hbox (badness 10000) has occurred while \output is active
 
 [1
 
-] (YReport_en.bbl)
+]
+Overfull \hbox (37.65334pt too wide) in paragraph at lines 35--35
+\OT1/cmr/m/n/10.95 To gain in-sight of the sta-bil-ity, lit-er-a-ture uses for 
+ex-am-ple the root-locus method [[]]
+ []
+
+File: YRmaterials/YReportP2.eps Graphic file (type eps)
+<YRmaterials/YReportP2.eps>
+Underfull \hbox (badness 10000) has occurred while \output is active
+[]
+ []
+
+[2] (YReport_en.bbl)
 File: YRmaterials/YReportP2.eps Graphic file (type eps)
  <YRmaterials/YReportP2.eps>
 Underfull \hbox (badness 10000) has occurred while \output is active
 []
  []
 
-[2] (YReport_en.aux) ) 
+[3] (YReport_en.aux) ) 
 Here is how much of TeX's memory you used:
- 1780 strings out of 493306
- 22523 string characters out of 3128523
- 108595 words of memory out of 3000000
- 5325 multiletter control sequences out of 15000+200000
- 11092 words of font info for 42 fonts, out of 3000000 for 9000
+ 1785 strings out of 493306
+ 22593 string characters out of 3128523
+ 113867 words of memory out of 3000000
+ 5329 multiletter control sequences out of 15000+200000
+ 11400 words of font info for 43 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 34i,18n,28p,534b,310s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 34i,18n,28p,669b,308s stack positions out of 5000i,500n,10000p,200000b,50000s
 
-Output written on YReport_en.dvi (2 pages, 232168 bytes).
+Output written on YReport_en.dvi (3 pages, 237360 bytes).

@@ -1,32 +1,45 @@
 \begin{thebibliography}{}
 
-\bibitem[Dutton et~al., 1997]{Dutton1997}
-Dutton, K., Thompson, S., and Barraclough, B. (1997).
-\newblock {\em The art of control engineering}.
-\newblock Addison Wesley Harlow.
+\bibitem[Oxf, ]{Oxford}
+Oxford online dictionaries.
 
-\bibitem[Junior et~al., 2016]{Junior2016}
-Junior, A. G.~L., de~Andrade, R.~M., and Bento~Filho, A. (2016).
-\newblock Series elastic actuator: Design, analysis and comparison.
-\newblock In {\em Recent Advances in Robotic Systems}. InTech.
+\bibitem[Adams et~al., 1998]{Adams1998}
+Adams, R.~J., Moreyra, M.~R., and Hannaford, B. (1998).
+\newblock Stability and performance of haptic displays: Theory and experiments.
+\newblock In {\em Proceedings ASME international mechanical engineering
+  congress and exhibition}, pages 227--234.
 
-\bibitem[Kuchenbecker et~al., 2003]{Kuchenbecker2003}
-Kuchenbecker, K.~J., Park, J.~G., and Niemeyer, G. (2003).
-\newblock Characterizing the human wrist for improved haptic interaction.
-\newblock In {\em ASME 2003 International Mechanical Engineering Congress and
-  Exposition}, pages 591--598. American Society of Mechanical Engineers.
+\bibitem[Christiansson et~al., 2006]{Christiansson2006}
+Christiansson, G.~A., Mulder, M., and Van Der~Helm, F.~C. (2006).
+\newblock Slave device stiffness and teleoperator stability.
+\newblock In {\em EuroHaptics Conference, Paris, France}. Citeseer.
 
-\bibitem[Park et~al., 2014]{Park2014}
-Park, J., Pa{\v{z}}in, N., Friedman, J., Zatsiorsky, V.~M., and Latash, M.~L.
-  (2014).
-\newblock Mechanical properties of the human hand digits: Age-related
-  differences.
-\newblock {\em Clinical Biomechanics}, 29(2):129--137.
+\bibitem[Christiansson, 2007]{Christiansson2007}
+Christiansson, G. A.~V. (2007).
+\newblock {\em Hard master, soft slave haptic teleoperation}.
+\newblock PhD thesis, TU Delft, Delft University of Technology.
 
-\bibitem[Speich et~al., 2005]{Speich2005}
-Speich, J.~E., Shao, L., and Goldfarb, M. (2005).
-\newblock Modeling the human hand as it interacts with a telemanipulation
-  system.
-\newblock {\em Mechatronics}, 15(9):1127--1142.
+\bibitem[Enayati et~al., 2016]{Enayati2016}
+Enayati, N., De~Momi, E., and Ferrigno, G. (2016).
+\newblock Haptics in robot-assisted surgery: challenges and benefits.
+\newblock {\em IEEE reviews in biomedical engineering}, 9:49--65.
+
+\bibitem[Hayward et~al., 2004]{Hayward2004}
+Hayward, V., Astley, O.~R., Cruz-Hernandez, M., Grant, D., and
+  Robles-De-La-Torre, G. (2004).
+\newblock Haptic interfaces and devices.
+\newblock {\em Sensor Review}, 24(1):16--29.
+
+\bibitem[Hogan, 1989]{Hogan1989}
+Hogan, N. (1989).
+\newblock Controlling impedance at the man/machine interface.
+\newblock In {\em Robotics and Automation, 1989. Proceedings., 1989 IEEE
+  International Conference on}, pages 1626--1631. IEEE.
+
+\bibitem[Srinivasan, 1995]{Srinivasan1995}
+Srinivasan, M.~A. (1995).
+\newblock What is haptics?
+\newblock {\em Laboratory for Human and Machine Haptics: The Touch Lab,
+  Massachusetts Institute of Technology}, pages 1--11.
 
 \end{thebibliography}
