@@ -33,9 +33,9 @@ const int OUTPUT_RANGE_R = 2 * MOTOR_MAX_VOLTAGE * OUTPUT_PER_VOLT / RIGHT_HAND_
 int error_left = 0;
 int last_error_left = 0;
 float sum_error_left = 0;
-const int PHOTO_MIN_LEFT = 36;
-const int PHOTO_MAX_LEFT = 850;
-const int MAX_DISPLACEMENT_UM = 1800; // [um], has been measured
+const int PHOTO_MIN_LEFT = 600;//290;
+const int PHOTO_MAX_LEFT = 810;//860;
+const int MAX_DISPLACEMENT_UM = 1800; // [um], RELIC, should be measured
 
 unsigned long TIME_BEGIN = 0;
 unsigned long TIME_NOW = 0;
@@ -87,7 +87,9 @@ void loop() {
     dist_ref = 0.99*dist_ref;// FIXME tune this param
   }
 
-  dist_ref = sine2dist(sine_signal);
+  //dist_ref = sine2dist(sine_signal);
+  dist_ref = joy_val_left * 100 / 255 * (MAX_DISPLACEMENT_UM / 100);
+  //dist_ref = joy_val_left / 255 * MAX_DISPLACEMENT_UM;
   error_left = dist_ref - sensor2dist(photo_value_left, PHOTO_MIN_LEFT, PHOTO_MAX_LEFT);
       
   int motor_output_left = k_p * error_left + k_i * sum_error_left + k_d * (error_left - last_error_left);
