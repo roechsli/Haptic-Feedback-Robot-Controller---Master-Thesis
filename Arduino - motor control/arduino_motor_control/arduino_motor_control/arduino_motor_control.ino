@@ -23,7 +23,7 @@ int testPin = 13; // Used for testing the speed of Arduino
 int controlPin = 6; // Used for checking the distance
 
 int dist_ref = 0;
-float FILTER_CST = 0.5;
+float FILTER_CST = 0.5;//FIXME play with this filter to have smooth behavior
 int OUTPUT_PER_VOLT = 255/5; // the arduino can output 5V max
 int MOTOR_MAX_VOLTAGE = 20; // change this according to motor
 int LEFT_HAND_AMPLIFIER_GAIN = 10;
@@ -97,7 +97,7 @@ void loop() {
 //  float k_p = 0.243;
 //  float k_i = 0.63;
 //  float k_d = 0.00126;
-  float k_p = 0.2;
+  float k_p = 0.3;
   float k_i = 0.0;
   float k_d = 0.0;
 
@@ -106,11 +106,11 @@ void loop() {
   Serial.write(joy_val_right); 
   Serial.write((joy_val_left + joy_val_right)%256); // this is the checksum
   if (Serial.available() > 0) {
-    dist_ref = (int)(FILTER_CST*dist_ref + (1-FILTER_CST)* Serial.read());
+    dist_ref = (int)(FILTER_CST*dist_ref + (1-FILTER_CST)* Serial.read()*(MAX_DISPLACEMENT_UM / 18) / 255 * 18);
   } else {
     //dist_ref = 0.99*dist_ref;// FIXME tune this param
   }
-
+  Serial.println(dist_ref);
   error_left = dist_ref - sensor2dist(photo_value_left_raw, PHOTO_MIN_LEFT, PHOTO_MAX_LEFT);
   error_right = dist_ref - sensor2dist(photo_value_right_raw, PHOTO_MIN_RIGHT, PHOTO_MAX_RIGHT);
   

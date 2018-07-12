@@ -322,7 +322,7 @@ void receive_arduino_msg() {
 void send_arduino_feedback() {
   // write the feedback according to the specified feedback_law to the arduino serial port
   float feedback = get_feedback(roll_angle, pitch_angle, crawler_current_left, crawler_current_right);
-  int arduino_feedback = (int) (feedback*1800);//FIXME this should be a constant
+  int arduino_feedback = (int) (feedback*255);//(feedback*1800);//FIXME this should be a constant
   if (!IGNORE_COM) arduinoPort.write(arduino_feedback);
   if (DEBUG) println("send feedback to arduino: " + arduino_feedback);
 }
