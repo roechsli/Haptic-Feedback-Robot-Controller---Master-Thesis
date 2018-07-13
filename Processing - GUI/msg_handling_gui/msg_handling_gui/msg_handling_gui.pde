@@ -80,7 +80,7 @@ void setup() {
   if (!IGNORE_COM) arduinoPort = new Serial(this, "COM3", 250000);//9600);
   if (!IGNORE_COM) crawlerPort = new Serial(this, "COM4", 250000);
   size(500, 500);
-  frameRate(50); // FIXME was 50
+  frameRate(50); // was 50
   println("Started up program!");
   if (IGNORE_COM) println("ignoring com ports");
   if (DEBUG) println("DEBUG MODE ON");
@@ -105,7 +105,7 @@ void draw() {
     warn_battery();
     send_over_serial(msg_stop);
   } else {
-    if (global_loop_counter == 5) { //FIXME was 5
+    if (global_loop_counter == 5) { //was 5
       global_loop_counter = 0;
       construct_msg();
       send_over_serial(my_msg);
