@@ -1,0 +1,7 @@
+scope measurements:
+
+Osc0: joystick (A0) in channel 1 and feedback (current mode) in channel 2
+Osc1: joystick (A0) in channel 1 and feedback (current mode) in channel 2
+Osc2: joystick (A0) in channel 1 and feedback (current mode) in channel 2
+Osc3: joystick (A0) in channel 1 and feedback (current mode) in channel 2; dist sensor (A2) in channel 3
+Osc3: joystick (A0) in channel 1 and feedback (current mode) in channel 2; dist sensor (A2) in channel 3 (needs to be converted to real distance)

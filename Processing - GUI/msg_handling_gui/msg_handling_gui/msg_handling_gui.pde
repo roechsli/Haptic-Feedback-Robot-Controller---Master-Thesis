@@ -11,7 +11,7 @@
  check if COMs available, otherwise it crashes
  limit current feedback when stopping abruptly
  robot behaves strangely when turning
- pc receives a lot of wrong msgs which changes feedback abruptly or driving mode
+ pc receives (very rarely) wrong msgs which changes feedback abruptly or driving mode
  test different baud rates and check how smoothly it runs (also update frequency)
  
  
@@ -19,7 +19,7 @@
  Bleulers comment: replace constant force output by vibrating to make it perceived more easily
  
  Bugs, Errors and FIXMEs
- maybe memory overuse?
+ sometimes it stops and goes
  battery should be warned first and if it consits, it has to be a major error
  
  */
@@ -69,7 +69,7 @@ final int FL_BR = 4; // forward left backward right
 int driving_mode = STOP_MODE;
 int feedback_law = 0; // 0 -> pitch + roll, 1 -> pitch*roll, 2 -> current
 int FEEDBACK_MAX = 3; // number of possible different feedback laws
-int SAFETY_FACTOR = 2; // factor by which final motor command is diveded by 2 (1 is appropriate)
+int SAFETY_FACTOR = 1; // factor by which final motor command is diveded by 2 (1 is appropriate)
 int ARDU_MSG_SHIFT = 2; // allows to shift msg by 2
 
 int global_loop_counter = 0;
@@ -80,7 +80,7 @@ void setup() {
   if (!IGNORE_COM) arduinoPort = new Serial(this, "COM3", 250000);//9600);
   if (!IGNORE_COM) crawlerPort = new Serial(this, "COM4", 250000);
   size(500, 500);
-  frameRate(50);
+  frameRate(50); // FIXME was 50
   println("Started up program!");
   if (IGNORE_COM) println("ignoring com ports");
   if (DEBUG) println("DEBUG MODE ON");
@@ -105,7 +105,7 @@ void draw() {
     warn_battery();
     send_over_serial(msg_stop);
   } else {
-    if (global_loop_counter == 5) {
+    if (global_loop_counter == 5) { //FIXME was 5
       global_loop_counter = 0;
       construct_msg();
       send_over_serial(my_msg);

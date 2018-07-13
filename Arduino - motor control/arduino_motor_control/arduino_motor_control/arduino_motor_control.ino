@@ -17,8 +17,8 @@
 #define photo_left_pin A2
 #define joystick_right_pin A1
 #define photo_right_pin A3
-int motorPinLowGain = 3;    // Motor connected to digital pin 3 (PWM)
-int motorPinHighGain = 11;    // Motor connected to digital pin 11 (PWM)
+int motorPinLeft = 3;    // Motor connected to digital pin 3 (PWM)
+int motorPinRight = 11;    // Motor connected to digital pin 11 (PWM)
 int testPin = 13; // Used for testing the speed of Arduino
 int controlPin = 6; // Used for checking the distance
 
@@ -60,8 +60,8 @@ unsigned long TIME_CYCLE = 1000; // this is the time_step in [microseconds] that
 
 void setup() {
   Serial.begin(250000);
-  pinMode(motorPinLowGain, OUTPUT);
-  pinMode(motorPinHighGain, OUTPUT);
+  pinMode(motorPinLeft, OUTPUT);
+  pinMode(motorPinRight, OUTPUT);
   
   pinMode(joystick_left_pin, INPUT);
   pinMode(photo_left_pin, INPUT);
@@ -69,6 +69,8 @@ void setup() {
   pinMode(photo_right_pin, INPUT);
   pinMode(testPin, OUTPUT);
   pinMode(controlPin, OUTPUT);
+
+  pinMode(LED_BUILTIN, OUTPUT);
 
   TCCR2B = TCCR2B & B11111000 | B00000001; // for PWM frequency of 31372.55 Hz
   #if FASTADC
@@ -108,9 +110,9 @@ void loop() {
   if (Serial.available() > 0) {
     dist_ref = (int)(FILTER_CST*dist_ref + (1-FILTER_CST)* Serial.read()*(MAX_DISPLACEMENT_UM / 18) / 255 * 18);
   } else {
-    //dist_ref = 0.99*dist_ref;// FIXME tune this param
+    dist_ref = 0.99*dist_ref;// FIXME tune this param
   }
-  Serial.println(dist_ref);
+  //Serial.println(dist_ref);
   error_left = dist_ref - sensor2dist(photo_value_left_raw, PHOTO_MIN_LEFT, PHOTO_MAX_LEFT);
   error_right = dist_ref - sensor2dist(photo_value_right_raw, PHOTO_MIN_RIGHT, PHOTO_MAX_RIGHT);
   
@@ -133,17 +135,11 @@ void loop() {
   pwmValueLeftSym = pid2pwm_sym(des_mot_volt_left, OUTPUT_RANGE_L);
   pwmValueRightSym = pid2pwm_sym(des_mot_volt_right, OUTPUT_RANGE_R);
 
-  analogWrite(motorPinLowGain, pwmValueLeftSym);//pwmValueLeftSym
-  analogWrite(motorPinHighGain, pwmValueRightSym); //pwmValueRightSym
-
-  if (dist_ref < MIN_DIST_THRESH) { // set motor command and integral part to zero, if reference is 0
-    analogWrite(motorPinLowGain, 128);//pwmValueLeftSym
-    analogWrite(motorPinHighGain, 128); //pwmValueRightSym
-    sum_error_left = 0;
-    sum_error_right = 0;
-  }
+  analogWrite(motorPinLeft, pwmValueLeftSym);//pwmValueLeftSym
+  analogWrite(motorPinRight, pwmValueRightSym); //pwmValueRightSym
 
   //Serial.println(sensor2dist(photo_value_right_raw, PHOTO_MIN_RIGHT, PHOTO_MAX_RIGHT));// for debugging purposes in serial monitor mode
+  //Serial.println(photo_value_left_raw);
  
   while ((micros() - TIME_BEGIN) < TIME_CYCLE) {  } // do nothing until we reach the time step of TIME_CYCLE
   digitalWrite(testPin, LOW); 
