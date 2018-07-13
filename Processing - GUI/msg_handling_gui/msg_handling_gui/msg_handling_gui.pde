@@ -3,15 +3,15 @@
  //  Author: Roman Oechslin
  //  Master project - haptic feedback controller - Yamamoto's lab, Uni Tokyo
  //  
- //  Date 2018/05/09
- //  Version 1.01
+ //  Date 2018/07/03
+ //  Version 1.02
  
  Todo:
  replace magic numbers with constants
  check if COMs available, otherwise it crashes
  limit current feedback when stopping abruptly
  robot behaves strangely when turning
- pc receives a lot of wrong msgs which changes feedback abruptly or driving mode
+ pc receives (very rarely) wrong msgs which changes feedback abruptly or driving mode
  test different baud rates and check how smoothly it runs (also update frequency)
  
  
@@ -19,8 +19,8 @@
  Bleulers comment: replace constant force output by vibrating to make it perceived more easily
  
  Bugs, Errors and FIXMEs
- maybe memory overuse?
- battery should be warned first and if it consits, it has to be a major error, ykwim
+ sometimes it stops and goes
+ battery should be warned first and if it consits, it has to be a major error
  
  */
 
@@ -69,7 +69,7 @@ final int FL_BR = 4; // forward left backward right
 int driving_mode = STOP_MODE;
 int feedback_law = 0; // 0 -> pitch + roll, 1 -> pitch*roll, 2 -> current
 int FEEDBACK_MAX = 3; // number of possible different feedback laws
-int SAFETY_FACTOR = 0; // factor by which final motor command is diveded by 2 (1 is appropriate)
+int SAFETY_FACTOR = 1; // factor by which final motor command is diveded by 2 (1 is appropriate)
 int ARDU_MSG_SHIFT = 2; // allows to shift msg by 2
 
 int global_loop_counter = 0;
@@ -77,10 +77,10 @@ boolean critical_battery_level = false; // is true when voltage drops below 11.5
 
 void setup() {
   // setup loop
-  if (!IGNORE_COM) arduinoPort = new Serial(this, "COM3", 115200);//9600);
-  if (!IGNORE_COM) crawlerPort = new Serial(this, "COM4", 115200);
+  if (!IGNORE_COM) arduinoPort = new Serial(this, "COM3", 250000);//9600);
+  if (!IGNORE_COM) crawlerPort = new Serial(this, "COM4", 250000);
   size(500, 500);
-  frameRate(50);
+  frameRate(50); // FIXME was 50
   println("Started up program!");
   if (IGNORE_COM) println("ignoring com ports");
   if (DEBUG) println("DEBUG MODE ON");
@@ -105,7 +105,7 @@ void draw() {
     warn_battery();
     send_over_serial(msg_stop);
   } else {
-    if (global_loop_counter == 5) {
+    if (global_loop_counter == 5) { //FIXME was 5
       global_loop_counter = 0;
       construct_msg();
       send_over_serial(my_msg);
@@ -239,7 +239,7 @@ void receive_arduino_msg() {
 
   while (!IGNORE_COM && arduinoPort.available() > 0 && counter < ARDU_MSG_LENGTH + ARDU_MSG_SHIFT) {
     received_msg[counter] = arduinoPort.read();
-    if (DEBUG) println("read " + counter + " as " + received_msg[counter]);
+    //if (DEBUG) println("read " + counter + " as " + received_msg[counter]);
     counter++;
   }
   
@@ -252,6 +252,7 @@ void receive_arduino_msg() {
     if (shift < ARDU_MSG_SHIFT) {
       joystick_value_left = received_msg[shift];
       joystick_value_right = received_msg[1 + shift];
+      //if (DEBUG) println("received: " + joystick_value_left + " and " + joystick_value_right);
     } else { //checksum does not check
       if (DEBUG) println("i did not find anything");
       return;
@@ -321,9 +322,9 @@ void receive_arduino_msg() {
 void send_arduino_feedback() {
   // write the feedback according to the specified feedback_law to the arduino serial port
   float feedback = get_feedback(roll_angle, pitch_angle, crawler_current_left, crawler_current_right);
-  int arduino_feedback = (int) (feedback*255);
+  int arduino_feedback = (int) (feedback*255);//(feedback*1800);//FIXME this should be a constant
   if (!IGNORE_COM) arduinoPort.write(arduino_feedback);
-  if (VERBOSE) println("send feedback to arduino: " + arduino_feedback);
+  if (DEBUG) println("send feedback to arduino: " + arduino_feedback);
 }
 
 void receive_robot_msg() {
