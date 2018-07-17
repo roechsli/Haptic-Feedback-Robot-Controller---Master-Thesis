@@ -35,6 +35,8 @@ int last_error_left = 0;
 float sum_error_left = 0;
 const int PHOTO_MIN_LEFT = 600;//290;
 const int PHOTO_MAX_LEFT = 810;//860;
+const int PHOTO_MIN_RIGHT = 600;//290;
+const int PHOTO_MAX_RIGHT = 790;//860;
 const int MAX_DISPLACEMENT_UM = 1800; // [um], RELIC, should be measured
 
 unsigned long TIME_BEGIN = 0;
