@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6630 64-bit) (preloaded format=latex 2018.4.26)  17 JUL 2018 17:47
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6630 64-bit) (preloaded format=latex 2018.4.26)  17 JUL 2018 18:01
 entering extended mode
 **./YReport_en.tex
 (YReport_en.tex
@@ -214,12 +214,11 @@ Overfull \hbox (47.38667pt too wide) in paragraph at lines 35--35
 r ex-am-ple the root-locus method [[]]
  []
 
-
-LaTeX Warning: Citation `Fry2018' on page 2 undefined on input line 35.
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 35--35
-
+File: Figs/topy_robot.eps Graphic file (type eps)
+<Figs/topy_robot.eps>
+Overfull \hbox (13.401pt too wide) in paragraph at lines 35--35
+\OT1/cmr/m/n/10.95 cate with the Topy robot. The com-mu-ni-ca-tion soft-ware wa
+s writ-ten in pro-cess-ing [[]]
  []
 
 
@@ -228,17 +227,21 @@ Underfull \hbox (badness 10000) in paragraph at lines 35--35
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 35--35
-
- []
+Underfull \vbox (badness 2005) has occurred while \output is active []
 
 File: YRmaterials/YReportP2.eps Graphic file (type eps)
+
 <YRmaterials/YReportP2.eps>
 Underfull \hbox (badness 10000) has occurred while \output is active
 []
  []
 
 [2]
+Underfull \hbox (badness 10000) in paragraph at lines 35--35
+
+ []
+
+
 Underfull \hbox (badness 10000) in paragraph at lines 35--35
 
  []
@@ -255,6 +258,24 @@ Underfull \hbox (badness 10000) has occurred while \output is active
  []
 
 [3]
+File: Figs/unity_test_setup.eps Graphic file (type eps)
+ <Figs/unity_test_setup.eps>
+Underfull \hbox (badness 10000) in paragraph at lines 35--35
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 35--35
+
+ []
+
+File: YRmaterials/YReportP2.eps Graphic file (type eps)
+<YRmaterials/YReportP2.eps>
+Underfull \hbox (badness 10000) has occurred while \output is active
+[]
+ []
+
+[4]
 Underfull \hbox (badness 10000) in paragraph at lines 35--35
 
  []
@@ -269,25 +290,13 @@ Underfull \hbox (badness 10000) has occurred while \output is active
 []
  []
 
-[4]
-Underfull \hbox (badness 10000) in paragraph at lines 35--35
-
- []
-
-
+[5]
 Underfull \hbox (badness 10000) in paragraph at lines 35--35
 
  []
 
 File: YRmaterials/YReportP2.eps Graphic file (type eps)
 <YRmaterials/YReportP2.eps>
-Underfull \hbox (badness 10000) has occurred while \output is active
-[]
- []
-
-[5]
-File: YRmaterials/YReportP2.eps Graphic file (type eps)
- <YRmaterials/YReportP2.eps>
 Underfull \hbox (badness 10000) has occurred while \output is active
 []
  []
@@ -299,18 +308,14 @@ Underfull \hbox (badness 10000) has occurred while \output is active
 []
  []
 
-[7] (YReport_en.aux)
-
-LaTeX Warning: There were undefined references.
-
- ) 
+[7] (YReport_en.aux) ) 
 Here is how much of TeX's memory you used:
- 1787 strings out of 493306
- 22613 string characters out of 3128523
- 137205 words of memory out of 3000000
- 5331 multiletter control sequences out of 15000+200000
+ 1797 strings out of 493306
+ 22810 string characters out of 3128523
+ 137693 words of memory out of 3000000
+ 5338 multiletter control sequences out of 15000+200000
  11400 words of font info for 43 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 34i,18n,28p,953b,308s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 34i,19n,28p,953b,308s stack positions out of 5000i,500n,10000p,200000b,50000s
 
-Output written on YReport_en.dvi (7 pages, 254244 bytes).
+Output written on YReport_en.dvi (7 pages, 254808 bytes).

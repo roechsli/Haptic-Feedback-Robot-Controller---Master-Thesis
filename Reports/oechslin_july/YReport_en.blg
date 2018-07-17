@@ -3,7 +3,6 @@ The style file: apalike.bst
 Database file #1: ../my_bib.bib
 Warning--entry type for "Oxford" isn't style-file defined
 --line 176 of file ../my_bib.bib
-Warning--I didn't find a database entry for "Fry2018"
 Warning--to sort, need author or key in Oxford
 Warning--empty year in Oxford
-(There were 4 warnings)
+(There were 3 warnings)

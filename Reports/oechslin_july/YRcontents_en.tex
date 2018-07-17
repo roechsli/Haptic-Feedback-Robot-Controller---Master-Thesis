@@ -84,12 +84,6 @@ In engineering, the research in the haptic field has started to emerge in late n
 %TODO stated already in april \subsection{Project Scope}
 %what are my goals
 
-%	\begin{figure}[h!]
-%		\centering
-%		\includegraphics[width=0.6\linewidth]{Figs/mechanical_schematic}
-%		\caption{Simplified mechanical schematic of the actuation system with the stimulator.}
-%		\label{fig:mechanical_schematic}
-%	\end{figure}
 
 
 %	\begin{figure}[h!]
@@ -115,7 +109,13 @@ To gain insight into the stability, literature uses for example the root-locus m
 %Hannaford shows that a cable driven hand-controller has similar frequency characteristics, where the resonance frequency is slightly more elevated than the SEA device.
 
 \section{PlayStation-Controller Testing}
-After the theoretical analysis and model identification of the PlayStation-controller, the setup has been put to the test. At first, the controller has been connected to the computer to communicate with the Topy robot. The communication software was written in processing \cite{Fry2018} and is explained in a different section.\\ %TODO write about the software somewhere
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.6\linewidth]{Figs/topy_robot}
+	\caption{Topy robot for real-world controller test setup.}
+	\label{fig:topy_robot}
+\end{figure}
+After the theoretical analysis and model identification of the PlayStation-controller, the setup has been put to the test. At first, the controller has been connected to the computer to communicate with the Topy robot. The communication software was written in processing \cite{Fry2018} and is explained in a different section.\\ %TODO write about the software somewhere, reference here
 \subsection{Latency}
 The controller was successfully able to navigate the robot, if with a delay of roughly $700$ms. The commercial controller, that was developed for the Topy robot, also had a certain delay of almost $500$ms. This delay is the difference between the instant when the joystick is pushed forward, and the moment when the robot starts moving. The feedback methods that have been tested varied between a pure pitch feedback, a combined pitch and roll feedback and a current consumption feedback law. \\%TODO state the feedback laws and reference here
 %TODO create figure here for command delay
@@ -127,13 +127,19 @@ The proportional control scheme is already capable of giving an intuitive feedba
 Both control schemes are stable for various grips and feedback values, but in some cases one can feel and hear a slight instability in the PID-controlled setup. This suggests that the gains are not optimal and that they can further be tuned in future research. However, it is not possible to render the setup instable even when the user is deliberately trying to do so, acting as a non-passive element. 
 
 \subsection{General Performance}
-%output force
 The overall performance evaluation of this controller is rather subjective. The output force of the SEA setup is much bigger than for the voice-coil implementation, as it has been foreseen in the design phase. Since the output force is distributed over the whole area of contact of the stimulators, the user technically feels a pressure instead of the force itself. However, one can call the feedback a pseudo-force as it has been shown in the previous research of this project \cite{Asada2016}. One important psychological aspect is the area of the stimulators. If they are too big, the pressure is much wweaker and the pseudo-force is too weak. If the area is too small, the feedback becomes punctual and the edges distort the feeling of the feedback, making it uncomfortable to use and anti-intuitive. In this controller design the stimulators have the right ratio between output force and area of contact.\\
 Another psychological aspect is the direction of the feedback. This controller has an angle of roughly $ 115^\circ$ with respect to the operator's orientation. During operation the forces tend to push the palms outwards which is not entirely intuitive if one is expecting a force opposing the movement of the robot ($180 ^\circ$). This however depends strongly on the target application and the controller design can be well-suited for other environments.\\ %TODO state this somewhere (drones, bagger, car, etc.)
 
 The biggest issue in this test setup though, is the delay of the command messages. In order to get an idea of the delay of the mechanical setup (the SEA implementation) the controller has also been tested in a purely simulated environment. This eliminates all potential delays in communication between robot and controller and the results and evaluation can be seen in the next section.
 
 \subsection{Unity Simulation}
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.6\linewidth]{Figs/unity_test_setup}
+	\caption{Unity simulation test setup.}
+	\label{fig:unity_test_setup}
+\end{figure}
+%TODO take picture to show test setup
 For testing the controller in the simulated world, the Unity program from the previous research of this project has been used. With minor modifications of the control software, the controller could be tested with different feedback for the two stimulators. This time, only the combined roll-pitch feedback law has been used.\\
 Since all communication delays have been eliminated, the simulated tank reacted instantly to the user's command and its orientation angles is fed back. \\
 There is no latency feelable, neither when sending the commands, nor when receiving the feedback. The real-feel of the controller is better than before and even the maximum output force could be achieved when driving over the steep slopes of the environment. The range of the output force is appropriate for the desired feedback. And obstacles or slopes can be felt individually and intuitively on both sides.\\
