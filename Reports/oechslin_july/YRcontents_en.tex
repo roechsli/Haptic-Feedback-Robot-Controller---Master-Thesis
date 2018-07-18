@@ -118,7 +118,18 @@ To gain insight into the stability, literature uses for example the root-locus m
 After the theoretical analysis and model identification of the PlayStation-controller, the setup has been put to the test. At first, the controller has been connected to the computer to communicate with the Topy robot. The communication software was written in processing \cite{Fry2018} and is explained in a different section.\\ %TODO write about the software somewhere, reference here
 \subsection{Latency}
 The controller was successfully able to navigate the robot, if with a delay of roughly $700$ms. The commercial controller, that was developed for the Topy robot, also had a certain delay of almost $500$ms. This delay is the difference between the instant when the joystick is pushed forward, and the moment when the robot starts moving. The feedback methods that have been tested varied between a pure pitch feedback, a combined pitch and roll feedback and a current consumption feedback law. \\%TODO state the feedback laws and reference here
-%TODO create figure here for command delay
+The effect and magnitude of the command latency, but also of the feedback latency can be seen in figure \ref{fig:topy_playstation_latency_plot}.
+\section{PlayStation-Controller Testing}
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.6\linewidth]{Figs/topy_playstation_latency_plot}
+	\caption{Command and behavior of Topy robot with P-controlled PlayStation controller.}
+	\label{fig:topy_playstation_latency_plot}
+\end{figure}
+
+In this figure, several interesting things have to be mentioned. First of all, the delay between sending the commands and receiving the consumed current value, which is then used as feedback value, is of less than $700$ ms. The delay between the received feedback value and the response of the distance sensor is much smaller, namely $150$ ms on average.\\
+Also indicated on figure \ref{fig:topy_playstation_latency_plot}, one can see that the feedback has been turned off when driving backwards (negative joystick commands). However, in this scenario the feedback has been activated when standing still, ie. sending $0$ as driving speed. Since the robot is only sending the magnitude but not the direction of the current in the crawlers, the remaining current from the backward motion is fed back. This mode can easily be turned off, such that no feedback is felt when the robot is off. However, it is interesting to note, that the time between switching the command values and the reception of the feedback value has been reduced to roughly $50$ ms. This suggests that the delay when sending forward commands is due to internal design of the robot and has nothing to do with the controller designed in this project.\\
+
 \subsection{Real-Feel and Intuitiveness}
 Despite the command delay, the feedback from the robot can be felt almost instantly in the user's palms. It is, as soon as the robot is moving forward, one can feel the current building up in the current consumption feedback mode for example. \\
 The difference between the PID and P-controlled controllers is small, but can still be felt. In the PID-control scheme, one can feel an asymmetry between the left and right palms. This is due to the distance sensors that have different threshold values and the fact that the PID gains have been tuned for one side only. To avoid this asymmetry, it is recommended to identify different gains for the two sides or use sensors with more similar threshold values.\\
