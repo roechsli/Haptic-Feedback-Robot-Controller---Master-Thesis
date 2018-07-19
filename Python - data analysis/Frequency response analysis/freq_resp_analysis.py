@@ -11,7 +11,7 @@ from math import atan2
 
 PLOT_BOOL = True
 CALC_OPER_FREQ = False
-SHORT_CUT = True
+SHORT_CUT = False
 only_this_file = "f"  # change this to "f" if all frequencies shall be tested, otherwise "f2_csv"
 
 INTMAX = 65535
@@ -27,14 +27,20 @@ PHOTO_MAX_LEFT = 840
 PHOTO_MIN_RIGHT = 690
 PHOTO_MAX_RIGHT = 880
 MAX_DISPLACEMENT_UM = 1800
-"""
+
 PHOTO_MIN_LEFT = 640
 PHOTO_MAX_LEFT = 840
 PHOTO_MIN_RIGHT = 700
 PHOTO_MAX_RIGHT = 880
 MAX_DISPLACEMENT_UM = 1800
 directory = "20180704_fra_logs_PID_243_63_00126_1perc/"  # TODO change this if new data shall be analyzed
-
+"""
+PHOTO_MIN_LEFT = 550
+PHOTO_MAX_LEFT = 800
+PHOTO_MIN_RIGHT = 700
+PHOTO_MAX_RIGHT = 870
+MAX_DISPLACEMENT_UM = 3000
+directory = "20180719_fra_logs_pilot_P02/"  # TODO change this if new data shall be analyzed
 def get_freq_from_filename(filename):
     if filename[0] == "f" and filename[-8:] == "_csv.csv":
         return filename[1:-8]
@@ -138,14 +144,14 @@ for file in os.listdir(directory):
         plt.xlabel('Time [s]')
         plt.ylabel('Compression [mm]')
         #plt.axis([2, 3.6, -0.05, 0.5])
-        plt.axis([2, 3.6, 0.6, 1.2])
+        plt.axis([2, 3.6, 1.0, 4])
         plt.legend(["left sensor", "right sensor", "reference signal"])
         figure_directory = 'figs/f' + frequency
         if not os.path.exists(figure_directory):
             os.makedirs(figure_directory)
         fig.savefig(figure_directory + '/' + frequency + 'plot_zoom_fixed_time.jpg')
         #plt.axis([2, 2 + 3 / frequency_float, -0.05, 0.7])
-        plt.axis([2, 2 + 3 / frequency_float, 0.6, 1.2])
+        plt.axis([2, 2 + 3 / frequency_float, 1.0, 4])
         fig.savefig(figure_directory + '/' + frequency + 'plot_zoom.jpg')
         with open(figure_directory + '/' + frequency + '_raw.pkl', "wb") as fp:
             pickle.dump(fig, fp, protocol=4)

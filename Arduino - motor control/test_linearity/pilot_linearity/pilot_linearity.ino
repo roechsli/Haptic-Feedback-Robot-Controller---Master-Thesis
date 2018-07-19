@@ -33,11 +33,11 @@ const int OUTPUT_RANGE_R = 2 * MOTOR_MAX_VOLTAGE * OUTPUT_PER_VOLT / RIGHT_HAND_
 int error_left = 0;
 int last_error_left = 0;
 float sum_error_left = 0;
-const int PHOTO_MIN_LEFT = 600;//290;
-const int PHOTO_MAX_LEFT = 810;//860;
+const int PHOTO_MIN_LEFT = 550;//290;
+const int PHOTO_MAX_LEFT = 800;//860;
 const int PHOTO_MIN_RIGHT = 600;//290;
 const int PHOTO_MAX_RIGHT = 790;//860;
-const int MAX_DISPLACEMENT_UM = 1800; // [um], RELIC, should be measured
+const int MAX_DISPLACEMENT_UM = 3000; // [um], RELIC, should be measured
 
 unsigned long TIME_BEGIN = 0;
 unsigned long TIME_NOW = 0;
@@ -106,6 +106,8 @@ void loop() {
   Serial.println(dist_ref);
   Serial.print("my_dist: ");
   Serial.println(sensor2dist(photo_value_left, PHOTO_MIN_LEFT, PHOTO_MAX_LEFT));
+  Serial.print("pwm: ");
+  Serial.println(pwmValueLeftSym);
 
 
   analogWrite(motorPinHighGain, pwmValueLeftSym);//pwmValueLeftSym
