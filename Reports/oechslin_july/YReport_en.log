@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6630 64-bit) (preloaded format=latex 2018.4.26)  18 JUL 2018 13:39
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6630 64-bit) (preloaded format=latex 2018.4.26)  19 JUL 2018 16:51
 entering extended mode
 **./YReport_en.tex
 (YReport_en.tex
@@ -311,27 +311,51 @@ Underfull \hbox (badness 10000) has occurred while \output is active
  []
 
 [6]
+Underfull \hbox (badness 10000) in paragraph at lines 35--35
+
+ []
+
+File: YRmaterials/YReportP2.eps Graphic file (type eps)
+<YRmaterials/YReportP2.eps>
+Underfull \hbox (badness 10000) has occurred while \output is active
+[]
+ []
+
+[7]
+File: Figs/pilot_bode_P02.eps Graphic file (type eps)
+ <Figs/pilot_bode_P02.eps>
+Underfull \hbox (badness 10000) in paragraph at lines 35--35
+
+ []
+
+File: YRmaterials/YReportP2.eps Graphic file (type eps)
+<YRmaterials/YReportP2.eps>
+Underfull \hbox (badness 10000) has occurred while \output is active
+[]
+ []
+
+[8]
 File: YRmaterials/YReportP2.eps Graphic file (type eps)
  <YRmaterials/YReportP2.eps>
 Underfull \hbox (badness 10000) has occurred while \output is active
 []
  []
 
-[7] (YReport_en.bbl)
+[9] (YReport_en.bbl)
 File: YRmaterials/YReportP2.eps Graphic file (type eps)
  <YRmaterials/YReportP2.eps>
 Underfull \hbox (badness 10000) has occurred while \output is active
 []
  []
 
-[8] (YReport_en.aux) ) 
+[10] (YReport_en.aux) ) 
 Here is how much of TeX's memory you used:
- 1801 strings out of 493306
- 22967 string characters out of 3128523
- 140863 words of memory out of 3000000
- 5341 multiletter control sequences out of 15000+200000
+ 1806 strings out of 493306
+ 23086 string characters out of 3128523
+ 148123 words of memory out of 3000000
+ 5345 multiletter control sequences out of 15000+200000
  11400 words of font info for 43 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  34i,19n,28p,953b,308s stack positions out of 5000i,500n,10000p,200000b,50000s
 
-Output written on YReport_en.dvi (8 pages, 257060 bytes).
+Output written on YReport_en.dvi (10 pages, 262700 bytes).

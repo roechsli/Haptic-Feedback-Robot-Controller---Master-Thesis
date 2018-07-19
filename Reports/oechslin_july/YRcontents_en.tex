@@ -203,10 +203,55 @@ Also, it was necessary to have a voltage follower (a simple operational amplifie
 \section{Pilot Controller}
 Based on the framework from the previous section, a new controller has been devised, mainly focusing on a different design and on a more optimal feedback direction.
 
+\subsection{Working Principle (cam)}%TODO put text from april here
+Has already been stated in April's monthly report.
+
+\subsection{Design and Parameters}
+When designing this controller, the design of an airplane yoke has been used as a model. Therefore it is from now on called pilot controller. In order to have a nice fit to the palms, the circumference has been chosen to be close to the airplane yokes or conventional car steering wheels. The joysticks' position is such that the stimulator touches the same area of the palm as in the previous controller and research (Venus and Mars area of the hand). This time the feedback direction is perpendicular towards the user, which ensures a more intuitive feeling for the desired application.\\
+The most important parameters in this system are the length of the lever and the springs. For the prototype, the levers length has been fixed to roughly $100$ mm and a set of four springs with $1$ N/mm each have been used. Their length is $10$ mm and they have an allowable deflection ratio of $40$\%.\\
+The stimulators area is kept almost the same with $7.5$ cm$^2$.\\
+The motors play an important role again and for this design, the motors with the reduction gear of $33:1$ have been implemented.
+
+When designing the rotational cam part, a spiral-like freeform has been drawn to keep the angle-to-distance ratio as linear as possible. The operational range of the motor shaft is $110 ^\circ$. It is, the full stroke of the lever can be achieved by rotating the motor shaft and the attached rotation cam by this angle.\\
+
+The operational distance for the photoreceptors is between $11$ mm and $8$ mm. 
+Again the operational range of the photoreceptors can be identified.
+
+\begin{figure}[h!]
+	\centering
+	\begin{tabular}{|l|c|c|c|c|c|}
+		\hline
+		& Sensor reading & Distance & Sensor reading & Distance & Max output  \\
+		& MAX (rest) & (rest) & MIN (compression) & (compression) & force \\ \hline \hline
+		Left side & 800 & 11mm & 550 & 8mm & 12N \\ \hline
+		%Right side & 870 &2.2mm & 700 & 8mm & 10.8N \\ \hline
+	\end{tabular}
+	\caption{Identified operational range for the photoreceptors in the pilot controller.}
+	\label{tab:oper_range_pilot}
+\end{figure}
 %state the parameter choices that i have made based on previous findings
+\subsection{advantages and disadvantages}%TODO is this really necessary or can i write it under design and parameters
 %state advantages and disadvantages
+\subsection{Analytical results}
 %state analytical results (if available)
+\subsection{Frequency Response Analysis}
+Similar to the previous frequency response analysis, the controller has been tested when feeding a sine wave in the range of $1$ Hz up to $100$ Hz. The result for the P-controlled device can be seen in figure \ref{fig:pilot_bode_P02}
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.6\linewidth]{Figs/pilot_bode_P02}
+	\caption{Frequency response function of the P-controlled pilot controller.}
+	\label{fig:pilot_bode_P02}
+\end{figure}
+
+The bode diagram resembles the one of the previous setup, with the main difference, that it seems to be shifted towards lower frequencies. The phase offset changes almost linearly from $45 ^\circ$ to $200 ^\circ$. Analogously, it is argued that the initial phase lag for low frequencies stems from the different filters that have been implemented in the same manner. Regarding the magnitude plot however, it is important to note that the resonance frequency is much lower, namely $4$ Hz.\\
+
+In the current design of the pilot controller, the lever is roughly $100$ mm and has been fabricated using an $8$ mm thick poly-acetal plate. Due to the relative low thickness, the lever can deform and thus leads to an additional spring element in the system. Furthermore, the rotation cam is not coupled to the lever and thus cannot make pull it back in order to decrease the springs' compression, even if a negative voltage is applied. This leads to a lower overall performance and results in a lower resonance frequency.\\
+In order to deal with this issue, it is recommended to preload the lever that pulls it back faster than normal, or couple the rotational cam with the lever.
+
+\subsection{Pilot-Controller Testing}
 %state real feel, latency, transparency and stability
+\subsection{Outlook}
 %state possible improvements for future work
 
 
