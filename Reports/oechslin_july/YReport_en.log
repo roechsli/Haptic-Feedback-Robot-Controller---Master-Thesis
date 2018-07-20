@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6630 64-bit) (preloaded format=latex 2018.4.26)  19 JUL 2018 16:51
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6630 64-bit) (preloaded format=latex 2018.4.26)  20 JUL 2018 16:52
 entering extended mode
 **./YReport_en.tex
 (YReport_en.tex
@@ -237,16 +237,13 @@ Underfull \hbox (badness 10000) has occurred while \output is active
  []
 
 [2]
-File: Figs/topy_playstation_latency_plot.eps Graphic file (type eps)
- <Figs/topy_playstation_latency_plot.eps>
-Underfull \hbox (badness 10000) in paragraph at lines 35--35
+File: Figs/real_P_scope_13_latency_plot.eps Graphic file (type eps)
+ <Figs/real_P_scope_13_latency_plot.eps>
+File: Figs/real_PID_scope_14_latency_plot.eps Graphic file (type eps)
 
- []
+<Figs/real_PID_scope_14_latency_plot.eps>
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 35--35
-
- []
+LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 File: YRmaterials/YReportP2.eps Graphic file (type eps)
 <YRmaterials/YReportP2.eps>
@@ -259,17 +256,11 @@ Underfull \hbox (badness 10000) in paragraph at lines 35--35
 
  []
 
-File: Figs/unity_test_setup.eps Graphic file (type eps)
-<Figs/unity_test_setup.eps>
 
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 35--35
-
- []
+Underfull \vbox (badness 3354) has occurred while \output is active []
 
 File: YRmaterials/YReportP2.eps Graphic file (type eps)
+
 <YRmaterials/YReportP2.eps>
 Underfull \hbox (badness 10000) has occurred while \output is active
 []
@@ -280,8 +271,14 @@ Underfull \hbox (badness 10000) in paragraph at lines 35--35
 
  []
 
+File: Figs/unity_test_setup.eps Graphic file (type eps)
+<Figs/unity_test_setup.eps>
+Underfull \hbox (badness 10000) in paragraph at lines 35--35
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
+ []
+
+
+Underfull \vbox (badness 2452) has occurred while \output is active []
 
 File: YRmaterials/YReportP2.eps Graphic file (type eps)
 
@@ -295,22 +292,18 @@ Underfull \hbox (badness 10000) in paragraph at lines 35--35
 
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 35--35
-
- []
-
-
-Underfull \vbox (badness 1173) has occurred while \output is active []
-
 File: YRmaterials/YReportP2.eps Graphic file (type eps)
-
 <YRmaterials/YReportP2.eps>
 Underfull \hbox (badness 10000) has occurred while \output is active
 []
  []
 
 [6]
+Underfull \hbox (badness 10000) in paragraph at lines 35--35
+
+ []
+
+
 Underfull \hbox (badness 10000) in paragraph at lines 35--35
 
  []
@@ -322,8 +315,6 @@ Underfull \hbox (badness 10000) has occurred while \output is active
  []
 
 [7]
-File: Figs/pilot_bode_P02.eps Graphic file (type eps)
- <Figs/pilot_bode_P02.eps>
 Underfull \hbox (badness 10000) in paragraph at lines 35--35
 
  []
@@ -335,8 +326,14 @@ Underfull \hbox (badness 10000) has occurred while \output is active
  []
 
 [8]
+File: Figs/pilot_bode_P02.eps Graphic file (type eps)
+ <Figs/pilot_bode_P02.eps>
+Underfull \hbox (badness 10000) in paragraph at lines 35--35
+
+ []
+
 File: YRmaterials/YReportP2.eps Graphic file (type eps)
- <YRmaterials/YReportP2.eps>
+<YRmaterials/YReportP2.eps>
 Underfull \hbox (badness 10000) has occurred while \output is active
 []
  []
@@ -350,12 +347,12 @@ Underfull \hbox (badness 10000) has occurred while \output is active
 
 [10] (YReport_en.aux) ) 
 Here is how much of TeX's memory you used:
- 1806 strings out of 493306
- 23086 string characters out of 3128523
- 148123 words of memory out of 3000000
- 5345 multiletter control sequences out of 15000+200000
+ 1810 strings out of 493306
+ 23243 string characters out of 3128523
+ 150981 words of memory out of 3000000
+ 5348 multiletter control sequences out of 15000+200000
  11400 words of font info for 43 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  34i,19n,28p,953b,308s stack positions out of 5000i,500n,10000p,200000b,50000s
 
-Output written on YReport_en.dvi (10 pages, 262700 bytes).
+Output written on YReport_en.dvi (10 pages, 264388 bytes).
