@@ -95,12 +95,12 @@ void loop() {
   int pwmValueLeftSym = 128;
   int pwmValueRightSym = 128;
 
-//  float k_p = 0.243;
-//  float k_i = 0.63;
-//  float k_d = 0.00126;
-  float k_p = 0.2;
-  float k_i = 0.0;
-  float k_d = 0.0;
+  float k_p = 0.243;
+  float k_i = 0.63;
+  float k_d = 0.00126;
+//  float k_p = 0.2;
+//  float k_i = 0.0;
+//  float k_d = 0.0;
 
   // ignore Serial and read sine wave signal as reference
   dist_ref_left = feedback2dist(feedback_left);
