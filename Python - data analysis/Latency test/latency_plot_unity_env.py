@@ -1,5 +1,5 @@
 """
-This program reads the oscilloscope data that has been measured for latency tests and plots it for real robot environment
+This program reads the oscilloscope data that has been measured for latency tests and plots it
 
 Version: 1.0
 Roman Oechslin
@@ -42,34 +42,34 @@ for filename in os.listdir(directory):
 
     #Osc3: joystick (A0) in channel 1 and feedback (current mode) in channel 2; dist sensor (A2) in channel 3
     time_vec = df.iloc[3:,0] - df.iloc[3,0]
-    joystick_vec = df.iloc[3:,1]/2.5 - 1
-    feedback_vec = df.iloc[3:,2]/5*1.8
+    joystick_vec = df.iloc[3:,1]/3.3*2 - 0.8
+    feedback_vec = ((df.iloc[3:,2]/5*1024) - 81)/492 / 1024*1800
     sensor_dist_vec = df.iloc[3:,3]
     fig = plt.figure(figsize=(15.0, 6.5))
-    fig.suptitle('Real robot testing')
+    fig.suptitle('Unity simulation testing')
     plt.subplot(311)
     plt.plot(time_vec, joystick_vec)  # plot reference
-
+    """Scope3 vertical lines
     plt.vlines(1.275, -1, 1, 'r')
     plt.vlines(4.06, -1, 1, 'r')
-    plt.vlines(7.94, -1, 1, 'g')
+    plt.vlines(7.94, -1, 1, 'g')"""
     plt.xlabel('Time [s]')
     plt.ylabel('Joystick commands [-]')
     # plot left and right sensor data,zoom and save
     plt.subplot(312)
     plt.plot(time_vec, feedback_vec)
-
+    """Scope3 vertical lines
     plt.vlines(2.02, 0, 2, 'r')
     plt.vlines(4.74, 0, 2, 'r')
-    plt.vlines(7.98, 0, 2, 'g')
+    plt.vlines(7.98, 0, 2, 'g')"""
     plt.xlabel('Time [s]')
     plt.ylabel('Desired compression [mm]')
     plt.subplot(313)
     plt.plot(time_vec, sensor_dist_vec)
-
+    """Scope3 vertical lines
     plt.vlines(2.235, 0, 1.9, 'r')
     plt.vlines(4.844, 0, 1.9, 'r')
-    plt.vlines(8.065, 0, 1.9, 'g')
+    plt.vlines(8.065, 0, 1.9, 'g')"""
     plt.xlabel('Time [s]')
     plt.ylabel('Compression [mm]')
     #plt.axis([2.9, 3.6, 0, 255])
@@ -80,6 +80,6 @@ for filename in os.listdir(directory):
         os.makedirs(figure_directory)
     #print (figure_directory + filename[:-4] + '_latency_plot.jpg')
     fig.savefig(figure_directory + filename[:-4] + '_latency_plot.jpg')
-    #plt.close(fig)
+    plt.close(fig)
 
-    plt.show()
+    #plt.show()

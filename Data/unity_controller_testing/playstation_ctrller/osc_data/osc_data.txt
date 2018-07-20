@@ -1,0 +1,9 @@
+scope measurements: (playstation controller, 20180720, unity-test-environment) - P
+
+Osc0-7: joystick (A0) in channel 1 and feedback (current mode) in channel 2; dist sensor (A2) in channel 3
+
+PID:
+  float k_p = 0.243;
+  float k_i = 0.63;
+  float k_d = 0.00126;
+Osc8-12: joystick (A0) in channel 1 and feedback (current mode) in channel 2; dist sensor (A2) in channel 3
