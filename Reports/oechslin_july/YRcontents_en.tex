@@ -85,22 +85,6 @@ In engineering, the research in the haptic field has started to emerge in late n
 %what are my goals
 
 
-
-%	\begin{figure}[h!]
-%		\centering
-%		\begin{tabular}{|l|c|c|}%designator | explanation | unit
-%			\hline
-%			 Designator & Explanation & Unit \\ \hline \hline
-%			$T_m$ & Motor torque & [Nm]\\ 
-%			$T$ & Output torque acting on carriage& [Nm]\\
-%			$b_{op}$ & Damping coefficient of the operator & [Ns/m]\\
-%			$J_T$ & Total inertia of mechanical setup & [$\textit{kgm}^2$]\\
-%			\hline
-%		\end{tabular}
-%		\caption{Setup parameters}
-%		\label{tab:setup_params}
-%	\end{figure}
-
 \section{Stability and Transparency Trade-Off}
 Even though the controller cannot be seen as a master-slave teleoperation setup, the problem settings of stability and transparency still apply. They are the main problems related to haptics and haptic teleoperation applications \cite{Christiansson2007}. Often, the stability issues arise from master-slave mass mismatch and stiffness of the environment. But high inertia also poses problems for higher frequencies. In this research however, the masses and frequencies are relatively low. \\
 The stability of this controller is not only affected by the control scheme and the mechanical setup, but also by the operator, whose grasp can render a system stable or unstable \cite{Enayati2016}. Additionally, communication delays can also cause instability.\\
@@ -138,9 +122,36 @@ The effect and magnitude of the command latency, but also of the feedback latenc
 In these figures, several interesting things have to be mentioned. First of all, the delay between sending the commands and receiving the consumed current value, which is then used as feedback value, is roughly $700$ ms. The delay between the received feedback value and the response of the distance sensor is much smaller and depends on the situation of the robot. When the robot starts to move, it takes some time until the current has built up, and the latency between the reference compression and actual compression is roughly $130$ ms for the P-controlled, and $430$ ms for the PID-controlled setup (see first red vertical lines). However, when the robot is stopped, the latency is $20$ - $30$ ms (second and third red lines).\\
 In the first green lines, an external force has been applied to the robot, simulating an obstacle, which increased the consumed current and therefore also increased the desired feedback value. Again, the latency was of roughly $30$ ms. The second green lines is where the external force has been removed and the current dropped abruptly back to its normal value. The latency here was below $10$ ms.\\
 Also indicated in figures \ref{fig:real_P_scope_13_latency_plot} and \ref{fig:real_PID_scope_14_latency_plot}, one can see that the feedback has been turned off when driving backwards (balck lines). However, in this scenario the feedback has been activated when standing still, ie. sending $0$ as driving speed. Since the robot is only sending the magnitude but not the direction of the current in the crawlers, the remaining current from the backward motion is fed back. This mode can easily be turned off, such that no feedback is felt when the robot is off. For reasons of completeness however, this has not been turned off and it is interesting to note, that the time between switching the command values and the reception of the feedback value has been reduced to roughly $50$ ms. \\
-From these experiments one can conclude that the robot takes a long time to start driving, mainly due to internal implementation of the crawler control scheme. The total delay for this inital start-up is $820$ ms for the P-controlled and $1160$ ms for the PID-controlled version. The communication delay (joystick command and robot's reaction) is $40$ ms on average. The time between sending the joysticks commands and feeling the feedback is $240$ ms (P) and $280$ ms (PID).
+From these experiments one can conclude that the robot takes a long time to start driving, mainly due to internal implementation of the crawler control scheme. The total delay for this inital start-up is $820$ ms for the P-controlled and $1160$ ms for the PID-controlled version. The communication delay (joystick command and robot's reaction) is $40$ ms on average. The time between sending the joysticks commands and feeling the feedback is $240$ ms (P) and $280$ ms (PID). The full data has been gathered with an oscilloscope and can be seen in table \ref{tab:latency_table}.
 
 %TODO insert tables here
+\begin{figure}[h!]
+	\centering
+	\begin{tabular}{|l|c|c|c|c|c|c|c|c|}% Go | Stop | start pushing | let go | stop | back | stop| 
+		\hline
+	 	 & Start & Stop & Ext. force & No force & Stop & Back & Stop & Control\\ \hline \hline
+		Joy-stick commands sent & 1.03 & 2.51 & - & - & 6.54 & 7.18 & 8.53 & P\\ 
+		\hline
+		Measured current in robot & 1.34 & 2.67 & 4.35 & 5.91 & 6.66 & 7.57 & 8.66 & P\\ 
+		\hline
+		Desired compression & 1.72 & 2.80 & 4.61 & 6.10 & 6.81 & - & 8.57 & P\\ 
+		\hline
+		Measured compression & 1.85 & 2.83 & 4.64 & 6.10 & 6.81 & - & 8.66 & P\\ 
+		\hline \hline
+		Joy-stick commands sent & 0.09 & 2.52 & - & - & 6.53 & 7.15 & 8.43 & PID\\ 
+		\hline
+		Measured current in robot & 0.26 & 2.66 & 4.44 & 5.76 & 6.66 & 7.26 & 8.55 & PID\\ 
+		\hline
+		Desired compression & 0.82 & 2.80 & 4.70 & 6.01 & 6.80 & - & 8.49 & PID\\ 
+		\hline
+		Measured compression & 1.25 & 2.83 & 4.75 & 6.02 & 6.82 & - & 8.67 & PID\\ 
+		\hline
+	\end{tabular}
+	\caption{Latency table for sending joystick commands, current measured on the real robot, desired compression and measured compression. All values indicated in [s].}
+	\label{tab:latency_table}
+\end{figure}
+
+
 
 \subsection{Real-Feel and Intuitiveness}
 Despite the command delay, the feedback from the robot can be felt almost instantly in the user's palms. It is, as soon as the robot is moving forward, one can feel the current building up in the current consumption feedback mode for example. \\
