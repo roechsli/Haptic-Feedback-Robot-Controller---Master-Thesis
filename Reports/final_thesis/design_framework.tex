@@ -1,0 +1,30 @@
+\section{Design Framework}
+This section provides a guideline for important design parameter choices, if one wants to design a similar haptic feedback controller based on series elastic actuators. It is mainly based on the findings from the PlayStation controller but also includes the main results of the second controller, called pilot controller. \\
+Since the design framework depends on the target application, it is assumed to use the controller for robots similar to the Topy robot.
+
+\subsection{Software and Control Choices}
+In order to introduce no latency for control commands, it is important to have a high communication speed with no delay. In the current Arduino setup, one can decrease the command delay by using interrupts for the joystick commands. For immediate feedback, one can implement a feedforward control scheme that is fed from the joysticks' positions directly to the stimulators.\\
+The bottleneck of this setup was the fixed communication frequency of the Topy robot of maximum $5$ Hz. Due to the small changes of the feedback value, this operation frequency is still acceptable. But if one expects a highly fluctuating feedback, a higher communication frequency has to be opted for.\\
+The suggested control scheme is a normal proportional controller, mainly due to the fact that it is bothersome to fine-tune the PID gains and because the results of the two control schemes do not differ too much.\\
+For haptic applications, it is suggested to have a motor control rate of at least $1$kHz which is the limit for the Arduino. If one opts for higher control frequencies, it is recommended to switch to an \textit{Mbed} device or similar devices.
+
+\subsection{Mechanical Parameters}
+One of the first mechanical design choices is the design of the controller itself. The PlayStation like controller has been chosen for consistency with the previous research, but also for the fact that most conventional controllers are based on this design. It is not required to copy this design, which is why a different approach has been chosen for the second controller design.\\
+The feedback direction is target-application specific and results from the design. For the desired application, it is recommended to have a direct movement opposing force, as it is the case for the pilot controller design.\\
+The weight only plays a minor role and any weight seems to be fine as long as the operator is comfortable with handling the controller.\\
+
+The target point of contact with the user's palm is between the Mars and Venus region\todo[inline]{reference hand terminology}. This area is sensitive enough and can have a typical indentation of $5$mm which needs to be taken into account when calculating the necessary stroke of the stimulator. The palm pads' areas should be around $5$ to $10$ cm$^2$.\\
+
+Another important element is the spring system. It is recommended to have a symmetric arrangement with springs of equal spring constant. Also, it should be paid attention to symmetries when assembling the springs, to assure a linear behavior when compressing. The length of the springs does not seem to be very important, as long as the compression is constrained to the perpendicular axis only. Testing different deflections has shown that the target stroke must be achievable and that it is better to have a margin if one wants to change the motors used to increase the output force.\\
+The spring coefficients can vary and tests between $2$ and $24$ N/mm have shown promising results. \todo[inline]{emphasize these tests or outcome, and reference somehow, link to results or data}
+
+The motors greatly influence the performance of the controller. The reduction ratio should be high enough to guarantee the target output force, while assuring the desired control speed. The target output torque can be used to calculate the output force approximately. But one should keep in mind that some energy is lost in friction and efficiency of the motor and gear assembly.
+
+\subsection{Electrical Parameters}
+The electric components that have been used are mainly the potentiometer for the joysticks and the photoreceptors for distance sensing.\\
+The photoreceptors have very different characteristics and all thresholds need to be identified individually. Furthermore, the output function is not linear for a big range of distances and the sensitivity also depends on the distance. If a high performance is expected from the controller, it is recommended to find a different solution or a better performing sensor.\\
+Furthermore, it is recommended to filter the motor commands to convert the Arduino output PWM to a more steady voltage level, to protect the amplifiers from overfitting the signal.\\
+Also, it was necessary to have a voltage follower (a simple operational amplifier with unitary gain) in order to reduce interfering effects on the distance sensors.
+
+
+\newpage

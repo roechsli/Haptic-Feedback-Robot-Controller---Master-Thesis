@@ -1,0 +1,164 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+
+\title{Master Thesis}
+\author{Roman Oechslin}
+\date{August 2018}
+
+\usepackage{natbib}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{gensymb}%for writing degree
+\usepackage{multirow}
+\usepackage{tabularx}
+\usepackage{subcaption}
+\setcitestyle{square}
+\newcolumntype{P}[1]{>{\centering\arraybackslash}p{#1}}
+%center table with p command
+\usepackage{todonotes}
+\usepackage{float}
+\usepackage{pdfpages}
+\usepackage{csquotes}%for quoting oxfor dict
+
+
+\usepackage[top=1in, bottom=1.25in, left=1.25in, right=1.25in]{geometry}
+
+
+%\graphicspath{{/}}
+
+
+%matlab packages
+\usepackage{color}
+\sloppy
+\definecolor{lightgray}{gray}{0.5}
+\setlength{\parindent}{0pt}
+
+\begin{document}
+
+
+
+\begin{titlepage}
+
+
+\begin{figure}
+\includegraphics[width=0.6\textwidth]{Figs/logo_ut}
+\hfill
+\includegraphics[width=0.3\textwidth]{Figs/logo_epfl}
+\end{figure}
+
+\centering
+
+\newcommand{\HRule}{\rule{\linewidth}{1.5mm}}
+\HRule \\[0.4cm]
+{ \huge \bfseries Haptic Feedback Controller
+
+\Huge Palm Pressurization by Series Elastic Actuators in a Handheld Device
+ 
+\vspace{0.5cm}
+
+ \large Master Thesis}\\[0.4cm]
+\HRule \\[1.5cm]
+% Author and supervisor
+\begin{minipage}{0.4\textwidth}
+\begin{flushleft} \large
+\emph{Author:}\\
+Roman \textsc{Oechslin}
+
+
+
+\end{flushleft}
+\end{minipage}
+\hfill
+\begin{minipage}{0.4\textwidth}
+\begin{flushright} \large
+\emph{Director of project:} \\
+~Prof. Hannes \textsc{Bleuler}
+
+\emph{Supervising professor:} \\
+~Prof. Akio \textsc{Yamamoto}
+
+
+\end{flushright}
+\end{minipage}
+
+\vfill
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\textwidth]{Figs/titlepage_controller.jpg}
+\end{figure}
+
+\vfill
+
+
+{\large \today}
+
+\end{titlepage}
+
+
+
+%\includepdf{Figs/organization_master_thesis.pdf}
+%includepdf{Figs/one_page_description.pdf}
+%\maketitle
+
+\pagenumbering{roman}
+\newpage
+\tableofcontents
+
+
+\newpage
+
+\input{acknowledgement}
+\newpage
+
+\input{preface}
+\newpage
+
+
+\section*{Abstract}
+In this master thesis continuing \cite{Asada2016a}....
+\todo[inline]{write the abstract in the end}
+\newpage
+
+\pagenumbering{arabic}
+
+
+%%%%%%% TODO's
+\todo[inline]{put datasheets of motor, photoreceptor, guideway, joystick, coupling, clamp link in appendices or references}
+
+
+
+
+
+%Haptic Feedback Controller
+\input{introduction}
+
+\input{design_playstation}
+
+\input{robot}
+
+\input{ps_testing}
+
+\input{ps_math_model}
+
+\input{design_framework}
+
+\input{design_pilot}
+
+\input{pilot_testing}
+
+\input{discussion}
+
+\input{conclusion}
+
+\input{appendices}
+\todo[inline]{create list of figures and tables}
+
+\pagenumbering{roman}
+
+\newpage
+
+\bibliographystyle{plain}
+\bibliography{bibfile.bib}
+
+\end{document}
