@@ -77,7 +77,7 @@ boolean critical_battery_level = false; // is true when voltage drops below 11.5
 
 void setup() {
   // setup loop
-  if (!IGNORE_COM) arduinoPort = new Serial(this, "COM3", 250000);//9600);
+  if (!IGNORE_COM) arduinoPort = new Serial(this, "COM3", 250000);
   if (!IGNORE_COM) crawlerPort = new Serial(this, "COM4", 250000);
   size(500, 500);
   frameRate(50); // was 50

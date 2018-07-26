@@ -45,10 +45,10 @@ float filter_coeff = 0.05;
 int photo_value_left_raw = 0;
 int photo_value_right_raw = 0;
 
-const int PHOTO_MIN_LEFT = 550;
-const int PHOTO_MAX_LEFT = 810;
+const int PHOTO_MIN_LEFT = 420;//550;
+const int PHOTO_MAX_LEFT = 795;
 const int PHOTO_MIN_RIGHT = 550;
-const int PHOTO_MAX_RIGHT = 795;//795;//765;
+const int PHOTO_MAX_RIGHT = 765;//795;//765;
 const int MAX_DISPLACEMENT_UM = 3000; // [um], has been measured
 
 unsigned long TIME_BEGIN = 0;
@@ -132,7 +132,7 @@ void loop() {
   Serial.print("photo_value_left_raw: ");
   Serial.println(photo_value_left_raw);
   Serial.print("photo_value_right_raw: ");
-  Serial.println(photo_value_right_raw);  
+  Serial.println(photo_value_right_raw);
   Serial.print("dist_ref: ");
   Serial.println(dist_ref);
   Serial.print("my_dist: ");
