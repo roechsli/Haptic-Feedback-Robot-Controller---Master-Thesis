@@ -15,6 +15,7 @@ import matplotlib.pyplot as plt
 
 #scope3 from real robot testing is best
 directory = "osc_data/"
+""" # if controller == centric shaft
 PHOTO_MIN_LEFT = 600#640
 PHOTO_MAX_LEFT = 790#840
 PHOTO_MIN_LEFT = 640#640
@@ -22,6 +23,13 @@ PHOTO_MAX_LEFT = 840#840
 PHOTO_MIN_RIGHT = 700
 PHOTO_MAX_RIGHT = 880
 MAX_DISPLACEMENT_UM = 1800
+"""
+# if controller == pilot
+PHOTO_MIN_LEFT = 420
+PHOTO_MAX_LEFT = 795
+PHOTO_MIN_RIGHT = 550
+PHOTO_MAX_RIGHT = 765
+MAX_DISPLACEMENT_UM = 3000
 
 def sensor2dist(sensor_value, min_val, max_val):
   # maps the measured value to the distance (assumed linearity) in micrometers
@@ -36,8 +44,8 @@ for filename in os.listdir(directory):
     for i in range(len(df.iloc[:,3]) -3):
         # convert sensor values to mm
         #print(i)
-        df.iloc[i + 3,3] = sensor2dist(float (df.iloc[i + 3,3])/5*1024, PHOTO_MIN_LEFT, PHOTO_MAX_LEFT)
-        #df.iloc[i + 3,3] = sensor2dist(float (df.iloc[i + 3,3])/5*1024, PHOTO_MIN_RIGHT, PHOTO_MAX_RIGHT)
+        #df.iloc[i + 3,3] = sensor2dist(float (df.iloc[i + 3,3])/5*1024, PHOTO_MIN_LEFT, PHOTO_MAX_LEFT)
+        df.iloc[i + 3,3] = sensor2dist(float (df.iloc[i + 3,3])/5*1024, PHOTO_MIN_RIGHT, PHOTO_MAX_RIGHT)
         df.iloc[i + 3,0] = float (df.iloc[i + 3, 0])
         df.iloc[i + 3,1] = float (df.iloc[i + 3, 1])
         df.iloc[i + 3,2] = float (df.iloc[i + 3, 2])
@@ -61,7 +69,8 @@ for filename in os.listdir(directory):
         plt.vlines(6.54, -1, 1, 'r')  # Stop
         plt.vlines(7.18, -1, 1, 'k')  # Back
         plt.vlines(8.53, -1, 1, 'c')  # Stop
-    else:
+    elif "scope_14" in filename:
+        """
         plt.vlines(0.09, -1, 1, 'r')  # Go
         plt.vlines(2.52, -1, 1, 'r')  # Stop
         # plt.vlines(4.35, -1, 1, 'g') # Ext. force
@@ -69,7 +78,15 @@ for filename in os.listdir(directory):
         plt.vlines(6.53, -1, 1, 'r')  # Stop
         plt.vlines(7.15, -1, 1, 'k')  # Back
         plt.vlines(8.43, -1, 1, 'c')  # Stop
-
+        """
+    else:
+        plt.vlines(0.08, -1, 1, 'r')  # Go
+        plt.vlines(1.69, -1, 1, 'r')  # Stop
+        # plt.vlines(4.35, -1, 1, 'g') # Ext. force
+        # plt.vlines(5.91, -1, 1, 'g') # Let go
+        plt.vlines(6.53, -1, 1, 'r')  # Stop
+        plt.vlines(7.55, -1, 1, 'k')  # Back
+        plt.vlines(9.11, -1, 1, 'c')  # Stop
     plt.xlabel('Time [s]')
     plt.ylabel('Joystick commands [-]')
     # plot left and right sensor data,zoom and save
@@ -84,7 +101,8 @@ for filename in os.listdir(directory):
         plt.vlines(6.66, 0, 2, 'r')  # Stop
         plt.vlines(7.57, 0, 2, 'k')  # Back
         plt.vlines(8.66, 0, 2, 'c')  # Stop
-    else:
+    elif "scope_14" in filename:
+        """
         plt.vlines(0.255, 0, 2, 'r')  # Go
         plt.vlines(2.66, 0, 2, 'r')  # Stop
         plt.vlines(4.44, 0, 2, 'g')  # Ext. force
@@ -92,6 +110,15 @@ for filename in os.listdir(directory):
         plt.vlines(6.66, 0, 2, 'r')  # Stop
         plt.vlines(7.255, 0, 2, 'k')  # Back
         plt.vlines(8.55, 0, 2, 'c')  # Stop
+        """
+    else:
+        plt.vlines(0.46, 0, 2, 'r')  # Go
+        plt.vlines(1.88, 0, 2, 'r')  # Stop
+        plt.vlines(4.29, 0, 2, 'g')  # Ext. force
+        plt.vlines(5.68, 0, 2, 'g')  # Let go
+        plt.vlines(6.68, 0, 2, 'r')  # Stop
+        plt.vlines(7.67, 0, 2, 'k')  # Back
+        plt.vlines(9.28, 0, 2, 'c')  # Stop
     plt.xlabel('Time [s]')
     plt.ylabel('Real current [A]')
 
@@ -105,7 +132,8 @@ for filename in os.listdir(directory):
         plt.vlines(6.81, 0, 2, 'r') # Stop
         #plt.vlines(0, 0, 2, 'k') # Back
         plt.vlines(8.57, 0, 2, 'c') # Stop
-    else:
+    elif "scope_14" in filename:
+        """
         plt.vlines(0.82, 0, 2, 'r') # Go
         plt.vlines(2.8, 0, 2, 'r') # Stop
         plt.vlines(4.7, 0, 2, 'g') # Ext. force
@@ -113,6 +141,15 @@ for filename in os.listdir(directory):
         plt.vlines(6.80, 0, 2, 'r') # Stop
         #plt.vlines(0, 0, 2, 'k') # Back
         plt.vlines(8.49, 0, 2, 'c') # Stop
+        """
+    else:
+        plt.vlines(0.73, 0, 2, 'r') # Go
+        plt.vlines(2.02, 0, 2, 'r') # Stop
+        plt.vlines(4.36, 0, 2, 'g') # Ext. force
+        plt.vlines(5.74, 0, 2, 'g') # Let go
+        plt.vlines(6.83, 0, 2, 'r') # Stop
+        plt.vlines(7.59, 0, 2, 'k') # Back
+        plt.vlines(9.15, 0, 2, 'c') # Stop
     plt.xlabel('Time [s]')
     plt.ylabel('Ref. compression [mm]')
 
@@ -126,7 +163,8 @@ for filename in os.listdir(directory):
         plt.vlines(6.81, 0, 2, 'r') # Stop
         #plt.vlines(0, 0, 2, 'k') # Back
         plt.vlines(8.66, 0, 2, 'c') # Stop
-    else:
+    elif "scope_14" in filename:
+        """
         plt.vlines(1.25, 0, 2, 'r') # Go
         plt.vlines(2.825, 0, 2, 'r') # Stop
         plt.vlines(4.75, 0, 2, 'g') # Ext. force
@@ -134,6 +172,15 @@ for filename in os.listdir(directory):
         plt.vlines(6.82, 0, 2, 'r') # Stop
         #plt.vlines(0, 0, 2, 'k') # Back
         plt.vlines(8.666, 0, 2, 'c') # Stop
+        """
+    else:
+        plt.vlines(1.01, 0, 2, 'r') # Go
+        plt.vlines(2.27, 0, 2, 'r') # Stop
+        plt.vlines(4.4, 0, 2, 'g') # Ext. force
+        plt.vlines(6.16, 0, 2, 'g') # Let go
+        plt.vlines(7.36, 0, 2, 'r') # Stop
+        #plt.vlines(0, 0, 2, 'k') # Back
+        #plt.vlines(8.666, 0, 2, 'c') # Stop
     plt.xlabel('Time [s]')
     plt.ylabel('Compression [mm]')
     #plt.axis([2.9, 3.6, 0, 255])
