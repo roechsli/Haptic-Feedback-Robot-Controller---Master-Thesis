@@ -27,7 +27,7 @@ int sine_signal = 0;
 int photo_value_left_raw = 0;
 int photo_value_right_raw = 0;
 
-int dist_ref = 0;
+float dist_ref = 0;
 int OUTPUT_PER_VOLT = 255 / 5; // the arduino can output 5V max
 int MOTOR_MAX_VOLTAGE = 20; // change this according to motor
 int LEFT_HAND_AMPLIFIER_GAIN = 10;
@@ -35,17 +35,17 @@ int RIGHT_HAND_AMPLIFIER_GAIN = 10;
 const int OUTPUT_RANGE_L = 2 * MOTOR_MAX_VOLTAGE * OUTPUT_PER_VOLT / LEFT_HAND_AMPLIFIER_GAIN;
 const int OUTPUT_RANGE_R = 2 * MOTOR_MAX_VOLTAGE * OUTPUT_PER_VOLT / RIGHT_HAND_AMPLIFIER_GAIN;
 
-int error_left = 0;
-int last_error_left = 0;
+float error_left = 0;
+float last_error_left = 0;
 float sum_error_left = 0;
-int error_right = 0;
-int last_error_right = 0;
+float error_right = 0;
+float last_error_right = 0;
 float sum_error_right = 0;
-const int PHOTO_MIN_LEFT = 550;
-const int PHOTO_MAX_LEFT = 800;
-const int PHOTO_MIN_RIGHT = 550;//360;//700;
-const int PHOTO_MAX_RIGHT = 765;//870;
-const int MAX_DISPLACEMENT_UM = 3000; // [um], has been measured
+const int PHOTO_MIN_LEFT = 550;//420;//550;
+const int PHOTO_MAX_LEFT = 795;
+const int PHOTO_MIN_RIGHT = 600;
+const int PHOTO_MAX_RIGHT = 765;//795;//765;
+const float MAX_DISPLACEMENT_UM = 5; // [mm], has been measured
 
 char buf[16];
 char all[512];
@@ -92,12 +92,13 @@ void loop() {
   int pwmValueLeftSym = 128;
   int pwmValueRightSym = 128;
 
-  float k_p = 1.0; // k_p = 1; and k_i = 0.01; works as well
+  float k_p = 15; // [V/mm]
   float k_i = 0.0;
   float k_d = 0.0;
 
+  k_p = k_p * 255 / 40; // to convert it to arduino values
   // ignore Serial and read sine wave signal as reference
-  dist_ref = sine2dist(sine_signal);
+  dist_ref = (float) sine2dist((float) sine_signal);
   error_left = dist_ref - sensor2dist(photo_value_left_raw, PHOTO_MIN_LEFT, PHOTO_MAX_LEFT);
   error_right = dist_ref - sensor2dist(photo_value_right_raw, PHOTO_MIN_RIGHT, PHOTO_MAX_RIGHT);
 
@@ -117,7 +118,7 @@ void loop() {
   
   //fastest way of writing data to serial
   all[0] = '\0';
-  p = mystrcat(init_p, itoa(dist_ref, buf, 16));
+  p = mystrcat(init_p, itoa(dist_ref*1000, buf, 16));
   p = mystrcat(p, semicolon);
   p = mystrcat(p, itoa(photo_value_left_raw, buf, 16));
   p = mystrcat(p, semicolon);
@@ -126,10 +127,10 @@ void loop() {
   p = mystrcat(p, itoa(TIME_BEGIN, buf, 16));
   p = mystrcat(p, semicolon);
   p = mystrcat(p, end_char);
-  //Serial.print(all); //TODO this is necessary for logging
+  Serial.print(all); //TODO this is necessary for logging
   // message format: dist ref | left val | right val | time stamp
 
-  
+  /*
   Serial.print("photo_value_right_raw: ");
   Serial.println(photo_value_right_raw);
   Serial.print("dist_ref: ");
@@ -138,11 +139,10 @@ void loop() {
   Serial.println(sensor2dist(photo_value_right_raw, PHOTO_MIN_RIGHT, PHOTO_MAX_RIGHT));
   Serial.print("pwm: ");
   Serial.println(pwmValueRightSym);
-  /*
   Serial.print("ref = ");
-  Serial.println(dist_ref);
+  Serial.println(dist_ref);*/
   Serial.print("photo_value_left_raw = ");
-  Serial.println(photo_value_left_raw);
+  Serial.println(photo_value_left_raw);/*
   Serial.print("error = ");
   Serial.println(error_left);
   Serial.print("des_mot_volt_right = ");
@@ -154,7 +154,7 @@ void loop() {
   
 
   while ((micros() - TIME_BEGIN) < TIME_CYCLE) {  } // do nothing until we reach the time step of TIME_CYCLE
-  digitalWrite(testPin, LOW); //instructions in between take roughly 640 microseconds
+  digitalWrite(testPin, LOW); //to test the update frequency
 }
 
 
@@ -166,14 +166,15 @@ char* mystrcat( char* dest, char* src )
   return --dest;
 }
 
-int sine2dist(int sine){
-  return (((sine / 4) * (MAX_DISPLACEMENT_UM / 35) / 16) * 5) / 16 * 7; 
+float sine2dist(float sine){
+  return (sine / 4) * (MAX_DISPLACEMENT_UM) / 256 ; 
   // sine / 1024 * MAX_DISPLACEMENT_UM had to be rewritten due to overflow
 }
 
-int sensor2dist(int sensor_value, int min_val, int max_val) {
+float sensor2dist(int sensor_value, int min_val, int max_val) {
   // maps the measured value to the distance (assumed linearity) in micrometers
-  return MAX_DISPLACEMENT_UM - (sensor_value - min_val) * (MAX_DISPLACEMENT_UM /45) / (max_val - min_val) * 45;
+  //Serial.println(MAX_DISPLACEMENT_UM - (sensor_value - min_val) * (MAX_DISPLACEMENT_UM) / (max_val - min_val));
+  return MAX_DISPLACEMENT_UM - (sensor_value - min_val) * (MAX_DISPLACEMENT_UM) / (max_val - min_val) ;
 }
 
 

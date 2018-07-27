@@ -11,7 +11,7 @@ from math import atan2
 
 PLOT_BOOL = True
 CALC_OPER_FREQ = False
-SHORT_CUT = True
+SHORT_CUT = False
 only_this_file = "f"  # change this to "f" if all frequencies shall be tested, otherwise "f2_csv"
 
 INTMAX = 65535
@@ -34,13 +34,21 @@ PHOTO_MIN_RIGHT = 700
 PHOTO_MAX_RIGHT = 880
 MAX_DISPLACEMENT_UM = 1800
 directory = "20180704_fra_logs_PID_243_63_00126_1perc/"  # TODO change this if new data shall be analyzed
-"""
+
+
 PHOTO_MIN_LEFT = 550
 PHOTO_MAX_LEFT = 800
 PHOTO_MIN_RIGHT = 700
 PHOTO_MAX_RIGHT = 870
 MAX_DISPLACEMENT_UM = 3000
 directory = "20180719_fra_logs_pilot_P02/"  # TODO change this if new data shall be analyzed
+"""
+PHOTO_MIN_LEFT = 630
+PHOTO_MAX_LEFT = 795
+PHOTO_MIN_RIGHT = 550
+PHOTO_MAX_RIGHT = 765
+MAX_DISPLACEMENT_UM = 5
+directory = "20180727_fra_logs_pilot_P10Vmm/"  # TODO change this if new data shall be analyzed
 def get_freq_from_filename(filename):
     if filename[0] == "f" and filename[-8:] == "_csv.csv":
         return filename[1:-8]
@@ -49,7 +57,7 @@ def get_freq_from_filename(filename):
 
 def sensor2dist(sensor_value, min_val, max_val):
   # maps the measured value to the distance (assumed linearity) in micrometers
-  return (MAX_DISPLACEMENT_UM - (sensor_value - min_val) * MAX_DISPLACEMENT_UM / (max_val - min_val) ) / 1000
+  return (MAX_DISPLACEMENT_UM - (sensor_value - min_val) * MAX_DISPLACEMENT_UM / (max_val - min_val) )
 
 def fitSine(tList, yList, freq):
     #from: http://exnumerus.blogspot.jp/2010/04/how-to-fit-sine-wave-example-in-python.html
@@ -124,6 +132,7 @@ for file in os.listdir(directory):
         df.iloc[i,1] = sensor2dist(df.iloc[i,1], PHOTO_MIN_LEFT, PHOTO_MAX_LEFT)
         df.iloc[i,2] = sensor2dist(df.iloc[i,2], PHOTO_MIN_RIGHT, PHOTO_MAX_RIGHT)
 
+    print(df.iloc[:,1])
     # just to have an average us length of a step:
     if CALC_OPER_FREQ:
         step_sum = 0
@@ -138,14 +147,15 @@ for file in os.listdir(directory):
         fig = plt.figure()
         # plot left and right sensor data,zoom and save
         plt.plot(df.iloc[:, 3], df.iloc[:, 1])
-        plt.plot(df.iloc[:, 3], df.iloc[:, 2])
+        #plt.plot(df.iloc[:, 3], df.iloc[:, 2])
         plt.plot(df.iloc[:, 3], df.iloc[:, 0] )  # plot reference
         fig.suptitle('Frequency response (' + frequency + ' Hz)')
         plt.xlabel('Time [s]')
         plt.ylabel('Compression [mm]')
         #plt.axis([2, 3.6, -0.05, 0.5])
         plt.axis([2, 3.6, 1.0, 4])
-        plt.legend(["left sensor", "right sensor", "reference signal"])
+        #plt.legend(["left sensor", "right sensor", "reference signal"])
+        plt.legend(["left sensor", "reference signal"])
         figure_directory = 'figs/f' + frequency
         if not os.path.exists(figure_directory):
             os.makedirs(figure_directory)

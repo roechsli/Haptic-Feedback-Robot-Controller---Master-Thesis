@@ -18,7 +18,10 @@ import shutil
 #directory = "20180704_fra_logs_PID_243_63_00126/raw_data/"
 #directory = "20180704_fra_logs_PID_243_63_00126_1perc/raw_data/"
 #directory = "20180704_fra_logs_PID_243_63_00126_10perc/raw_data/"
-directory = "20180719_fra_logs_pilot_P02/raw_data/"
+#directory = "20180719_fra_logs_pilot_P02/raw_data/"
+#directory = "20180726_fra_logs_pilot_P005/raw_data/"
+#directory = "20180726_fra_logs_pilot_P01/raw_data/"
+directory = "20180727_fra_logs_pilot_P10Vmm/raw_data/"
 #shutil.move( myfile + ".txt", myfile+"new" + ".txt")
 import os
 
@@ -34,7 +37,10 @@ for filename in os.listdir(directory):
     #destination= open("20180704_fra_logs_PID_243_63_00126/" + filename[:-4] + "_csv" + ".csv", "w")
     #destination= open("20180704_fra_logs_PID_243_63_00126_1perc/" + filename[:-4] + "_csv" + ".csv", "w")
     #destination= open("20180704_fra_logs_PID_243_63_00126_10perc/" + filename[:-4] + "_csv" + ".csv", "w")
-    destination= open("20180719_fra_logs_pilot_P02/" + filename[:-4] + "_csv" + ".csv", "w")
+    #destination= open("20180719_fra_logs_pilot_P02/" + filename[:-4] + "_csv" + ".csv", "w")
+    #destination= open("20180726_fra_logs_pilot_P005/" + filename[:-4] + "_csv" + ".csv", "w")
+    #destination= open("20180726_fra_logs_pilot_P01/" + filename[:-4] + "_csv" + ".csv", "w")
+    destination= open("20180727_fra_logs_pilot_P10Vmm/" + filename[:-4] + "_csv" + ".csv", "w")
     count = 0
     num_lines = sum(1 for line in open(directory + filename))
     #print(num_lines)
