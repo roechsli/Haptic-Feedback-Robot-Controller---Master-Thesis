@@ -20,13 +20,12 @@ CONVERT_TO_DEC = True
 PLOT_BOOL = True
 CONVERT_TO_DEC = False
 
-
-directory = "C:/Users/Oechslin/Documents/Haptic_Controller_Code/Python - data analysis/hysteresis_test/test1_20180730/"
+directory = "C:/Users/Oechslin/Documents/Haptic_Controller_Code/Python - data analysis/hysteresis_test/test2_20180731/"
 INTMAX = 65535
 PHOTO_MIN_LEFT = 550
-PHOTO_MAX_LEFT = 795
+PHOTO_MAX_LEFT = 780
 PHOTO_MIN_RIGHT = 600
-PHOTO_MAX_RIGHT = 765
+PHOTO_MAX_RIGHT = 763
 MAX_DISPLACEMENT_UM = 5
 
 def convert2dec(filename):
@@ -71,7 +70,7 @@ for filename in os.listdir(directory):
         else:
             continue
 
-    if "2" not in filename:  # skip all files except this one
+    if "3" not in filename:  # skip all files except this one
         continue
 
     print("plotting " + dec_file)
@@ -93,8 +92,8 @@ for filename in os.listdir(directory):
     if PLOT_BOOL:
         fig = plt.figure()
         #plt.plot(df.iloc[:, 3],df.iloc[:, 0]/1000)  # plot reference
-        plt.plot(df.iloc[0:round(len(df.iloc[:, 0])/2):100, 0]/1000, sensor2dist(df.iloc[0:round(len(df.iloc[:, 1])/2):100, 1], PHOTO_MIN_LEFT, PHOTO_MAX_LEFT), 'b.')
-        plt.plot(df.iloc[round(len(df.iloc[:, 0])/2)+1:-1:100, 0]/1000, sensor2dist(df.iloc[round(len(df.iloc[:, 1])/2)+1:-1:100, 1], PHOTO_MIN_LEFT, PHOTO_MAX_LEFT), 'r.')  # input to output
+        plt.plot(df.iloc[0:round(len(df.iloc[:, 0])/2), 0]/1000, sensor2dist(df.iloc[0:round(len(df.iloc[:, 1])/2), 1], PHOTO_MIN_LEFT, PHOTO_MAX_LEFT), 'b.')
+        plt.plot(df.iloc[round(len(df.iloc[:, 0])/2)+1:-1, 0]/1000, sensor2dist(df.iloc[round(len(df.iloc[:, 1])/2)+1:-1, 1], PHOTO_MIN_LEFT, PHOTO_MAX_LEFT), 'r.')  # input to output
 
         fig.suptitle('Reference tracking with P')
         plt.xlabel('Compression reference [mm]')

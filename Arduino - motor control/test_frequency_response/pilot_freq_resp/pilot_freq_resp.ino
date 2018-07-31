@@ -27,7 +27,7 @@ int sine_signal = 0;
 int photo_value_left_raw = 0;
 int photo_value_right_raw = 0;
 
-float dist_ref = 0;
+float dist_ref = 0.0;
 int OUTPUT_PER_VOLT = 255 / 5; // the arduino can output 5V max
 int MOTOR_MAX_VOLTAGE = 20; // change this according to motor
 int LEFT_HAND_AMPLIFIER_GAIN = 10;
@@ -41,11 +41,11 @@ float sum_error_left = 0;
 float error_right = 0;
 float last_error_right = 0;
 float sum_error_right = 0;
-const int PHOTO_MIN_LEFT = 550;//420;//550;
-const int PHOTO_MAX_LEFT = 795;
+const int PHOTO_MIN_LEFT = 550;
+const int PHOTO_MAX_LEFT = 780;
 const int PHOTO_MIN_RIGHT = 600;
-const int PHOTO_MAX_RIGHT = 765;//795;//765;
-const float MAX_DISPLACEMENT_UM = 5; // [mm], has been measured
+const int PHOTO_MAX_RIGHT = 763;
+const float MAX_DISPLACEMENT_UM = 5.0; // [mm], has been measured
 
 char buf[16];
 char all[512];
@@ -92,7 +92,7 @@ void loop() {
   int pwmValueLeftSym = 128;
   int pwmValueRightSym = 128;
 
-  float k_p = 15; // [V/mm]
+  float k_p = 5.0; // [V/mm]
   float k_i = 0.0;
   float k_d = 0.0;
 
@@ -154,7 +154,6 @@ void loop() {
   
 
   while ((micros() - TIME_BEGIN) < TIME_CYCLE) {  } // do nothing until we reach the time step of TIME_CYCLE
-  digitalWrite(testPin, LOW); //to test the update frequency
 }
 
 
@@ -167,7 +166,7 @@ char* mystrcat( char* dest, char* src )
 }
 
 float sine2dist(float sine){
-  return (sine / 4) * (MAX_DISPLACEMENT_UM) / 256 ; 
+  return (sine / 4.0) * (MAX_DISPLACEMENT_UM) / 256.0 ; 
   // sine / 1024 * MAX_DISPLACEMENT_UM had to be rewritten due to overflow
 }
 
