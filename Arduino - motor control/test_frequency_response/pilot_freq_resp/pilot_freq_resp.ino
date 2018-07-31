@@ -140,9 +140,9 @@ void loop() {
   Serial.print("pwm: ");
   Serial.println(pwmValueRightSym);
   Serial.print("ref = ");
-  Serial.println(dist_ref);*/
+  Serial.println(dist_ref);
   Serial.print("photo_value_left_raw = ");
-  Serial.println(photo_value_left_raw);/*
+  Serial.println(photo_value_left_raw);
   Serial.print("error = ");
   Serial.println(error_left);
   Serial.print("des_mot_volt_right = ");
