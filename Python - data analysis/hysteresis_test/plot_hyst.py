@@ -93,12 +93,12 @@ for filename in os.listdir(directory):
     if PLOT_BOOL:
         fig = plt.figure()
         #plt.plot(df.iloc[:, 3],df.iloc[:, 0]/1000)  # plot reference
-        plt.plot(sensor2dist(df.iloc[0:round(len(df.iloc[:, 1])/2):100, 1], PHOTO_MIN_LEFT, PHOTO_MAX_LEFT), df.iloc[0:round(len(df.iloc[:, 0])/2):100, 0]/1000, 'b.')
-        plt.plot(sensor2dist(df.iloc[round(len(df.iloc[:, 1])/2)+1:-1:100, 1], PHOTO_MIN_LEFT, PHOTO_MAX_LEFT), df.iloc[round(len(df.iloc[:, 0])/2)+1:-1:100, 0]/1000, 'r.')  # input to output
+        plt.plot(df.iloc[0:round(len(df.iloc[:, 0])/2):100, 0]/1000, sensor2dist(df.iloc[0:round(len(df.iloc[:, 1])/2):100, 1], PHOTO_MIN_LEFT, PHOTO_MAX_LEFT), 'b.')
+        plt.plot(df.iloc[round(len(df.iloc[:, 0])/2)+1:-1:100, 0]/1000, sensor2dist(df.iloc[round(len(df.iloc[:, 1])/2)+1:-1:100, 1], PHOTO_MIN_LEFT, PHOTO_MAX_LEFT), 'r.')  # input to output
 
         fig.suptitle('Reference tracking with P')
-        plt.xlabel('Measured distance [mm]')
-        plt.ylabel('Compression reference [mm]')
+        plt.xlabel('Compression reference [mm]')
+        plt.ylabel('Measured distance [mm]')
         # plot left and right sensor data,zoom and save
         #plt.plot(df.iloc[:, 3], df.iloc[:, 1])
         #plt.plot(df.iloc[:, 3], df.iloc[:, 2])
