@@ -20,6 +20,11 @@ PHOTO_MAX_LEFT = 790#840
 PHOTO_MIN_RIGHT = 700
 PHOTO_MAX_RIGHT = 880
 MAX_DISPLACEMENT_UM = 1800
+PHOTO_MIN_LEFT = 550#640
+PHOTO_MAX_LEFT = 725#840
+PHOTO_MIN_RIGHT = 600
+PHOTO_MAX_RIGHT = 720
+MAX_DISPLACEMENT_UM = 5000
 
 def sensor2dist(sensor_value, min_val, max_val):
   # maps the measured value to the distance (assumed linearity) in micrometers
@@ -34,18 +39,19 @@ for filename in os.listdir(directory):
     for i in range(len(df.iloc[:,3]) -3):
         # convert sensor values to mm
         #print(i)
-        df.iloc[i + 3,3] = sensor2dist(float (df.iloc[i + 3,3])/5*1024, PHOTO_MIN_LEFT, PHOTO_MAX_LEFT)
-        #df.iloc[i + 3,3] = sensor2dist(float (df.iloc[i + 3,3])/5*1024, PHOTO_MIN_RIGHT, PHOTO_MAX_RIGHT)
+        #df.iloc[i + 3,3] = 5-(float (df.iloc[i + 3,3])-1.37)/(2.77-1.37)*5
+        df.iloc[i + 3,3] = sensor2dist(float (df.iloc[i + 3,3])/5*1024, PHOTO_MIN_RIGHT, PHOTO_MAX_RIGHT)
         df.iloc[i + 3,0] = float (df.iloc[i + 3, 0])
         df.iloc[i + 3,1] = float (df.iloc[i + 3, 1])
         df.iloc[i + 3,2] = float (df.iloc[i + 3, 2])
 
     #Osc3: joystick (A0) in channel 1 and feedback (current mode) in channel 2; dist sensor (A2) in channel 3
     time_vec = df.iloc[3:,0] - df.iloc[3,0]
-    joystick_vec = df.iloc[3:,1]/3.3*2 - 0.8
-    feedback_vec = ((df.iloc[3:,2]/5*1024) - 81)/492 / 1024*1800
+    #joystick_vec = df.iloc[3:,1]/3.3*2 - 0.8
+    joystick_vec = df.iloc[3:,1]/3.3*2 - 1
+    feedback_vec = ((df.iloc[3:,2]/5*1024) - 81)/492 / 1024 * MAX_DISPLACEMENT_UM
     sensor_dist_vec = df.iloc[3:,3]
-    fig = plt.figure(figsize=(15.0, 6.5))
+    fig = plt.figure()#figsize=(15.0, 6.5))
     fig.suptitle('Unity simulation testing')
     plt.subplot(311)
     plt.plot(time_vec, joystick_vec)  # plot reference
@@ -80,6 +86,6 @@ for filename in os.listdir(directory):
         os.makedirs(figure_directory)
     #print (figure_directory + filename[:-4] + '_latency_plot.jpg')
     fig.savefig(figure_directory + filename[:-4] + '_latency_plot.jpg')
-    plt.close(fig)
+    #plt.close(fig)
 
-    #plt.show()
+    plt.show()
