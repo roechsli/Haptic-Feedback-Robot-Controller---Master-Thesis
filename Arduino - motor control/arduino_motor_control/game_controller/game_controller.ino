@@ -22,7 +22,7 @@ int motorPinRight = 11;    // Motor connected to digital pin 11 (PWM)
 int testPin = 13; // Used for testing the speed of Arduino
 int controlPin = 6; // Used for checking the distance
 
-int dist_ref = 0;
+float dist_ref = 0;
 float FILTER_CST = 0.5;//FIXME play with this filter to have smooth behavior
 int OUTPUT_PER_VOLT = 255/5; // the arduino can output 5V max
 int MOTOR_MAX_VOLTAGE = 20; // change this according to motor

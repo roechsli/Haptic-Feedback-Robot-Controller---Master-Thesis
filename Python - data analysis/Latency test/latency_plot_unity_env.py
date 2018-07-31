@@ -21,9 +21,9 @@ PHOTO_MIN_RIGHT = 700
 PHOTO_MAX_RIGHT = 880
 MAX_DISPLACEMENT_UM = 1800
 PHOTO_MIN_LEFT = 550#640
-PHOTO_MAX_LEFT = 725#840
+PHOTO_MAX_LEFT = 780#840
 PHOTO_MIN_RIGHT = 600
-PHOTO_MAX_RIGHT = 720
+PHOTO_MAX_RIGHT = 763
 MAX_DISPLACEMENT_UM = 5000
 
 def sensor2dist(sensor_value, min_val, max_val):
@@ -47,20 +47,20 @@ for filename in os.listdir(directory):
 
     #Osc3: joystick (A0) in channel 1 and feedback (current mode) in channel 2; dist sensor (A2) in channel 3
     time_vec = df.iloc[3:,0] - df.iloc[3,0]
-    #joystick_vec = df.iloc[3:,1]/3.3*2 - 0.8
-    joystick_vec = df.iloc[3:,1]/3.3*2 - 1
+    #joystick_vec = df.iloc[3:,1]/3.3*2 - 1
+    motor_volt_vec = df.iloc[3:,1]
     feedback_vec = ((df.iloc[3:,2]/5*1024) - 81)/492 / 1024 * MAX_DISPLACEMENT_UM
     sensor_dist_vec = df.iloc[3:,3]
-    fig = plt.figure()#figsize=(15.0, 6.5))
+    fig = plt.figure(figsize=(15.0, 6.5))
     fig.suptitle('Unity simulation testing')
     plt.subplot(311)
-    plt.plot(time_vec, joystick_vec)  # plot reference
+    plt.plot(time_vec, motor_volt_vec)  # plot reference
     """Scope3 vertical lines
     plt.vlines(1.275, -1, 1, 'r')
     plt.vlines(4.06, -1, 1, 'r')
     plt.vlines(7.94, -1, 1, 'g')"""
     plt.xlabel('Time [s]')
-    plt.ylabel('Joystick commands [-]')
+    plt.ylabel('Motor voltage [V]')
     # plot left and right sensor data,zoom and save
     plt.subplot(312)
     plt.plot(time_vec, feedback_vec)
@@ -86,6 +86,6 @@ for filename in os.listdir(directory):
         os.makedirs(figure_directory)
     #print (figure_directory + filename[:-4] + '_latency_plot.jpg')
     fig.savefig(figure_directory + filename[:-4] + '_latency_plot.jpg')
-    #plt.close(fig)
+    plt.close(fig)
 
-    plt.show()
+    #plt.show()
