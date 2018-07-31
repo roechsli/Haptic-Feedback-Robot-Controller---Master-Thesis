@@ -30,8 +30,8 @@ int feedback_right = 0;
 int photo_value_left_raw = 0;
 int photo_value_right_raw = 0;
 
-int dist_ref_left = 0;
-int dist_ref_right = 0;
+float dist_ref_left = 0;
+float dist_ref_right = 0;
 int OUTPUT_PER_VOLT = 255 / 5; // the arduino can output 5V max
 int MOTOR_MAX_VOLTAGE = 20; // change this according to motor
 int LEFT_HAND_AMPLIFIER_GAIN = 10;
@@ -51,10 +51,10 @@ float numerator_l_last_f = 0;
 float numerator_r_last_f = 0;
 
 const int PHOTO_MIN_LEFT = 550;
-const int PHOTO_MAX_LEFT = 725;//795;
+const int PHOTO_MAX_LEFT = 780;
 const int PHOTO_MIN_RIGHT = 600;
-const int PHOTO_MAX_RIGHT = 720;//765;
-const int MAX_DISPLACEMENT_UM = 5; // [um], has been measured
+const int PHOTO_MAX_RIGHT = 763;
+const float MAX_DISPLACEMENT_UM = 5.0; // [um], has been measured
 const int UNITY_MIN = 1024 / 5 * 0.400; // min applied voltage
 const int UNITY_MAX = 1024 / 5 * 2.8; // max applied voltage
 
@@ -95,7 +95,7 @@ void loop() {
   int pwmValueLeftSym = 128;
   int pwmValueRightSym = 128;
 
-  float k_p = 15; // [V/mm]
+  float k_p = 5; // [V/mm]
   float k_i = 0.0;
   float k_d = 0.0;
 
@@ -128,6 +128,12 @@ void loop() {
 
   analogWrite(motorPinLowGain, pwmValueLeftSym); //pwmValueLeftSym
   analogWrite(motorPinHighGain, pwmValueRightSym); //pwmValueRightSym
+
+  //Test
+  //analogWrite(motorPinLowGain, 30*error_left);
+  //Serial.println(sensor2dist(photo_value_left_raw, PHOTO_MIN_LEFT, PHOTO_MAX_LEFT));
+  //Serial.println(error_left * k_p);
+  //Serial.println(dist_ref_left);
   
   /*
   Serial.print("dist_ref_right = ");
@@ -157,8 +163,8 @@ void loop() {
 }
 
 float feedback2dist(int fb){
-  float scaled_fb = (fb - UNITY_MIN) * 32 / (UNITY_MAX - UNITY_MIN) * 32;
-  return (( scaled_fb / 4) * MAX_DISPLACEMENT_UM / 16) / 16; 
+  float scaled_fb = ((float) fb - UNITY_MIN) * 32.0 / (UNITY_MAX - UNITY_MIN) * 32.0;
+  return (( scaled_fb / 4.0) * MAX_DISPLACEMENT_UM /16.0) / 16.0; 
 }
 
 float sensor2dist(int sensor_value, int min_val, int max_val) {

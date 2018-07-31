@@ -30,8 +30,8 @@ int feedback_right = 0;
 int photo_value_left_raw = 0;
 int photo_value_right_raw = 0;
 
-int dist_ref_left = 0;
-int dist_ref_right = 0;
+float dist_ref_left = 0;
+float dist_ref_right = 0;
 int OUTPUT_PER_VOLT = 255 / 5; // the arduino can output 5V max
 int MOTOR_MAX_VOLTAGE = 20; // change this according to motor
 int LEFT_HAND_AMPLIFIER_GAIN = 10;
