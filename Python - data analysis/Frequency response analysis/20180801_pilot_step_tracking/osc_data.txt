@@ -1,0 +1,9 @@
+pilot controller 20180801 - p-controlled with 5V/mm
+
+channel 2: reference from wave generator
+channel 3: photoreceptor measured distance
+channel 4: applied motor voltage
+
+scope 0 - 3
+
+scope 4- 8 KP = 15V/mm
