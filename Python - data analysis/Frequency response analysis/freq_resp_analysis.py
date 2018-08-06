@@ -11,7 +11,7 @@ from math import atan2
 
 PLOT_BOOL = True
 CALC_OPER_FREQ = False
-SHORT_CUT = False
+SHORT_CUT = True
 only_this_file = "f"  # change this to "f" if all frequencies shall be tested, otherwise "f2_csv"
 
 INTMAX = 65535
@@ -85,26 +85,29 @@ freq_vec = []
 for file in os.listdir(directory):
     if SHORT_CUT:  # TODO change this, if you want to skip all the calculation
         freq_vec = [1.25, 1.6, 100, 10, 12.6, 16, 1, 2.5, 20, 25, 2, 3.17, 32, 40, 4, 50, 5, 6.3, 63, 80, 8]
-        amplitude_factor_l = [0.6826234034854604, 0.702374068644084, 0.05610956954278812, 0.3579372634987285, 0.26866083287735826,
-         0.19647660916392465, 0.647273557667352, 0.7424797291501742, 0.15264512730303045, 0.11829267140399782,
-         0.7117423136609905, 0.0901260959293993, 0.7848023817050434, 0.06615899237338108, 0.7905173847409144,
-         0.044896725338400285, 0.7590282516526557, 0.6311748818364169, 0.026049768482241147, 0.017103178371389995,
-         0.4879827264237093]
-        phasediff_l = [-40.10687754626554, -41.98509752016072, 152.4520139097022, 255.6319030383657, -114.85232848050612,
-         -119.33613045636007, -39.078149644094864, -48.631722825286644, -125.30530032192252, 229.22824092038974,
-         -44.777581888368445, 217.55446351786463, -53.22182715259622, 208.4141552514917, 297.92861841460507,
-         -166.6962457862339, -71.23913013944895, -83.9110927646621, 171.66651258712463, 167.8372131209474,
-         -95.63151954764379]
-        amplitude_factor_r = [1.000217496008667, 1.0224667693424105, 0.14262450160374648, 0.5439481391284673, 0.39119884378164393,
-         0.28047123242674943, 0.9530565602417771, 1.0894258166953414, 0.20496294743197854, 0.14956632734620307,
-         1.044891618639843, 0.10853587895896519, 1.1512376656897343, 0.08565315014067588, 1.1669485083013422,
-         0.06478991960980265, 1.1083119776877381, 0.9267128544601474, 0.05252185473693241, 0.04482807213226543,
-         0.7245426097285498]
-        phasediff_r = [-40.22745932910232, -42.80798510252933, 137.79294684175713, 253.88666919350538, -117.93014090329234,
-         -121.63329538954531, -39.35752372223705, -49.28601025949844, -126.85033117262097, 226.5150457468216,
-         -45.27174647943687, 219.08656716857047, -53.62205292081548, 214.34742948046522, 296.93419365531673,
-         -171.53790001253358, -72.39259793369217, -85.77067297709058, 200.7164467428948, 206.21724432342802,
-         -97.60000229355124]
+        amplitude_factor_l = [0.6994285255386264, 0.7060693178843412, 0.1642580358036316, 0.7504272083193917,
+                              0.5608147625160623, 0.4350563936262765, 0.6865373796317358, 0.750613957790355,
+                              0.28764124380912426, 0.18157383994468917, 0.719141440214737, 0.11841728824778987,
+                              0.7841511950211536, 0.08356286691382651, 0.8395411308613303, 0.05160910392066559,
+                              0.8761974243234357, 0.8727214341574415, 0.03602633336518485, 0.02369799489660005,
+                              0.8238155452976973]
+        phasediff_l = [-26.74399667740589, -28.252082139057677, -139.02668442120668, -87.62296455097207,
+                       -111.60332053386406, -122.30681291255031, -26.264449481141625, -33.65993410529991,
+                       -136.88907219509647, 211.81932574839442, -30.129518435338937, 204.82749776212066,
+                       -36.105113701961486, -165.420081452403, -42.83497528042071, 185.87493727039276,
+                       -49.77014973321731, -59.48404583982298, -183.0169730842087, 153.6436519113613,
+                       -71.90212621011054]
+        amplitude_factor_r = [0.002698423806236808, 0.0016442425085835218, 0.042726917043537455, 0.0026442860711027526,
+                              0.002109693116543353, 0.000714095040074596, 0.0004954684393076871, 0.002028191543406408,
+                              0.003573655272637005, 0.0018125102659706518, 0.0009111882556132023, 0.002321354015034593,
+                              0.0009606503908176091, 0.004116386983303665, 0.0006861257226317704, 0.0014236278486540602,
+                              0.0022596612864099665, 0.002388333213123135, 0.0012674189965787093, 0.00684975069637002,
+                              0.002997922097144885]
+        phasediff_r = [54.935068271591334, -104.98856855317769, 18.805709126367418, 9.826501678416832,
+                       -27.094197321617585, 44.4046272047869, -218.03744278412796, 4.153093327601631,
+                       0.31130603544275814, 314.33969792406447, -315.4842229244386, -28.52875809938429,
+                       54.380397810163274, -9.591765076043131, -91.2826756161442, 99.50085940965394, 23.369819555133233,
+                       -317.90093511647376, -244.66332388913816, 150.72386693909115, 22.13060360284489]
 
         freq_vec = [1.25, 1.6, 100.0, 10.0, 13.0, 16.0, 1.0, 2.5, 20.0, 25.0, 2.0, 32.0, 3.0, 40.0, 4.0, 50.0, 5.0, 6.3, 63.0,
          80.0, 8.0]
@@ -212,15 +215,15 @@ amplitude_factor_r = 20 * np.log10(amplitude_factor_r)
 
 
 left_bode, axarr_l = plt.subplots(2, sharex=True)
-left_lines = axarr_l[0].semilogx([freq_vec[x] for x in indices], [amplitude_factor_l[x] for x in indices], linewidth=5.0, label='Left side')
+left_lines = axarr_l[0].semilogx([freq_vec[x] for x in indices], [amplitude_factor_l[x] for x in indices], 'o-', linewidth=5.0, label='Left side')
 axarr_l[0].set_title('Bode diagram - left side (reduction 33:1)', fontsize=25)
 """
-right_lines = axarr_l[0].semilogx([freq_vec[x] for x in indices], [amplitude_factor_r[x] for x in indices], linewidth=5.0, label='Right side')
+right_lines = axarr_l[0].semilogx([freq_vec[x] for x in indices], [amplitude_factor_r[x] for x in indices], 'o-', linewidth=5.0, label='Right side')
 axarr_l[0].legend()
-axarr_l[1].semilogx([freq_vec[x] for x in indices], [phasediff_r[x] if phasediff_r[x] < 0 else phasediff_r[x] - 360 for x in indices], linewidth=5.0, label='Right side')
+axarr_l[1].semilogx([freq_vec[x] for x in indices], [phasediff_r[x] if phasediff_r[x] < 0 else phasediff_r[x] - 360 for x in indices], 'o-', linewidth=5.0, label='Right side')
 axarr_l[0].set_title('Bode diagram (reduction 112:1)', fontsize=25)
 #"""
-axarr_l[1].semilogx([freq_vec[x] for x in indices], [phasediff_l[x] if phasediff_l[x] < 0 else phasediff_l[x] - 360 for x in indices], linewidth=5.0, label='Left side')
+axarr_l[1].semilogx([freq_vec[x] for x in indices], [phasediff_l[x] if phasediff_l[x] < 0 else phasediff_l[x] - 360 for x in indices], 'o-', linewidth=5.0, label='Left side')
 #axarr_l[1].semilogx([freq_vec[x] for x in indices], [phasediff_l[x]  for x in indices])
 axarr_l[1].set_xlabel('Frequency [Hz]', fontsize=25)
 axarr_l[0].set_ylabel('Magnitude [dB]', fontsize=25)
@@ -240,9 +243,9 @@ plt.show()
 left_bode.savefig(figure_directory + '/bode_left.jpg')
 
 right_bode, axarr_r = plt.subplots(2, sharex=True)
-axarr_r[0].semilogx([freq_vec[x] for x in indices], [amplitude_factor_r[x] for x in indices], linewidth=5.0)
+axarr_r[0].semilogx([freq_vec[x] for x in indices], [amplitude_factor_r[x] for x in indices], 'o-', linewidth=5.0)
 axarr_r[0].set_title('Bode diagram - right side (reduction 33:1)', fontsize=25)
-axarr_r[1].semilogx([freq_vec[x] for x in indices], [phasediff_r[x] if phasediff_r[x] < 0 else phasediff_r[x] - 360 for x in indices], linewidth=5.0)
+axarr_r[1].semilogx([freq_vec[x] for x in indices], [phasediff_r[x] if phasediff_r[x] < 0 else phasediff_r[x] - 360 for x in indices], 'o-', linewidth=5.0)
 #axarr_r[1].semilogx([freq_vec[x] for x in indices], [phasediff_r[x] for x in indices])
 axarr_r[1].set_xlabel('Frequency [Hz]', fontsize=25)
 axarr_r[0].set_ylabel('Magnitude [dB]', fontsize=25)
