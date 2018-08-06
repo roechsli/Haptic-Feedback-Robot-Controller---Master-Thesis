@@ -58,11 +58,11 @@ for file in os.listdir(directory):
     if SHORT_CUT:  # TODO change this, if you want to skip all the calculation
         freq_vec = [1.25, 1.6, 100, 10, 12.6, 16, 1, 2.5, 20, 25, 2, 3.17, 32, 40, 4, 50, 5, 6.3, 63, 80, 8]
         amplitude_factor_l = [0.42398913976097446, 0.4282153912079033, 0.12378284313044466, 0.711221069409896,
-                               0.7225816897317351, 0.7646527825863285, 0.40112267357697934, 0.42743202148716863,
-                               0.9914095813817145, 1.2222055794324236, 0.4284915596303108, 0.42862587415289155,
-                               1.6182794339223205, 1.264568245831212, 0.4311669676245879, 0.5462780686764698,
-                               0.44415703547915164, 0.5944384653289748, 0.2708103187351025, 0.170468881007046,
-                               0.6476744573446083]
+                              0.7225816897317351, 0.7646527825863285, 0.40112267357697934, 0.42743202148716863,
+                              0.9914095813817145, 1.2222055794324236, 0.4284915596303108, 0.42862587415289155,
+                              1.6182794339223205, 1.264568245831212, 0.4311669676245879, 0.5462780686764698,
+                              0.44415703547915164, 0.5944384653289748, 0.2708103187351025, 0.170468881007046,
+                              0.6476744573446083]
         phasediff_l = [-29.67419316918162, 329.3954574722484, 151.77595893442785, -34.1606097854003,
                        -37.606370641125956, -40.36468813694745, -30.36855317966672, -31.3116501593979,
                        -47.26522334530678, 306.8163968335256, -30.42922969682391, -32.857491878311464,
@@ -179,9 +179,9 @@ amplitude_factor_r = 20 * np.log10(amplitude_factor_r)
 
 
 left_bode, axarr_l = plt.subplots(2, sharex=True)
-axarr_l[0].semilogx([freq_vec[x] for x in indices], [amplitude_factor_l[x] for x in indices], linewidth=5.0)
+axarr_l[0].semilogx([freq_vec[x] for x in indices], [amplitude_factor_l[x] for x in indices], 'o-', linewidth=5.0)
 axarr_l[0].set_title('Bode diagram - left side (reduction 33:1)', fontsize=25)
-axarr_l[1].semilogx([freq_vec[x] for x in indices], [phasediff_l[x] if phasediff_l[x] < 0 else phasediff_l[x] - 360 for x in indices], linewidth=5.0)
+axarr_l[1].semilogx([freq_vec[x] for x in indices], [phasediff_l[x] if phasediff_l[x] < 0 else phasediff_l[x] - 360 for x in indices], 'o-', linewidth=5.0)
 #axarr_l[1].semilogx([freq_vec[x] for x in indices], [phasediff_l[x]  for x in indices])
 axarr_l[1].set_xlabel('Frequency [Hz]', fontsize=25)
 axarr_l[0].set_ylabel('Magnitude [dB]', fontsize=25)
@@ -201,9 +201,9 @@ plt.show()
 left_bode.savefig(figure_directory + '/bode_left.jpg')
 
 right_bode, axarr_r = plt.subplots(2, sharex=True)
-axarr_r[0].semilogx([freq_vec[x] for x in indices], [amplitude_factor_r[x] for x in indices], linewidth=5.0)
+axarr_r[0].semilogx([freq_vec[x] for x in indices], [amplitude_factor_r[x] for x in indices], 'o-', linewidth=5.0)
 axarr_r[0].set_title('Bode diagram - right side (reduction 112:1)', fontsize=25)
-axarr_r[1].semilogx([freq_vec[x] for x in indices], [phasediff_r[x] if phasediff_r[x] < 0 else phasediff_r[x] - 360 for x in indices], linewidth=5.0)
+axarr_r[1].semilogx([freq_vec[x] for x in indices], [phasediff_r[x] if phasediff_r[x] < 0 else phasediff_r[x] - 360 for x in indices], 'o-', linewidth=5.0)
 #axarr_r[1].semilogx([freq_vec[x] for x in indices], [phasediff_r[x] for x in indices])
 axarr_r[1].set_xlabel('Frequency [Hz]', fontsize=25)
 axarr_r[0].set_ylabel('Magnitude [dB]', fontsize=25)
