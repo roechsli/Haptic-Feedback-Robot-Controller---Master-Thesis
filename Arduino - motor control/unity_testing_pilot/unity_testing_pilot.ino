@@ -24,6 +24,7 @@
 #define feedback_pin_right A5
 int motorPinLowGain = 3;    // Motor connected to digital pin 3 (PWM)
 int motorPinHighGain = 11;    // Motor connected to digital pin 11 (PWM)
+int controlPin = 6; // Used for testing the speed of Arduino
 
 int feedback_left = 0;
 int feedback_right = 0;
@@ -53,7 +54,7 @@ float numerator_r_last_f = 0;
 const int PHOTO_MIN_LEFT = 550;
 const int PHOTO_MAX_LEFT = 780;
 const int PHOTO_MIN_RIGHT = 600;
-const int PHOTO_MAX_RIGHT = 763;
+const int PHOTO_MAX_RIGHT = 741;//763;
 const float MAX_DISPLACEMENT_UM = 5.0; // [um], has been measured
 const int UNITY_MIN = 1024 / 5 * 0.400; // min applied voltage
 const int UNITY_MAX = 1024 / 5 * 2.8; // max applied voltage
@@ -73,6 +74,7 @@ void setup() {
   pinMode(photo_left_pin, INPUT);
   pinMode(joystick_right_pin, INPUT);
   pinMode(photo_right_pin, INPUT);
+  pinMode(controlPin, OUTPUT);
 
   TCCR2B = TCCR2B & B11111000 | B00000001; // for PWM frequency of 31372.55 Hz
 
@@ -95,7 +97,7 @@ void loop() {
   int pwmValueLeftSym = 128;
   int pwmValueRightSym = 128;
 
-  float k_p = 5; // [V/mm]
+  float k_p = 15; // [V/mm]
   float k_i = 0.0;
   float k_d = 0.0;
 
@@ -137,9 +139,9 @@ void loop() {
   
   /*
   Serial.print("dist_ref_right = ");
-  Serial.println(dist_ref_right);
+  Serial.println(dist_ref_right);*/
   Serial.print("photo_value_right_raw = ");
-  Serial.println(photo_value_right_raw);
+  Serial.println(photo_value_right_raw);/*
   Serial.print("error = ");
   Serial.println(error_right);
   Serial.print("des_mot_volt_right = ");
@@ -160,6 +162,9 @@ void loop() {
   Serial.println( numerator_r);*/
   
   while ((micros() - TIME_BEGIN) < TIME_CYCLE) {  } // do nothing until we reach the time step of TIME_CYCLE
+  Serial.println(3.2/5*255 - (((float) photo_value_left_raw - (float)PHOTO_MIN_LEFT)/(float) (PHOTO_MAX_LEFT - PHOTO_MIN_LEFT)* (UNITY_MAX - UNITY_MIN)+UNITY_MIN) /4);
+  analogWrite(controlPin, 3.2/5*255 - (((float) photo_value_left_raw - (float)PHOTO_MIN_LEFT)/(float) (PHOTO_MAX_LEFT - PHOTO_MIN_LEFT)* (UNITY_MAX - UNITY_MIN)+UNITY_MIN) /4);
+  
 }
 
 float feedback2dist(int fb){
