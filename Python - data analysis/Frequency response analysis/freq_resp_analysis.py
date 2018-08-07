@@ -158,12 +158,6 @@ for file in os.listdir(directory):
 
 # plot Bode diagram (freq_vec, magn_vec) and (freq_vec, phase_offset_vec)
 # save figures
-"""
-print(amplitude_factor_l)
-print(phasediff_l)
-print(amplitude_factor_r)
-print(phasediff_r)
-"""
 print("amplitude_factor_l = ")
 print(amplitude_factor_l)
 print("phasediff_l = " )
