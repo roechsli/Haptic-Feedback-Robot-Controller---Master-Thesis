@@ -11,7 +11,7 @@ from math import atan2
 
 PLOT_BOOL = True
 CALC_OPER_FREQ = False
-SHORT_CUT = True
+SHORT_CUT = True  # change this, if you want to skip all the calculation
 only_this_file = "f"  # change this to "f" if all frequencies shall be tested, otherwise "f2_csv"
 
 INTMAX = 65535
@@ -49,18 +49,22 @@ PHOTO_MIN_RIGHT = 550
 PHOTO_MAX_RIGHT = 765
 MAX_DISPLACEMENT_UM = 5
 directory = "20180727_fra_logs_pilot_P10Vmm/"  # TODO change this if new data shall be analyzed
+
+
 def get_freq_from_filename(filename):
     if filename[0] == "f" and filename[-8:] == "_csv.csv":
         return filename[1:-8]
     else:
         return ""
 
+
 def sensor2dist(sensor_value, min_val, max_val):
-  # maps the measured value to the distance (assumed linearity) in micrometers
-  return (MAX_DISPLACEMENT_UM - (sensor_value - min_val) * MAX_DISPLACEMENT_UM / (max_val - min_val) )
+    # maps the measured value to the distance (assumed linearity) in micrometers
+    return (MAX_DISPLACEMENT_UM - (sensor_value - min_val) * MAX_DISPLACEMENT_UM / (max_val - min_val) )
+
 
 def fitSine(tList, yList, freq):
-    #from: http://exnumerus.blogspot.jp/2010/04/how-to-fit-sine-wave-example-in-python.html
+    # from: http://exnumerus.blogspot.jp/2010/04/how-to-fit-sine-wave-example-in-python.html
     '''
         freq in Hz
         tList in sec
@@ -83,7 +87,7 @@ phasediff_l = []
 amplitude_factor_l = []
 freq_vec = []
 for file in os.listdir(directory):
-    if SHORT_CUT:  # TODO change this, if you want to skip all the calculation
+    if SHORT_CUT:
         freq_vec = [1.25, 1.6, 100, 10, 12.6, 16, 1, 2.5, 20, 25, 2, 3.17, 32, 40, 4, 50, 5, 6.3, 63, 80, 8]
         amplitude_factor_l = [0.6994285255386264, 0.7060693178843412, 0.1642580358036316, 0.7504272083193917,
                               0.5608147625160623, 0.4350563936262765, 0.6865373796317358, 0.750613957790355,
@@ -192,12 +196,6 @@ for file in os.listdir(directory):
 
 # plot Bode diagram (freq_vec, magn_vec) and (freq_vec, phase_offset_vec)
 # save figures
-"""
-print(amplitude_factor_l)
-print(phasediff_l)
-print(amplitude_factor_r)
-print(phasediff_r)
-"""
 print("freq_vec = ")
 print(freq_vec)
 print("amplitude_factor_l = ")
@@ -263,32 +261,3 @@ mng = plt.get_current_fig_manager()
 mng.resize(*mng.window.maxsize())
 plt.show()
 right_bode.savefig(figure_directory + '/bode_right.jpg')
-
-"""
-#======================= trial with bode plot
-#sys = signal.TransferFunction([9.6e10, -2.8e11, 2.7e11, -8.6e10, 0, 0, 0, 0, 0, 0, 0], [1.9e10, -6.3e11, 7.7e11, -4.1e11, 8.3e10, -3.2e5, 0, 0, 0, 0, 0], dt=0.001)
-sys = signal.TransferFunction([9.6e10, -2.8e11, 2.7e11, -8.6e10, 0, 0], [1.9e10, -6.3e11, 7.7e11, -4.1e11, 8.3e10, -3.2e5], dt=0.001)
-w, mag, phase = sys.bode()
-comp_bode, axarr_comp = plt.subplots(2, sharex=True)
-axarr_comp[0].semilogx([freq_vec[x] for x in indices], [amplitude_factor_r[x] for x in indices], linewidth=5.0)
-axarr_comp[0].semilogx(w, mag)    # Bode magnitude plot
-axarr_comp[0].set_title('Bode diagram - comparison', fontsize=25)
-axarr_comp[1].semilogx([freq_vec[x] for x in indices], [phasediff_r[x] if phasediff_r[x] < 0 else phasediff_r[x] - 360 for x in indices], linewidth=5.0)
-#axarr_r[1].semilogx([freq_vec[x] for x in indices], [phasediff_r[x] for x in indices])
-axarr_comp[1].set_xlabel('Frequency [Hz]', fontsize=25)
-axarr_comp[0].set_ylabel('Magnitude [dB]', fontsize=25)
-axarr_comp[1].set_ylabel('Phase [deg]', fontsize=25)
-axarr_comp[0].tick_params(axis='x', labelsize=10)
-axarr_comp[1].tick_params(axis='x', labelsize=10)
-axarr_comp[0].tick_params(axis='y', labelsize=10)
-axarr_comp[1].tick_params(axis='y', labelsize=10)
-#axarr_comp[0].set_ylim(-25,10)
-#axarr_comp[1].set_ylim(-200,0)
-axarr_comp[0].grid()
-axarr_comp[1].grid()
-figure_directory = 'figs/'
-mng = plt.get_current_fig_manager()
-mng.resize(*mng.window.maxsize())
-plt.show()
-comp_bode.savefig(figure_directory + '/bode_comp.jpg')
-"""
