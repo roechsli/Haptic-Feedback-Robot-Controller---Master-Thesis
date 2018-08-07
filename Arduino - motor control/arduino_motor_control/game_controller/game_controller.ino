@@ -1,7 +1,8 @@
 /*
   Roman Oechslin
   Robot controller with haptic feedback
-  2018/07/03  Tokyo
+  2018/08/07  Tokyo
+  Version 1.0
 */
 #define FASTADC 1
 
@@ -19,11 +20,9 @@
 #define photo_right_pin A3
 int motorPinLeft = 3;    // Motor connected to digital pin 3 (PWM)
 int motorPinRight = 11;    // Motor connected to digital pin 11 (PWM)
-int testPin = 13; // Used for testing the speed of Arduino
-int controlPin = 6; // Used for checking the distance
 
-float dist_ref = 0;
-float FILTER_CST = 0.5;//FIXME play with this filter to have smooth behavior
+float dist_ref = 0.0;
+float FILTER_CST = 0.5; // filter when reading new feedback value
 int OUTPUT_PER_VOLT = 255/5; // the arduino can output 5V max
 int MOTOR_MAX_VOLTAGE = 20; // change this according to motor
 int LEFT_HAND_AMPLIFIER_GAIN = 10;
@@ -31,27 +30,34 @@ int RIGHT_HAND_AMPLIFIER_GAIN = 10;
 const int OUTPUT_RANGE_L = 2 * MOTOR_MAX_VOLTAGE * OUTPUT_PER_VOLT / LEFT_HAND_AMPLIFIER_GAIN;
 const int OUTPUT_RANGE_R = 2 * MOTOR_MAX_VOLTAGE * OUTPUT_PER_VOLT / RIGHT_HAND_AMPLIFIER_GAIN;
 
-float error_left = 0;
-float error_left_last = 0;
-float sum_error_left = 0;
-float numerator_l_last_f = 0;
-float error_right = 0;
-float error_right_last = 0;
-float sum_error_right = 0;
-float numerator_r_last_f = 0;
+float error_left = 0.0;
+float error_left_last = 0.0;
+float sum_error_left = 0.0;
+float numerator_l_last_f = 0.0;
+float error_right = 0.0;
+float error_right_last = 0.0;
+float sum_error_right = 0.0;
+float numerator_r_last_f = 0.0;
 float dT = 0.001;
-float filter_coeff = 0.05;
+float filter_coeff = 0.05; // filter on derivative part
 
 int photo_value_left_raw = 0;
 int photo_value_right_raw = 0;
 
-const int PHOTO_MIN_LEFT = 640;//650;
-const int PHOTO_MAX_LEFT = 840;//830;
-const int PHOTO_MIN_RIGHT = 700;//700;
-const int PHOTO_MAX_RIGHT = 880;//870;
-const int MAX_DISPLACEMENT_UM = 1800; // [um], has been measured
+const int PHOTO_MIN_LEFT = 640;
+const int PHOTO_MAX_LEFT = 840;
+const int PHOTO_MIN_RIGHT = 700;
+const int PHOTO_MAX_RIGHT = 880;
+const float MAX_DISPLACEMENT_MM = 1.8; // [mm], has been measured
 
-const int MIN_DIST_THRESH = 10;
+// If Yoke controller is used:
+/*
+const int PHOTO_MIN_LEFT = 550;
+const int PHOTO_MAX_LEFT = 780;
+const int PHOTO_MIN_RIGHT = 600;
+const int PHOTO_MAX_RIGHT = 763;
+const float MAX_DISPLACEMENT_MM = 5.0; // [mm], has been measured
+*/
 
 unsigned long TIME_BEGIN = 0;
 unsigned long TIME_NOW = 0;
@@ -67,10 +73,6 @@ void setup() {
   pinMode(photo_left_pin, INPUT);
   pinMode(joystick_right_pin, INPUT);
   pinMode(photo_right_pin, INPUT);
-  pinMode(testPin, OUTPUT);
-  pinMode(controlPin, OUTPUT);
-
-  pinMode(LED_BUILTIN, OUTPUT);
 
   TCCR2B = TCCR2B & B11111000 | B00000001; // for PWM frequency of 31372.55 Hz
   #if FASTADC
@@ -82,13 +84,12 @@ void setup() {
 }
 
 void loop() {
-  digitalWrite(testPin, HIGH); // this is only used to measure the operating frequency
   TIME_BEGIN = micros();
   
   int joy_val_left = analogRead(joystick_left_pin);
-  joy_val_left = joy_val_left>>2; // the joystick value is [0..1023] and I want to convert it to 8bit
+  joy_val_left = joy_val_left>>2; // the joystick value is [0..1023] converts it to 8bit
   int joy_val_right = analogRead(joystick_right_pin);
-  joy_val_right = joy_val_right>>2; // the joystick value is [0..1023] and I want to convert it to 8bit
+  joy_val_right = joy_val_right>>2; // the joystick value is [0..1023] converts it to 8bit
 
   photo_value_left_raw = analogRead(photo_left_pin);
   photo_value_right_raw = analogRead(photo_right_pin);
@@ -103,16 +104,24 @@ void loop() {
   float k_i = 0.0;
   float k_d = 0.0;
 
-  //Writing to Processing file
+  // If Yoke controller is used:
+  /*
+   float k_p = 5.0; // [V/mm]
+   float k_i = 0.0;
+   float k_d = 0.0;
+
+   k_p = k_p * 255 / 40; // to convert it to arduino values
+   */
+
+  // Writing to Processing file
   Serial.write(joy_val_left);
   Serial.write(joy_val_right); 
   Serial.write((joy_val_left + joy_val_right)%256); // this is the checksum
   if (Serial.available() > 0) {
-    dist_ref = (int)(FILTER_CST*dist_ref + (1-FILTER_CST)* Serial.read()*(MAX_DISPLACEMENT_UM / 18) / 255 * 18);
+    dist_ref = (int)(FILTER_CST*dist_ref + (1-FILTER_CST)* Serial.read()*(MAX_DISPLACEMENT_MM) / 255);
   } else {
-    dist_ref = 0.99*dist_ref;// FIXME tune this param
+    dist_ref = FILTER_CST*dist_ref;
   }
-  //Serial.println(dist_ref);
   error_left = dist_ref - sensor2dist(photo_value_left_raw, PHOTO_MIN_LEFT, PHOTO_MAX_LEFT);
   error_right = dist_ref - sensor2dist(photo_value_right_raw, PHOTO_MIN_RIGHT, PHOTO_MAX_RIGHT);
   
@@ -135,20 +144,15 @@ void loop() {
   pwmValueLeftSym = pid2pwm_sym(des_mot_volt_left, OUTPUT_RANGE_L);
   pwmValueRightSym = pid2pwm_sym(des_mot_volt_right, OUTPUT_RANGE_R);
 
-  analogWrite(motorPinLeft, pwmValueLeftSym);//pwmValueLeftSym
-  analogWrite(motorPinRight, pwmValueRightSym); //pwmValueRightSym
-
-  //Serial.println(sensor2dist(photo_value_right_raw, PHOTO_MIN_RIGHT, PHOTO_MAX_RIGHT));// for debugging purposes in serial monitor mode
-  //Serial.println(photo_value_left_raw);
+  analogWrite(motorPinLeft, pwmValueLeftSym);
+  analogWrite(motorPinRight, pwmValueRightSym); 
  
   while ((micros() - TIME_BEGIN) < TIME_CYCLE) {  } // do nothing until we reach the time step of TIME_CYCLE
-  digitalWrite(testPin, LOW); 
-  analogWrite(controlPin, dist_ref*0.1417); // dist_ref
 }
 
-int sensor2dist(int sensor_value, int min_val, int max_val) {
-  // maps the measured value to the distance (assumed linearity) in micrometers
-  return MAX_DISPLACEMENT_UM - (sensor_value - min_val) * (MAX_DISPLACEMENT_UM /15) / (max_val - min_val) * 15;
+float sensor2dist(int sensor_value, int min_val, int max_val) {
+  // maps the measured value to the distance (assumed linearity) in millimeters
+  return MAX_DISPLACEMENT_MM - (sensor_value - min_val) * (MAX_DISPLACEMENT_MM ) / (max_val - min_val) ;
 }
 
 

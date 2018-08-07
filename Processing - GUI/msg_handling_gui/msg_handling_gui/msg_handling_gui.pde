@@ -3,26 +3,9 @@
  //  Author: Roman Oechslin
  //  Master project - haptic feedback controller - Yamamoto's lab, Uni Tokyo
  //  
- //  Date 2018/07/03
- //  Version 1.02
- 
- Todo:
- replace magic numbers with constants
- check if COMs available, otherwise it crashes
- limit current feedback when stopping abruptly
- robot behaves strangely when turning
- pc receives (very rarely) wrong msgs which changes feedback abruptly or driving mode
- test different baud rates and check how smoothly it runs (also update frequency)
- 
- 
- Improvements:
- Bleulers comment: replace constant force output by vibrating to make it perceived more easily
- 
- Bugs, Errors and FIXMEs
- sometimes it stops and goes
- battery should be warned first and if it consits, it has to be a major error
- 
- */
+ //  Date 2018/08/07
+ //  Version 1.03
+*/
 
 import processing.serial.*;
 Serial crawlerPort;
@@ -59,7 +42,7 @@ int RX_ROBOT_MSG_LENGTH = 70; // number of bytes in msg from robot to pc
 
 int crawler_current_left = 0;
 int crawler_current_right = 0;
-int current_offset[] = {529, 550}; // FIXME check if offset values set correctly, can vary over time
+int current_offset[] = {529, 550}; // offset values can vary over time (529, 550 is suggested)
 
 final int STOP_MODE = 0; // both stop
 final int FORWARD_MODE = 1; // both forward
@@ -77,10 +60,10 @@ boolean critical_battery_level = false; // is true when voltage drops below 11.5
 
 void setup() {
   // setup loop
-  if (!IGNORE_COM) arduinoPort = new Serial(this, "COM3", 250000);//9600);
+  if (!IGNORE_COM) arduinoPort = new Serial(this, "COM3", 250000);
   if (!IGNORE_COM) crawlerPort = new Serial(this, "COM4", 250000);
   size(500, 500);
-  frameRate(50); // was 50
+  frameRate(50); // 50 is appropriate
   println("Started up program!");
   if (IGNORE_COM) println("ignoring com ports");
   if (DEBUG) println("DEBUG MODE ON");
@@ -105,7 +88,7 @@ void draw() {
     warn_battery();
     send_over_serial(msg_stop);
   } else {
-    if (global_loop_counter == 5) { //was 5
+    if (global_loop_counter == 5) { // 5 is appropriate
       global_loop_counter = 0;
       construct_msg();
       send_over_serial(my_msg);
@@ -239,7 +222,6 @@ void receive_arduino_msg() {
 
   while (!IGNORE_COM && arduinoPort.available() > 0 && counter < ARDU_MSG_LENGTH + ARDU_MSG_SHIFT) {
     received_msg[counter] = arduinoPort.read();
-    //if (DEBUG) println("read " + counter + " as " + received_msg[counter]);
     counter++;
   }
   
@@ -252,16 +234,15 @@ void receive_arduino_msg() {
     if (shift < ARDU_MSG_SHIFT) {
       joystick_value_left = received_msg[shift];
       joystick_value_right = received_msg[1 + shift];
-      //if (DEBUG) println("received: " + joystick_value_left + " and " + joystick_value_right);
-    } else { //checksum does not check
-      if (DEBUG) println("i did not find anything");
+    } else { // if checksum does not check
+      if (DEBUG) println("Checksum is wrong");
       return;
     }
   } else {
     return;
   }
 
-  if (!IGNORE_COM) arduinoPort.clear(); //TODO think about filtering maybe or taking average
+  if (!IGNORE_COM) arduinoPort.clear();
 
   // shift joystick values by 127 (half a byte) to make it symmetric around 0
   joystick_value_left = joystick_value_left - 127;
@@ -293,7 +274,7 @@ void receive_arduino_msg() {
       if (driving_mode == BACKWARD_MODE) {
         driving_mode = BL_FR;
       } else {
-        driving_mode = FORWARD_MODE; // FIXME if i drop this i can forbid one sided turns
+        driving_mode = FORWARD_MODE; // NOTE if this is dropped, one can forbid one-sided turns
       }
       driving_speed_right = joystick_value_right - DEADZONE_CST; 
       // joystick_value_right is bounded between (27..127)
@@ -311,8 +292,7 @@ void receive_arduino_msg() {
     if (VERBOSE) println("right stopping");
     driving_speed_right = 0;
   }
-
-  //FIXME if safety factor == 0, the robot does not move anymore
+  // Safety factor division to drive the robot slower than full speed
   driving_speed_left = driving_speed_left >> SAFETY_FACTOR;
   driving_speed_right = driving_speed_right >> SAFETY_FACTOR;
   if (DEBUG) println("driving speed = " + driving_speed_left + " and " + driving_speed_right);
@@ -373,7 +353,7 @@ void receive_robot_msg() {
   
 }
 
-int convert_angles(int high_byte_val, int low_byte_val) {  // FIXME why can't I use convert16bit here?
+int convert_angles(int high_byte_val, int low_byte_val) { 
   // This function converts a 16bit value for the angles to an integer
   int angle = 0;
 
@@ -399,7 +379,7 @@ int convert16bit(int high_byte_val, int low_byte_val) {
 }
 
 void check_battery_status(int bat_msg) {
-  float battery_level = (float) bat_msg *30/255;
+  float battery_level = (float) bat_msg *30/255; // values from robot manual
   if (VERBOSE) println("battery status = " + battery_level);
 
   if (battery_level > 13.4) { // everything is fine
