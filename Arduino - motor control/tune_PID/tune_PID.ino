@@ -103,12 +103,12 @@ void loop() {
 
   // k_p = 0.243; k_i = 0.63; k_d =0.00126; works well
   //1.6; // k_p = 0.8; and k_i = 0.01; k_d = 0.008; works not so well
-//  float k_p = 0.243;
-//  float k_i = 0.63;
-//  float k_d = 0.00126;
-  float k_p = 0.2;
+//  float k_p = 0.2;
+//  float k_i = 0.0;
+//  float k_d = 0.0;
+  float k_p = 0.2;//243;
   float k_i = 0.0;
-  float k_d = 0.0;
+  float k_d = 0.0;//00126;
 
   // ignore Serial and read sine wave signal as reference
   dist_ref = sine2dist(sine_signal);
@@ -148,23 +148,29 @@ void loop() {
   p = mystrcat(p, itoa(TIME_BEGIN, buf, 16));
   p = mystrcat(p, semicolon);
   p = mystrcat(p, end_char);
-  //Serial.print(all); //TODO this is necessary for logging
+  Serial.print(all); //TODO this is necessary for logging
   // message format: dist ref | left val | right val | time stamp
 
-  
+  /*
   Serial.print("ref = ");
   Serial.println(dist_ref);
   Serial.print("photo_value_right_raw = ");
-  Serial.println(photo_value_right_raw);/*
+  Serial.println(photo_value_right_raw);
+  Serial.print("photo_value_left_raw = ");
+  Serial.println(photo_value_left_raw);
   Serial.print("error = ");
-  Serial.println(error_right);*/
+  Serial.println(error_right);
+  Serial.print("sum_error_left = ");
+  Serial.println(sum_error_left);
+  Serial.print("sum_error_right = ");
+  Serial.println(sum_error_right);
   Serial.print("des_mot_volt_right = ");
-  Serial.println(des_mot_volt_right);/*
+  Serial.println(des_mot_volt_right);
   Serial.print("pwmValueRightSym = ");
-  Serial.println(pwmValueRightSym);*/
+  Serial.println(pwmValueRightSym);
 
   Serial.print("measured dist = ");
-  Serial.println(sensor2dist(photo_value_right_raw, PHOTO_MIN_RIGHT, PHOTO_MAX_RIGHT));/*
+  Serial.println(sensor2dist(photo_value_right_raw, PHOTO_MIN_RIGHT, PHOTO_MAX_RIGHT));
   Serial.print("error right = ");
   Serial.println( error_right);
   Serial.print("proportional term = ");
