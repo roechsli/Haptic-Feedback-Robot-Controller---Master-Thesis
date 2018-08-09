@@ -51,10 +51,10 @@ float error_right_last = 0;
 float numerator_l_last_f = 0;
 float numerator_r_last_f = 0;
 
-const int PHOTO_MIN_LEFT = 550;
-const int PHOTO_MAX_LEFT = 780;
-const int PHOTO_MIN_RIGHT = 600;
-const int PHOTO_MAX_RIGHT = 741;//763;
+const int PHOTO_MIN_LEFT = 550;//550;
+const int PHOTO_MAX_LEFT = 780;//800;
+const int PHOTO_MIN_RIGHT = 600;//650;
+const int PHOTO_MAX_RIGHT = 761;//730;
 const float MAX_DISPLACEMENT_UM = 5.0; // [um], has been measured
 const int UNITY_MIN = 1024 / 5 * 0.400; // min applied voltage
 const int UNITY_MAX = 1024 / 5 * 2.8; // max applied voltage
