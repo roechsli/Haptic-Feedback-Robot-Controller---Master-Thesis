@@ -107,7 +107,7 @@ void loop() {
 //  float k_i = 0.0;
 //  float k_d = 0.0;
   float k_p = 0.2;//243;
-  float k_i = 0.0;
+  float k_i = 0.93;
   float k_d = 0.0;//00126;
 
   // ignore Serial and read sine wave signal as reference
