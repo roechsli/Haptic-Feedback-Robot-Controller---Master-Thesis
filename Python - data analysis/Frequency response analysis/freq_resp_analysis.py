@@ -33,7 +33,7 @@ PHOTO_MAX_LEFT = 840
 PHOTO_MIN_RIGHT = 700
 PHOTO_MAX_RIGHT = 880
 MAX_DISPLACEMENT_UM = 1800
-directory = "20180810_tracking_step_P02I093/"  # TODO change this if new data shall be analyzed
+directory = "20180810_tracking_step_P0243/"  # TODO change this if new data shall be analyzed
 
 def get_freq_from_filename(filename):
     if filename[0] == "f" and filename[-8:] == "_csv.csv":
@@ -145,14 +145,14 @@ for file in os.listdir(directory):
         plt.ylabel('Compression [mm]')
         #plt.axis([2, 3.6, 0.2, 0.7])
         #plt.axis([11.5, 11.7, 0.0, 2.0])
-        plt.axis([9, 9.2, 0.0, 2.0])
+        plt.axis([11.5, 11.7, 0.0, 2.0])
         plt.legend(["left sensor", "right sensor", "reference signal"])
         figure_directory = 'figs/f' + frequency
         if not os.path.exists(figure_directory):
             os.makedirs(figure_directory)
         fig.savefig(figure_directory + '/' + frequency + 'plot_zoom_fixed_time.jpg')
         #plt.axis([2, 2 + 3 / frequency_float, -0.05, 0.7])
-        plt.axis([2, 2 + 3 / frequency_float, 0.2, 0.90])
+        plt.axis([2, 2 + 3 / frequency_float, 0.0, 2.0])
         fig.savefig(figure_directory + '/' + frequency + 'plot_zoom.jpg')
         with open(figure_directory + '/' + frequency + '_raw.pkl', "wb") as fp:
             pickle.dump(fig, fp, protocol=4)
