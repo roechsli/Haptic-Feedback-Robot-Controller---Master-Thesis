@@ -40,20 +40,26 @@ for filename in os.listdir(directory):
         # convert sensor values to mm
         #print(i)
         #df.iloc[i + 3,3] = 5-(float (df.iloc[i + 3,3])-1.37)/(2.77-1.37)*5
-        df.iloc[i + 3,3] = sensor2dist(float (df.iloc[i + 3,3])/5*1024, PHOTO_MIN_RIGHT, PHOTO_MAX_RIGHT)
-        df.iloc[i + 3,0] = float (df.iloc[i + 3, 0])
-        df.iloc[i + 3,1] = float (df.iloc[i + 3, 1])
-        df.iloc[i + 3,2] = float (df.iloc[i + 3, 2])
+        #df.iloc[i + 3,3] = sensor2dist(float (df.iloc[i + 3,3])/5*1024, PHOTO_MIN_RIGHT, PHOTO_MAX_RIGHT)
+        #df.iloc[i + 3,1] = float (df.iloc[i + 3, 1])  # old motor voltage
+        #df.iloc[i + 3, 2] = float (df.iloc[i + 3, 2])  # old feedback
+        df.iloc[i + 3, 2] = (float(df.iloc[i + 3, 2]) - 0.4 )/2.4 * 5  # sensor
+        df.iloc[i + 3, 0] = float (df.iloc[i + 3, 0])  # time
+        df.iloc[i + 3, 1] = (float (df.iloc[i + 3, 1]) - 0.4 )/2.4 * 5  # feedback
+        df.iloc[i + 3, 3] = float (df.iloc[i + 3, 3])  # motor voltage
 
     #Osc3: joystick (A0) in channel 1 and feedback (current mode) in channel 2; dist sensor (A2) in channel 3
-    time_vec = df.iloc[3:,0] - df.iloc[3,0]
+    time_vec = df.iloc[3:, 0] - df.iloc[3, 0]
     #joystick_vec = df.iloc[3:,1]/3.3*2 - 1
-    motor_volt_vec = df.iloc[3:,1]
-    feedback_vec = ((df.iloc[3:,2]/5*1024) - 81)/492 / 1024 * MAX_DISPLACEMENT_UM
-    sensor_dist_vec = df.iloc[3:,3]
+    #motor_volt_vec = df.iloc[3:,1]
+    #feedback_vec = ((df.iloc[3:,2]/5*1024) - 81)/492 / 1024 * MAX_DISPLACEMENT_UM
+    #sensor_dist_vec = df.iloc[3:,3]
+    motor_volt_vec = df.iloc[3:, 3]
+    feedback_vec = df.iloc[3:, 1]
+    sensor_dist_vec = df.iloc[3:, 2]
     fig = plt.figure(figsize=(15.0, 6.5))
     fig.suptitle('Unity simulation testing')
-    plt.subplot(311)
+    plt.subplot(212)
     plt.plot(time_vec, motor_volt_vec)  # plot reference
     """Scope3 vertical lines
     plt.vlines(1.275, -1, 1, 'r')
@@ -62,16 +68,16 @@ for filename in os.listdir(directory):
     plt.xlabel('Time [s]')
     plt.ylabel('Motor voltage [V]')
     # plot left and right sensor data,zoom and save
-    plt.subplot(312)
-    plt.plot(time_vec, feedback_vec)
+    plt.subplot(211)
+    plt.plot(time_vec, feedback_vec, 'g')
     """Scope3 vertical lines
     plt.vlines(2.02, 0, 2, 'r')
     plt.vlines(4.74, 0, 2, 'r')
     plt.vlines(7.98, 0, 2, 'g')"""
     plt.xlabel('Time [s]')
     plt.ylabel('Desired compression [mm]')
-    plt.subplot(313)
-    plt.plot(time_vec, sensor_dist_vec)
+    plt.subplot(211)
+    plt.plot(time_vec, sensor_dist_vec, color='darkorange')
     """Scope3 vertical lines
     plt.vlines(2.235, 0, 1.9, 'r')
     plt.vlines(4.844, 0, 1.9, 'r')
@@ -79,7 +85,7 @@ for filename in os.listdir(directory):
     plt.xlabel('Time [s]')
     plt.ylabel('Compression [mm]')
     #plt.axis([2.9, 3.6, 0, 255])
-    #plt.legend(["joystick commands", "feedback", "distance"])
+    plt.legend(["reference", "measured"])
 
     figure_directory = 'figs/'
     if not os.path.exists(figure_directory):
