@@ -35,6 +35,11 @@ for filename in os.listdir(directory):
     print(filename)
     # plotting
     df = pd.read_csv(directory + filename, delimiter=',')
+    my_multiplier = 1
+    if "a" in filename:
+        my_multiplier = 1.800
+    elif "b" in filename:
+        my_multiplier = 5.000
 
     for i in range(len(df.iloc[:,3]) -3):
         # convert sensor values to mm
@@ -43,9 +48,9 @@ for filename in os.listdir(directory):
         #df.iloc[i + 3,3] = sensor2dist(float (df.iloc[i + 3,3])/5*1024, PHOTO_MIN_RIGHT, PHOTO_MAX_RIGHT)
         #df.iloc[i + 3,1] = float (df.iloc[i + 3, 1])  # old motor voltage
         #df.iloc[i + 3, 2] = float (df.iloc[i + 3, 2])  # old feedback
-        df.iloc[i + 3, 2] = (float(df.iloc[i + 3, 2]) - 0.4 )/2.4 * 5  # sensor
+        df.iloc[i + 3, 2] = (float(df.iloc[i + 3, 2]) - 0.4 )/2.4 * my_multiplier  # sensor
         df.iloc[i + 3, 0] = float (df.iloc[i + 3, 0])  # time
-        df.iloc[i + 3, 1] = (float (df.iloc[i + 3, 1]) - 0.4 )/2.4 * 5  # feedback
+        df.iloc[i + 3, 1] = (float (df.iloc[i + 3, 1]) - 0.4 )/2.4 * my_multiplier  # feedback
         df.iloc[i + 3, 3] = float (df.iloc[i + 3, 3])  # motor voltage
 
     #Osc3: joystick (A0) in channel 1 and feedback (current mode) in channel 2; dist sensor (A2) in channel 3
@@ -92,6 +97,6 @@ for filename in os.listdir(directory):
         os.makedirs(figure_directory)
     #print (figure_directory + filename[:-4] + '_latency_plot.jpg')
     fig.savefig(figure_directory + filename[:-4] + '_latency_plot.jpg')
-    plt.close(fig)
+    #plt.close(fig)
 
-    #plt.show()
+    plt.show()
