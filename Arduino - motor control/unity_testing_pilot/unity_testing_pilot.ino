@@ -54,7 +54,7 @@ float numerator_r_last_f = 0;
 const int PHOTO_MIN_LEFT = 550;//550;
 const int PHOTO_MAX_LEFT = 780;//800;
 const int PHOTO_MIN_RIGHT = 600;//650;
-const int PHOTO_MAX_RIGHT = 761;//730;
+const int PHOTO_MAX_RIGHT = 731;//730;
 const float MAX_DISPLACEMENT_UM = 5.0; // [um], has been measured
 const int UNITY_MIN = 1024 / 5 * 0.400; // min applied voltage
 const int UNITY_MAX = 1024 / 5 * 2.8; // max applied voltage
@@ -163,7 +163,7 @@ void loop() {
   
   while ((micros() - TIME_BEGIN) < TIME_CYCLE) {  } // do nothing until we reach the time step of TIME_CYCLE
   Serial.println(3.2/5*255 - (((float) photo_value_left_raw - (float)PHOTO_MIN_LEFT)/(float) (PHOTO_MAX_LEFT - PHOTO_MIN_LEFT)* (UNITY_MAX - UNITY_MIN)+UNITY_MIN) /4);
-  analogWrite(controlPin, 3.2/5*255 - (((float) photo_value_left_raw - (float)PHOTO_MIN_LEFT)/(float) (PHOTO_MAX_LEFT - PHOTO_MIN_LEFT)* (UNITY_MAX - UNITY_MIN)+UNITY_MIN) /4);
+  analogWrite(controlPin, 3.2/5*255 - (((float) photo_value_right_raw - (float)PHOTO_MIN_RIGHT)/(float) (PHOTO_MAX_RIGHT - PHOTO_MIN_RIGHT)* (UNITY_MAX - UNITY_MIN)+UNITY_MIN) /4);
   
 }
 
