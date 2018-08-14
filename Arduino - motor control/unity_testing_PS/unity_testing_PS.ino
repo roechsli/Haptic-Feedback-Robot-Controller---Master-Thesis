@@ -24,6 +24,7 @@
 #define feedback_pin_right A5
 int motorPinLowGain = 3;    // Motor connected to digital pin 3 (PWM)
 int motorPinHighGain = 11;    // Motor connected to digital pin 11 (PWM)
+int controlPin = 6; // Used for testing the speed of Arduino
 
 int feedback_left = 0;
 int feedback_right = 0;
@@ -73,6 +74,7 @@ void setup() {
   pinMode(photo_left_pin, INPUT);
   pinMode(joystick_right_pin, INPUT);
   pinMode(photo_right_pin, INPUT);
+  pinMode(controlPin, OUTPUT);
 
   TCCR2B = TCCR2B & B11111000 | B00000001; // for PWM frequency of 31372.55 Hz
 
@@ -98,7 +100,7 @@ void loop() {
   float k_p = 0.243;
   float k_i = 0.63;
   float k_d = 0.00126;
-//  float k_p = 0.2;
+//  float k_p = 0.243;
 //  float k_i = 0.0;
 //  float k_d = 0.0;
 
@@ -155,6 +157,9 @@ void loop() {
   Serial.println( numerator_r);*/
   
   while ((micros() - TIME_BEGIN) < TIME_CYCLE) {  } // do nothing until we reach the time step of TIME_CYCLE
+  analogWrite(controlPin, 3.2/5*255 - (((float) photo_value_right_raw - (float)PHOTO_MIN_RIGHT)/(float) (PHOTO_MAX_RIGHT - PHOTO_MIN_RIGHT)* (UNITY_MAX - UNITY_MIN)+UNITY_MIN) /4);
+  //analogWrite(controlPin, 255);
+
 }
 
 int feedback2dist(int fb){
