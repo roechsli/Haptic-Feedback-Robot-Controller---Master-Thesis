@@ -1,3 +1,15 @@
+"""
+This program reads the converted hexadecimal csv files and calculates the bode diagram from the input
+by interpolating a sine wave. It also plots the tracking performance in a specified window
+
+Version: 1.01
+Roman Oechslin
+Master Thesis - University of Tokyo
+Date: August 2018
+
+"""
+
+
 import os
 import csv
 import pandas as pd
@@ -15,40 +27,12 @@ SHORT_CUT = True  # change this, if you want to skip all the calculation
 only_this_file = "f"  # change this to "f" if all frequencies shall be tested, otherwise "f2_csv"
 
 INTMAX = 65535
-"""
-PHOTO_MIN_LEFT = 650
-PHOTO_MAX_LEFT = 830
-PHOTO_MIN_RIGHT = 700
-PHOTO_MAX_RIGHT = 870
-MAX_DISPLACEMENT_UM = 1800
-
-PHOTO_MIN_LEFT = 640
-PHOTO_MAX_LEFT = 840
-PHOTO_MIN_RIGHT = 690
-PHOTO_MAX_RIGHT = 880
-MAX_DISPLACEMENT_UM = 1800
-
-PHOTO_MIN_LEFT = 640
-PHOTO_MAX_LEFT = 840
-PHOTO_MIN_RIGHT = 700
-PHOTO_MAX_RIGHT = 880
-MAX_DISPLACEMENT_UM = 1800
-directory = "20180704_fra_logs_PID_243_63_00126_1perc/"  # TODO change this if new data shall be analyzed
-
-
-PHOTO_MIN_LEFT = 550
-PHOTO_MAX_LEFT = 800
-PHOTO_MIN_RIGHT = 700
-PHOTO_MAX_RIGHT = 870
-MAX_DISPLACEMENT_UM = 3000
-directory = "20180719_fra_logs_pilot_P02/"  # TODO change this if new data shall be analyzed
-"""
 PHOTO_MIN_LEFT = 630
 PHOTO_MAX_LEFT = 795
 PHOTO_MIN_RIGHT = 550
 PHOTO_MAX_RIGHT = 765
 MAX_DISPLACEMENT_UM = 5
-directory = "20180727_fra_logs_pilot_P10Vmm/"  # TODO change this if new data shall be analyzed
+directory = "20180727_fra_logs_pilot_P10Vmm/"  # change this if new data shall be analyzed
 
 
 def get_freq_from_filename(filename):
@@ -60,19 +44,19 @@ def get_freq_from_filename(filename):
 
 def sensor2dist(sensor_value, min_val, max_val):
     # maps the measured value to the distance (assumed linearity) in micrometers
-    return (MAX_DISPLACEMENT_UM - (sensor_value - min_val) * MAX_DISPLACEMENT_UM / (max_val - min_val) )
+    return MAX_DISPLACEMENT_UM - (sensor_value - min_val) * MAX_DISPLACEMENT_UM / (max_val - min_val)
 
 
-def fitSine(tList, yList, freq):
+def fit_sine(t_list, y_list, freq):
     # from: http://exnumerus.blogspot.jp/2010/04/how-to-fit-sine-wave-example-in-python.html
-    '''
+    """
         freq in Hz
         tList in sec
     returns
         phase in degrees
-    '''
-    b = matrix(yList).T
-    rows = [[sin(freq * 2 * pi * t), cos(freq * 2 * pi * t), 1] for t in tList]
+    """
+    b = matrix(y_list).T
+    rows = [[sin(freq * 2 * pi * t), cos(freq * 2 * pi * t), 1] for t in t_list]
     A = matrix(rows)
     (w, residuals, rank, sing_vals) = lstsq(A, b)
     phase = atan2(w[1, 0], w[0, 0]) * 180 / pi
@@ -88,7 +72,6 @@ amplitude_factor_l = []
 freq_vec = []
 for file in os.listdir(directory):
     if SHORT_CUT:
-        freq_vec = [1.25, 1.6, 100, 10, 12.6, 16, 1, 2.5, 20, 25, 2, 3.17, 32, 40, 4, 50, 5, 6.3, 63, 80, 8]
         amplitude_factor_l = [0.6994285255386264, 0.7060693178843412, 0.1642580358036316, 0.7504272083193917,
                               0.5608147625160623, 0.4350563936262765, 0.6865373796317358, 0.750613957790355,
                               0.28764124380912426, 0.18157383994468917, 0.719141440214737, 0.11841728824778987,
@@ -113,8 +96,8 @@ for file in os.listdir(directory):
                        54.380397810163274, -9.591765076043131, -91.2826756161442, 99.50085940965394, 23.369819555133233,
                        -317.90093511647376, -244.66332388913816, 150.72386693909115, 22.13060360284489]
 
-        freq_vec = [1.25, 1.6, 100.0, 10.0, 13.0, 16.0, 1.0, 2.5, 20.0, 25.0, 2.0, 32.0, 3.0, 40.0, 4.0, 50.0, 5.0, 6.3, 63.0,
-         80.0, 8.0]
+        freq_vec = [1.25, 1.6, 100.0, 10.0, 13.0, 16.0, 1.0, 2.5, 20.0, 25.0, 2.0, 32.0, 3.0, 40.0, 4.0, 50.0, 5.0, 6.3,
+                    63.0, 80.0, 8.0]
         continue
 
     if ".csv" not in file:
@@ -129,24 +112,24 @@ for file in os.listdir(directory):
 
     df = pd.read_csv(directory + file, delimiter=';')
     # make timeline continuous (no overflow), change [us] to [s] convert sensor value to [mm]
-    for i in range(len(df.iloc[:,3]) -1):
-        if df.iloc[i,3] > df.iloc[i+1,3]:
-            df.iloc[i+1:,3] = df.iloc[i+1:,3] + INTMAX
-    for i in range(len(df.iloc[:,3])):
+    for i in range(len(df.iloc[:, 3]) - 1):
+        if df.iloc[i, 3] > df.iloc[i+1, 3]:
+            df.iloc[i+1:, 3] = df.iloc[i+1:, 3] + INTMAX
+    for i in range(len(df.iloc[:, 3])):
         df.iloc[i, 3] = df.iloc[i, 3] / 1000000  # convert to seconds
-        df.iloc[i,0] = df.iloc[i,0] / 1000  # convert reference to mm
+        df.iloc[i, 0] = df.iloc[i, 0] / 1000  # convert reference to mm
         # convert sensor values to mm
-        df.iloc[i,1] = sensor2dist(df.iloc[i,1], PHOTO_MIN_LEFT, PHOTO_MAX_LEFT)
-        df.iloc[i,2] = sensor2dist(df.iloc[i,2], PHOTO_MIN_RIGHT, PHOTO_MAX_RIGHT)
+        df.iloc[i, 1] = sensor2dist(df.iloc[i, 1], PHOTO_MIN_LEFT, PHOTO_MAX_LEFT)
+        df.iloc[i, 2] = sensor2dist(df.iloc[i, 2], PHOTO_MIN_RIGHT, PHOTO_MAX_RIGHT)
 
-    print(df.iloc[:,1])
+    print(df.iloc[:, 1])
     # just to have an average us length of a step:
     if CALC_OPER_FREQ:
         step_sum = 0
-        for i in range(len(df.iloc[:,3]) - 1):
-            step_sum = step_sum + df.iloc[i+1,3] - df.iloc[i,3]
-        # avg_step_len = step_sum / len(df.iloc[:,3])  # more precise mean
-        avg_step_len = (df.iloc[-1,3] - df.iloc[0,3]) / len(df.iloc[:,3])  # global mean
+        for i in range(len(df.iloc[:, 3]) - 1):
+            step_sum = step_sum + df.iloc[i+1, 3] - df.iloc[i, 3]
+        # avg_step_len = step_sum / len(df.iloc[:, 3])  # more precise mean
+        avg_step_len = (df.iloc[-1, 3] - df.iloc[0, 3]) / len(df.iloc[:, 3])  # global mean
         print("average step length for " + frequency + "Hz is " + str(avg_step_len))
 
     if PLOT_BOOL:
@@ -161,13 +144,11 @@ for file in os.listdir(directory):
         plt.ylabel('Compression [mm]')
         #plt.axis([2, 3.6, -0.05, 0.5])
         plt.axis([2, 3.6, 1.0, 4])
-        #plt.legend(["left sensor", "right sensor", "reference signal"])
         plt.legend(["left sensor", "reference signal"])
         figure_directory = 'figs/f' + frequency
         if not os.path.exists(figure_directory):
             os.makedirs(figure_directory)
         fig.savefig(figure_directory + '/' + frequency + 'plot_zoom_fixed_time.jpg')
-        #plt.axis([2, 2 + 3 / frequency_float, -0.05, 0.7])
         plt.axis([2, 2 + 3 / frequency_float, 1.0, 4])
         fig.savefig(figure_directory + '/' + frequency + 'plot_zoom.jpg')
         with open(figure_directory + '/' + frequency + '_raw.pkl', "wb") as fp:
@@ -209,8 +190,6 @@ print(phasediff_r)
 indices = np.argsort(freq_vec)
 amplitude_factor_l = 20 * np.log10(amplitude_factor_l)
 amplitude_factor_r = 20 * np.log10(amplitude_factor_r)
-
-
 
 left_bode, axarr_l = plt.subplots(2, sharex=True)
 left_lines = axarr_l[0].semilogx([freq_vec[x] for x in indices], [amplitude_factor_l[x] for x in indices], 'o-', linewidth=5.0, label='Left side')

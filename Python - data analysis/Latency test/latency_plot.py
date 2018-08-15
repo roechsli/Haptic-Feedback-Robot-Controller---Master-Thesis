@@ -1,10 +1,11 @@
 """
-This program reads the oscilloscope data that has been measured for latency tests and plots it for real robot environment
+This program reads the oscilloscope data that has been measured for latency tests and plots it for
+ real robot environment
 
-Version: 1.0
+Version: 1.01
 Roman Oechslin
 Master Thesis - University of Tokyo
-2018 July 18
+Date: August 2018
 """
 import os
 import pandas as pd
@@ -13,17 +14,17 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-#scope3 from real robot testing is best
 directory = "osc_data/"
-PHOTO_MIN_LEFT = 600#640
-PHOTO_MAX_LEFT = 790#840
+PHOTO_MIN_LEFT = 600
+PHOTO_MAX_LEFT = 790
 PHOTO_MIN_RIGHT = 700
 PHOTO_MAX_RIGHT = 880
 MAX_DISPLACEMENT_UM = 1800
 
+
 def sensor2dist(sensor_value, min_val, max_val):
-  # maps the measured value to the distance (assumed linearity) in micrometers
-  return (MAX_DISPLACEMENT_UM - (sensor_value - min_val) * MAX_DISPLACEMENT_UM / (max_val - min_val) ) / 1000
+    # maps the measured value to the distance (assumed linearity) in micrometers
+    return (MAX_DISPLACEMENT_UM - (sensor_value - min_val) * MAX_DISPLACEMENT_UM / (max_val - min_val)) / 1000
 
 
 for filename in os.listdir(directory):
@@ -31,20 +32,19 @@ for filename in os.listdir(directory):
     # plotting
     df = pd.read_csv(directory + filename, delimiter=',')
 
-    for i in range(len(df.iloc[:,3]) -3):
+    for i in range(len(df.iloc[:, 3]) - 3):
         # convert sensor values to mm
-        #print(i)
-        df.iloc[i + 3,3] = sensor2dist(float (df.iloc[i + 3,3])/5*1024, PHOTO_MIN_LEFT, PHOTO_MAX_LEFT)
-        #df.iloc[i + 3,3] = sensor2dist(float (df.iloc[i + 3,3])/5*1024, PHOTO_MIN_RIGHT, PHOTO_MAX_RIGHT)
-        df.iloc[i + 3,0] = float (df.iloc[i + 3, 0])
-        df.iloc[i + 3,1] = float (df.iloc[i + 3, 1])
-        df.iloc[i + 3,2] = float (df.iloc[i + 3, 2])
+        df.iloc[i + 3, 3] = sensor2dist(float(df.iloc[i + 3, 3])/5*1024, PHOTO_MIN_LEFT, PHOTO_MAX_LEFT)
+        #df.iloc[i + 3, 3] = sensor2dist(float(df.iloc[i + 3, 3])/5*1024, PHOTO_MIN_RIGHT, PHOTO_MAX_RIGHT)
+        df.iloc[i + 3, 0] = float(df.iloc[i + 3, 0])
+        df.iloc[i + 3, 1] = float(df.iloc[i + 3, 1])
+        df.iloc[i + 3, 2] = float(df.iloc[i + 3, 2])
 
     #Osc3: joystick (A0) in channel 1 and feedback (current mode) in channel 2; dist sensor (A2) in channel 3
-    time_vec = df.iloc[3:,0] - df.iloc[3,0]
-    joystick_vec = df.iloc[3:,1]/2.5 - 1
-    feedback_vec = df.iloc[3:,2]/5*1.8
-    sensor_dist_vec = df.iloc[3:,3]
+    time_vec = df.iloc[3:, 0] - df.iloc[3, 0]
+    joystick_vec = df.iloc[3:, 1]/2.5 - 1
+    feedback_vec = df.iloc[3:, 2]/5*1.8
+    sensor_dist_vec = df.iloc[3:, 3]
     fig = plt.figure(figsize=(15.0, 6.5))
     fig.suptitle('Real robot testing')
     plt.subplot(311)

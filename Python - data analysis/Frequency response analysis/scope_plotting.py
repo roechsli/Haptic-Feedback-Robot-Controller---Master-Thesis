@@ -1,9 +1,11 @@
 """
 This program reads out the raw data saved in the csv files from the oscilloscope
 Then it plots the figures using matplotlib
-Version: 1.0
+
+Version: 1.01
 Roman Oechslin
 Master Thesis - University of Tokyo
+Date: August 2018
 
 """
 
@@ -26,14 +28,15 @@ PHOTO_MIN_RIGHT = 700
 PHOTO_MAX_RIGHT = 880
 MAX_DISPLACEMENT_UM = 1800
 
+
 def sensor2dist(sensor_value, min_val, max_val):
-  # maps the measured value to the distance (assumed linearity) in micrometers
-  return (MAX_DISPLACEMENT_UM - (sensor_value - min_val) * MAX_DISPLACEMENT_UM / (max_val - min_val) ) / 1000
+    # maps the measured value to the distance (assumed linearity) in micrometers
+    return (MAX_DISPLACEMENT_UM - (sensor_value - min_val) * MAX_DISPLACEMENT_UM / (max_val - min_val)) / 1000
 
 
 for filename in os.listdir(directory):
     print(filename)
-    source= open(directory + filename, "r")
+    source = open(directory + filename, "r")
     destination_file = open(destination + filename[:-4] + "_csv" + ".csv", "w")
     for line in source:
         buf = ""
@@ -49,6 +52,7 @@ for filename in os.listdir(directory):
     source.close()
     destination_file.close()
 
+
 counter = 0
 if PLOT_ALL_IN_ONE:
     fig = plt.figure(1)
@@ -57,15 +61,15 @@ for filename in os.listdir(destination):
         continue
     df = pd.read_csv(destination + filename, delimiter=';')
     # make timeline continuous (no overflow), change [us] to [s] convert sensor value to [mm]
-    for i in range(len(df.iloc[:,3]) -1):
-        if df.iloc[i,3] > df.iloc[i+1,3]:
-            df.iloc[i+1:,3] = df.iloc[i+1:,3] + INTMAX
-    for i in range(len(df.iloc[:,3])):
+    for i in range(len(df.iloc[:, 3]) - 1):
+        if df.iloc[i, 3] > df.iloc[i+1, 3]:
+            df.iloc[i+1:, 3] = df.iloc[i+1:, 3] + INTMAX
+    for i in range(len(df.iloc[:, 3])):
         df.iloc[i, 3] = df.iloc[i, 3] / 1000000  # convert to seconds
-        df.iloc[i,0] = df.iloc[i,0] / 1000  # convert reference to mm
+        df.iloc[i, 0] = df.iloc[i, 0] / 1000  # convert reference to mm
         # convert sensor values to mm
-        df.iloc[i,1] = sensor2dist(df.iloc[i,1], PHOTO_MIN_LEFT, PHOTO_MAX_LEFT)
-        df.iloc[i,2] = sensor2dist(df.iloc[i,2], PHOTO_MIN_RIGHT, PHOTO_MAX_RIGHT)
+        df.iloc[i, 1] = sensor2dist(df.iloc[i, 1], PHOTO_MIN_LEFT, PHOTO_MAX_LEFT)
+        df.iloc[i, 2] = sensor2dist(df.iloc[i, 2], PHOTO_MIN_RIGHT, PHOTO_MAX_RIGHT)
     print("plotting file " + filename[:-4])
 
     if PLOT_ALL_IN_ONE:

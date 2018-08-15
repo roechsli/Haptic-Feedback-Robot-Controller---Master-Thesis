@@ -1,5 +1,0 @@
-This data has been gathered with:
-filter_coeff = 0.1;
-float k_p = 0.243;
-float k_i = 0.63; 
-float k_d = 0.00126;
