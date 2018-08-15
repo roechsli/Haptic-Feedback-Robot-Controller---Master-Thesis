@@ -49,10 +49,10 @@ float error_right_last = 0;
 float numerator_l_last_f = 0;
 float numerator_r_last_f = 0;
 
-const int PHOTO_MIN_LEFT = 640;//650;
-const int PHOTO_MAX_LEFT = 840;//830;
-const int PHOTO_MIN_RIGHT = 700;//700;
-const int PHOTO_MAX_RIGHT = 880;//870;
+const int PHOTO_MIN_LEFT = 640;
+const int PHOTO_MAX_LEFT = 840;
+const int PHOTO_MIN_RIGHT = 700;
+const int PHOTO_MAX_RIGHT = 880;
 const int MAX_DISPLACEMENT_UM = 1800; // [um], has been measured
 
 char buf[16];

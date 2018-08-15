@@ -78,11 +78,6 @@ void loop() {
   float k_i = 0.0;
   float k_d = 0.0;
 
-  //Writing to Processing file
-  //Serial.write(joy_val_left);
-  //Serial.write(joy_val_right); 
-  //Serial.write((joy_val_left + joy_val_right)%256); // this is the checksum
-  //Serial.println(joy_val_right);// for debugging purposes in serial monitor mode
   if (Serial.available() > 0) {
     dist_ref = (int)(FILTER_CST*dist_ref + (1-FILTER_CST)* Serial.read());
   } else {

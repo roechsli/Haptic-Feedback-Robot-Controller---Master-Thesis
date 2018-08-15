@@ -27,7 +27,7 @@ int sine_signal = 0;
 int photo_value_left_raw = 0;
 int photo_value_right_raw = 0;
 
-int dist_ref = 0;
+float dist_ref = 0.0;
 int OUTPUT_PER_VOLT = 255 / 5; // the arduino can output 5V max
 int MOTOR_MAX_VOLTAGE = 20; // change this according to motor
 int LEFT_HAND_AMPLIFIER_GAIN = 10;
@@ -35,24 +35,17 @@ int RIGHT_HAND_AMPLIFIER_GAIN = 10;
 const int OUTPUT_RANGE_L = 2 * MOTOR_MAX_VOLTAGE * OUTPUT_PER_VOLT / LEFT_HAND_AMPLIFIER_GAIN;
 const int OUTPUT_RANGE_R = 2 * MOTOR_MAX_VOLTAGE * OUTPUT_PER_VOLT / RIGHT_HAND_AMPLIFIER_GAIN;
 
-int error_left = 0;
-int last_error_left = 0;
+float error_left = 0;
+float last_error_left = 0;
 float sum_error_left = 0;
-int error_right = 0;
-int last_error_right = 0;
-int sum_error_right = 0;
-<<<<<<< HEAD
-const int PHOTO_MIN_LEFT = 750;//650;//440;
-const int PHOTO_MAX_LEFT = 830;//830;//830;
-const int PHOTO_MIN_RIGHT = 710;//700;//630;
-const int PHOTO_MAX_RIGHT = 870;//870;//875;
-=======
-const int PHOTO_MIN_LEFT = 650;
-const int PHOTO_MAX_LEFT = 830;
-const int PHOTO_MIN_RIGHT = 700;
-const int PHOTO_MAX_RIGHT = 870;
-const int MAX_DISPLACEMENT_UM = 1800; // [um], has been measured
->>>>>>> test_linearity
+float error_right = 0;
+float last_error_right = 0;
+float sum_error_right = 0;
+const int PHOTO_MIN_LEFT = 550;
+const int PHOTO_MAX_LEFT = 780;
+const int PHOTO_MIN_RIGHT = 600;
+const int PHOTO_MAX_RIGHT = 763;
+const float MAX_DISPLACEMENT_UM = 5.0; // [mm], has been measured
 
 char buf[16];
 char all[512];
@@ -98,32 +91,19 @@ void loop() {
 
   int pwmValueLeftSym = 128;
   int pwmValueRightSym = 128;
-<<<<<<< HEAD
-  // 2.5 and 0.01 and 0.01
-  float k_p = 1.0; // k_p = 1; and k_i = 0.01; works as well
-=======
 
-  float k_p = 0.2; // k_p = 1; and k_i = 0.01; works as well
->>>>>>> test_linearity
+  float k_p = 5.0; // [V/mm]
   float k_i = 0.0;
   float k_d = 0.0;
 
+  k_p = k_p * 255 / 40; // to convert it to arduino values
   // ignore Serial and read sine wave signal as reference
-<<<<<<< HEAD
-  dist_ref = sine_signal >> 2; // dist ref is between [0..255]
-  error_left = k_i * (dist_ref - map_to_255(photo_value_left_raw, PHOTO_MIN_LEFT, PHOTO_MAX_LEFT));
-  error_right = dist_ref - map_to_255(photo_value_right_raw, PHOTO_MIN_RIGHT, PHOTO_MAX_RIGHT);
-  
-  int motor_output_left = k_p * error_left + sum_error_left + k_d * (error_left - last_error_left);
-  int motor_output_right =  k_p * error_right + k_i * sum_error_right + k_d * (error_right - last_error_right);//FIXME need two different control parameters?
-=======
-  dist_ref = sine2dist(sine_signal);
+  dist_ref = (float) sine2dist((float) sine_signal);
   error_left = dist_ref - sensor2dist(photo_value_left_raw, PHOTO_MIN_LEFT, PHOTO_MAX_LEFT);
   error_right = dist_ref - sensor2dist(photo_value_right_raw, PHOTO_MIN_RIGHT, PHOTO_MAX_RIGHT);
 
   int des_mot_volt_left = k_p * error_left + k_i * sum_error_left + k_d * (error_left - last_error_left);
   int des_mot_volt_right =  k_p * error_right + k_i * sum_error_right + k_d * (error_right - last_error_right);//FIXME need two different control parameters?
->>>>>>> test_linearity
   sum_error_left = error_left + sum_error_left;
   last_error_left = error_left;
   sum_error_right = error_right + sum_error_right;
@@ -133,21 +113,12 @@ void loop() {
   pwmValueLeftSym = pid2pwm_sym(des_mot_volt_left, OUTPUT_RANGE_L);
   pwmValueRightSym = pid2pwm_sym(des_mot_volt_right, OUTPUT_RANGE_R);
 
-  //Serial.println(dist_ref);
-  Serial.println(photo_value_left_raw);
-  //Serial.println(map_to_255(photo_value_left_raw, PHOTO_MIN_LEFT, PHOTO_MAX_LEFT));
-  //Serial.println(error_left);
-  //Serial.println(pwmValueRightSym);
-  //Serial.println(sum_error_left);
-  //Serial.println();
-  
-
   analogWrite(motorPinLowGain, pwmValueLeftSym); //pwmValueLeftSym
   analogWrite(motorPinHighGain, pwmValueRightSym); //pwmValueRightSym
   
   //fastest way of writing data to serial
   all[0] = '\0';
-  p = mystrcat(init_p, itoa(dist_ref, buf, 16));
+  p = mystrcat(init_p, itoa(dist_ref*1000, buf, 16));
   p = mystrcat(p, semicolon);
   p = mystrcat(p, itoa(photo_value_left_raw, buf, 16));
   p = mystrcat(p, semicolon);
@@ -156,23 +127,33 @@ void loop() {
   p = mystrcat(p, itoa(TIME_BEGIN, buf, 16));
   p = mystrcat(p, semicolon);
   p = mystrcat(p, end_char);
-  //Serial.print(all); //TODO this is necessary for logging
+  Serial.print(all); // this is necessary for logging
   // message format: dist ref | left val | right val | time stamp
+
   /*
+  Serial.print("photo_value_right_raw: ");
+  Serial.println(photo_value_right_raw);
+  Serial.print("dist_ref: ");
+  Serial.println(dist_ref);
+  Serial.print("my_dist: ");
+  Serial.println(sensor2dist(photo_value_right_raw, PHOTO_MIN_RIGHT, PHOTO_MAX_RIGHT));
+  Serial.print("pwm: ");
+  Serial.println(pwmValueRightSym);
   Serial.print("ref = ");
   Serial.println(dist_ref);
-  Serial.print("photo_value_right_raw = ");
-  Serial.println(photo_value_right_raw);
+  Serial.print("photo_value_left_raw = ");
+  Serial.println(photo_value_left_raw);
   Serial.print("error = ");
-  Serial.println(error_right);
+  Serial.println(error_left);
   Serial.print("des_mot_volt_right = ");
   Serial.println(des_mot_volt_right);
-  Serial.print("pwmValueRightSym = ");
-  Serial.println(pwmValueRightSym);*/
+  Serial.print("pwmValueLeftSym = ");
+  Serial.println(pwmValueLeftSym);
+  Serial.print("sensor dist = ");
+  Serial.println(sensor2dist(photo_value_left_raw, PHOTO_MIN_LEFT, PHOTO_MAX_LEFT));*/
   
 
   while ((micros() - TIME_BEGIN) < TIME_CYCLE) {  } // do nothing until we reach the time step of TIME_CYCLE
-  digitalWrite(testPin, LOW); //instructions in between take roughly 640 microseconds
 }
 
 
@@ -184,14 +165,15 @@ char* mystrcat( char* dest, char* src )
   return --dest;
 }
 
-int sine2dist(int sine){
-  return (((sine / 4) * (MAX_DISPLACEMENT_UM / 15) / 16) * 15) / 16; 
+float sine2dist(float sine){
+  return (sine / 4.0) * (MAX_DISPLACEMENT_UM) / 256.0 ; 
   // sine / 1024 * MAX_DISPLACEMENT_UM had to be rewritten due to overflow
 }
 
-int sensor2dist(int sensor_value, int min_val, int max_val) {
+float sensor2dist(int sensor_value, int min_val, int max_val) {
   // maps the measured value to the distance (assumed linearity) in micrometers
-  return MAX_DISPLACEMENT_UM - (sensor_value - min_val) * (MAX_DISPLACEMENT_UM /15) / (max_val - min_val) * 15;
+  //Serial.println(MAX_DISPLACEMENT_UM - (sensor_value - min_val) * (MAX_DISPLACEMENT_UM) / (max_val - min_val));
+  return MAX_DISPLACEMENT_UM - (sensor_value - min_val) * (MAX_DISPLACEMENT_UM) / (max_val - min_val) ;
 }
 
 
@@ -204,24 +186,10 @@ int limit_value(int value, int lower, int upper) {
   return value;
 }
 
-<<<<<<< HEAD
-int output2pwm_sym(int output, float gain) {
-  // This function converts the reference symmetrically into a PWM where 0 is full power in one direction and 255 is full power in the other
-  // Due to the non exactness of the sensor MIN and MAX values, this still results in some asymmetries however
-  // conversion of feedback to pwm[0..255]:
-  output = limit_value(output, -255, 255);
-
-  // limit to MAX_VOLTAGE
-  int limit_val = 2 * MOTOR_MAX_VOLTAGE * OUTPUT_PER_VOLT / gain;
-  //float pwm = (float) output / 16 * limit_val / (32) + limit_val / 2;
-  float pwm = (float) output * limit_val / 2 / 255 + 128;
-  return limit_value((int) pwm, (256-limit_val)/2, limit_val + (256-limit_val)/2);
-=======
 int pid2pwm_sym(int des_voltage, int range) {
   // converts motor voltage to pwm output where 128-range/2 is full power in one direction and 128+range/2 is 
   // full power in the other
   return limit_value(des_voltage, -range/2, range/2) + 128;
->>>>>>> test_linearity
 }
 
 

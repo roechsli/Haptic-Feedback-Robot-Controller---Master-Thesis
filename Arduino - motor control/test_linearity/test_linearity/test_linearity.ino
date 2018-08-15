@@ -27,10 +27,10 @@ int sum_error_left = 0;
 int error_right = 0; 
 int last_error_right = 0;
 int sum_error_right = 0;
-const int PHOTO_MIN_LEFT = 514;//500;//0;//514;
-const int PHOTO_MAX_LEFT = 787;//770;//1023;//787;
-const int PHOTO_MIN_RIGHT = 678;//680;//0;//678;
-const int PHOTO_MAX_RIGHT = 773;//770;//1023;//773;
+const int PHOTO_MIN_LEFT = 514;
+const int PHOTO_MAX_LEFT = 787;
+const int PHOTO_MIN_RIGHT = 678;
+const int PHOTO_MAX_RIGHT = 773;
 
 char buf[16];
 char all[512];
@@ -101,10 +101,6 @@ void loop() {
     last_error_left = error_left;
     sum_error_right = error_right + sum_error_right;
     last_error_right = error_right;
-    // feedbackLeft
-    //pwmValueLeft = feedback2pwm(motor_output_left, LEFT_HAND_AMPLIFIER_GAIN); // TODO CHANGETHIS should be motoroutput
-    // feedbackRight
-    //pwmValueRight = feedback2pwm(motor_output_right, RIGHT_HAND_AMPLIFIER_GAIN); // TODO CHANGETHIS should be motoroutput
     // symmetric feedbackLeft, (allowing for negative motor values)
     pwmValueLeftSym = output2pwm_sym(motor_output_left, LEFT_HAND_AMPLIFIER_GAIN); //motor_output_left
     // symmetric feedbackRight, (allowing for negative motor values)
@@ -113,26 +109,8 @@ void loop() {
   }
   analogWrite(motorPinLowGain, 230);//pwmValueLeftSym
   analogWrite(motorPinHighGain, pwmValueRightSym); //pwmValueRightSym
-
-/*
-  //fastest way of writing data to serial
-  all[0] = '\0';
-  p = mystrcat(init_p, itoa(dist_ref, buf, 16));
-  p = mystrcat(p, semicolon);
-  p = mystrcat(p, itoa(photo_value_left_raw, buf, 16));
-  p = mystrcat(p, semicolon);
-  p = mystrcat(p, itoa(photo_value_right_raw, buf, 16));
-  p = mystrcat(p, semicolon);
-  /*p = mystrcat(p, itoa(pwmValueLeftSym, buf, 16));
-  p = mystrcat(p, semicolon);
-  p = mystrcat(p, itoa(pwmValueRightSym, buf, 16));
-  p = mystrcat(p, semicolon);
-  p = mystrcat(p, itoa(TIME_BEGIN, buf, 16));
-  p = mystrcat(p, semicolon);
-  p = mystrcat(p, end_char);*/
-  Serial.println(photo_value_left_raw); //TODO this is necessary for logging
+  Serial.println(photo_value_left_raw); // this is necessary for logging
   
- 
   while ((micros() - TIME_BEGIN) < TIME_CYCLE) {  } // do nothing until we reach the time step of TIME_CYCLE
   digitalWrite(testPin, LOW); //instructions in between take roughly 640 microseconds
 }
