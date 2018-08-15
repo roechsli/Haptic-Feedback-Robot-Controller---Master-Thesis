@@ -7,8 +7,8 @@ In 2016 and 2017 a research group at the University of Tokyo has designed a robo
 This project is the continuation of the research and aimed at replacing the VCMs by a Series Elastic Actuator (SEA) implementation.
 A new controller has been designed and tested, varying setup parameters such as the equivalent spring constant, the actuator and gear ratio or filter design.
 An underlying mathematical model has been created and verified with the frequency response data from the controller.
-For testing on a real robot, designed by Topy, a communication software and graphical user interface had to be written. 
+For testing on a real robot, designed by Topy, a communication software and graphical user interface had to be written.
 
-Expected:
-In the tests the smoothness and real-feel due to latency and transparency have been reported, varying the robot-controller communication frequency.
-For completion and outlook, a second controller with a different SEA implementation has been designed and tested.
+Based on performance analysis, design suggestions have been made and a second controller could be developed.
+
+The transparency and latency (response delay) have been reported for both controllers with different setup parameters settings.
