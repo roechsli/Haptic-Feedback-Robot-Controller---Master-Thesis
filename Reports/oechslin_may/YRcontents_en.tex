@@ -126,7 +126,7 @@
 		\label{fig:max_volt_applied_plot}
 	\end{figure}
 	
-	The values that have been found to be the limiting values are resumed in table \ref{tab:oper_range}.
+	The values that have been found to be the limiting values are resumed in table \ref{tab:oper_range_PS}.
 	
 	\begin{figure}[h!]
 		\centering
@@ -137,8 +137,8 @@
 			Left side & 830 & 2.35mm & 650 & 4mm & 9.9N \\ \hline
 			Right side & 870 &2.2mm & 700 & 4mm & 10.8N \\ \hline
 		\end{tabular}
-		\caption{Identified operational range}
-		\label{tab:oper_range}
+		\caption{Identified operational range for the photoreceptors in the PlayStation controller.}
+		\label{tab:oper_range_PS}
 	\end{figure}
 	
 	Using these values, the photoreceptor measurements can be mapped to this range with an 8-bit value. This means that $0$ is no compression and $255$ is fully achievable compression.
@@ -150,15 +150,15 @@
 	\begin{figure}[!htb]
 		\minipage{0.32\textwidth}
 		\includegraphics[width=\linewidth]{Figs/1plot_zoom}
-		\caption{1 Herz}\label{fig:1plot_zoom}
+		\caption{1 Hertz}\label{fig:1plot_zoom}
 		\endminipage\hfill
 		\minipage{0.32\textwidth}
 		\includegraphics[width=\linewidth]{Figs/12.6plot_zoom.eps}
-		\caption{12.6 Herz}\label{fig:12.6plot_zoom}
+		\caption{12.6 Hertz}\label{fig:12.6plot_zoom}
 		\endminipage\hfill
 		\minipage{0.32\textwidth}%
 		\includegraphics[width=\linewidth]{Figs/100plot_zoom}
-		\caption{100 Herz}\label{fig:100plot_zoom}
+		\caption{100 Hertz}\label{fig:100plot_zoom}
 		\endminipage
 	\end{figure}
 	With these signals one can calculate the amplification factor between the reference signal and the output signal, as well as the phase shift.

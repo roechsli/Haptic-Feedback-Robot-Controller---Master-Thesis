@@ -1,9 +1,9 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2015.4.29)  7 JUN 2018 00:26
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2015.4.29)  9 JUL 2018 10:12
 entering extended mode
 **YReport_en.tex
 
 (C:\Users\Oechslin\EPFL\Master\Japan\git_project\Haptic-Feedback-Robot-Controll
-er---Master-Thesis\Reports\oechslin_june\YReport_en.tex
+er---Master-Thesis\Reports\oechslin_july\YReport_en.tex
 LaTeX2e <2011/06/27>
 Babel <v3.8m> and hyphenation patterns for english, afrikaans, ancientgreek, ar
 abic, armenian, assamese, basque, bengali, bokmal, bulgarian, catalan, coptic, 
@@ -17,7 +17,7 @@ an, tamil, telugu, turkish, turkmen, ukenglish, ukrainian, uppersorbian, usengl
 ishmax, welsh, loaded.
 
 (C:\Users\Oechslin\EPFL\Master\Japan\git_project\Haptic-Feedback-Robot-Controll
-er---Master-Thesis\Reports\oechslin_june\YReport_en.cls
+er---Master-Thesis\Reports\oechslin_july\YReport_en.cls
 Document Class: YReport_en 2012/04/16 KIMURA
 ("C:\Users\Oechslin\AppData\Local\Programs\MiKTeX 2.9\tex\latex\base\size11.clo
 "
@@ -180,28 +180,28 @@ LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
 \footleft=\dimen124
 )
 (C:\Users\Oechslin\EPFL\Master\Japan\git_project\Haptic-Feedback-Robot-Controll
-er---Master-Thesis\Reports\oechslin_june\YRcontents_en.tex)
+er---Master-Thesis\Reports\oechslin_july\YRcontents_en.tex)
 (C:\Users\Oechslin\EPFL\Master\Japan\git_project\Haptic-Feedback-Robot-Controll
-er---Master-Thesis\Reports\oechslin_june\YReport_en.aux)
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 7.
-LaTeX Font Info:    ... okay on input line 7.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 7.
-LaTeX Font Info:    ... okay on input line 7.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 7.
-LaTeX Font Info:    ... okay on input line 7.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 7.
-LaTeX Font Info:    ... okay on input line 7.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 7.
-LaTeX Font Info:    ... okay on input line 7.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 7.
-LaTeX Font Info:    ... okay on input line 7.
-LaTeX Font Info:    Try loading font information for U+msa on input line 21.
+er---Master-Thesis\Reports\oechslin_july\YReport_en.aux)
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 6.
+LaTeX Font Info:    ... okay on input line 6.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 6.
+LaTeX Font Info:    ... okay on input line 6.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 6.
+LaTeX Font Info:    ... okay on input line 6.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 6.
+LaTeX Font Info:    ... okay on input line 6.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 6.
+LaTeX Font Info:    ... okay on input line 6.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 6.
+LaTeX Font Info:    ... okay on input line 6.
+LaTeX Font Info:    Try loading font information for U+msa on input line 20.
 
 ("C:\Users\Oechslin\AppData\Local\Programs\MiKTeX 2.9\tex\latex\amsfonts\umsa.f
 d"
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 21.
+LaTeX Font Info:    Try loading font information for U+msb on input line 20.
 
 ("C:\Users\Oechslin\AppData\Local\Programs\MiKTeX 2.9\tex\latex\amsfonts\umsb.f
 d"
@@ -209,14 +209,24 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
 ("C:\Users\Oechslin\AppData\Local\Programs\MiKTeX 2.9\tex\latex\base\omscmr.fd"
 )
-Overfull \hbox (8.1239pt too wide) in paragraph at lines 26--27
+Overfull \hbox (8.1239pt too wide) in paragraph at lines 25--26
   [] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 36--36
+LaTeX Warning: Citation `Oxford' on page 1 undefined on input line 35.
 
- []
+
+LaTeX Warning: Citation `srinivasan1995haptics' on page 1 undefined on input li
+ne 35.
+
+
+LaTeX Warning: Citation `hayward2004haptic' on page 1 undefined on input line 3
+5.
+
+
+LaTeX Warning: Citation `adams1998stability' on page 1 undefined on input line 
+35.
 
 File: YRmaterials/YReportP1.eps Graphic file (type eps)
 <YRmaterials/YReportP1.eps>
@@ -228,12 +238,6 @@ Underfull \hbox (badness 10000) has occurred while \output is active
 Non-PDF special ignored!
 
 {C:/Users/Oechslin/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}]
-Underfull \hbox (badness 10000) in paragraph at lines 36--36
-
- []
-
-File: Figs/block_diagram.eps Graphic file (type eps)
-<Figs/block_diagram.eps>
 File: YRmaterials/YReportP2.eps Graphic file (type eps)
  <YRmaterials/YReportP2.eps>
 Underfull \hbox (badness 10000) has occurred while \output is active
@@ -241,13 +245,11 @@ Underfull \hbox (badness 10000) has occurred while \output is active
  []
 
 [2
-Non-PDF special ignored!
 Non-PDF special ignored!]
-Underfull \hbox (badness 10000) in paragraph at lines 36--36
-
- []
-
+(C:\Users\Oechslin\EPFL\Master\Japan\git_project\Haptic-Feedback-Robot-Controll
+er---Master-Thesis\Reports\oechslin_july\YReport_en.bbl)
 File: YRmaterials/YReportP2.eps Graphic file (type eps)
+
 <YRmaterials/YReportP2.eps>
 Underfull \hbox (badness 10000) has occurred while \output is active
 []
@@ -256,42 +258,32 @@ Underfull \hbox (badness 10000) has occurred while \output is active
 [3
 Non-PDF special ignored!]
 (C:\Users\Oechslin\EPFL\Master\Japan\git_project\Haptic-Feedback-Robot-Controll
-er---Master-Thesis\Reports\oechslin_june\YReport_en.bbl)
-File: YRmaterials/YReportP2.eps Graphic file (type eps)
+er---Master-Thesis\Reports\oechslin_july\YReport_en.aux)
 
-<YRmaterials/YReportP2.eps>
-Underfull \hbox (badness 10000) has occurred while \output is active
-[]
- []
+LaTeX Warning: There were undefined references.
 
-[4
-Non-PDF special ignored!]
-(C:\Users\Oechslin\EPFL\Master\Japan\git_project\Haptic-Feedback-Robot-Controll
-er---Master-Thesis\Reports\oechslin_june\YReport_en.aux) ) 
+ ) 
 Here is how much of TeX's memory you used:
- 1736 strings out of 493921
- 23078 string characters out of 3144867
- 110809 words of memory out of 3000000
- 5019 multiletter control sequences out of 15000+200000
- 11092 words of font info for 42 fonts, out of 3000000 for 9000
+ 1737 strings out of 493921
+ 23102 string characters out of 3144867
+ 106137 words of memory out of 3000000
+ 5021 multiletter control sequences out of 15000+200000
+ 11400 words of font info for 43 fonts, out of 3000000 for 9000
  841 hyphenation exceptions out of 8191
- 34i,19n,28p,616b,310s stack positions out of 5000i,500n,10000p,200000b,50000s
-<C:/Users/Oechslin/Ap
-pData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/U
-sers/Oechslin/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/
-cmmi10.pfb><C:/Users/Oechslin/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/pub
-lic/amsfonts/cm/cmmi8.pfb><C:/Users/Oechslin/AppData/Local/Programs/MiKTeX 2.9/
-fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/Oechslin/AppData/Local/Progr
-ams/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/Oechslin/AppD
-ata/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Users
-/Oechslin/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy
-10.pfb><C:/Users/Oechslin/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/
-amsfonts/cm/cmti10.pfb>
+ 34i,18n,28p,668b,306s stack positions out of 5000i,500n,10000p,200000b,50000s
+<C:/Users/Oechslin/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfo
+nts/cm/cmbx10.pfb><C:/Users/Oechslin/AppData/Local/Programs/MiKTeX 2.9/fonts/ty
+pe1/public/amsfonts/cm/cmbx12.pfb><C:/Users/Oechslin/AppData/Local/Programs/MiK
+TeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/Oechslin/AppData/Loc
+al/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/Oechs
+lin/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb
+><C:/Users/Oechslin/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfon
+ts/cm/cmti10.pfb>
 Output written on C:/Users/Oechslin/EPFL/Master/Japan/git_project/Haptic-Feedba
-ck-Robot-Controller---Master-Thesis/Reports/oechslin_june/build/YReport_en.pdf 
-(4 pages, 172015 bytes).
+ck-Robot-Controller---Master-Thesis/Reports/oechslin_july/build/YReport_en.pdf 
+(3 pages, 149742 bytes).
 PDF statistics:
- 47 PDF objects out of 1000 (max. 8388607)
+ 36 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

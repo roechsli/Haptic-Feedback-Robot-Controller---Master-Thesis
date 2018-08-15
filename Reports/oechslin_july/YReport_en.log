@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6630 64-bit) (preloaded format=latex 2018.4.26)  3 JUL 2018 17:09
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6630 64-bit) (preloaded format=latex 2018.4.26)  23 JUL 2018 16:53
 entering extended mode
 **./YReport_en.tex
 (YReport_en.tex
@@ -208,21 +208,167 @@ Underfull \hbox (badness 10000) has occurred while \output is active
 
 [1
 
-] (YReport_en.bbl)
+]
+Overfull \hbox (47.38667pt too wide) in paragraph at lines 35--35
+\OT1/cmr/m/n/10.95 To gain in-sight into the sta-bil-ity, lit-er-a-ture uses fo
+r ex-am-ple the root-locus method [[]]
+ []
+
+File: Figs/topy_robot.eps Graphic file (type eps)
+<Figs/topy_robot.eps>
+Overfull \hbox (13.401pt too wide) in paragraph at lines 35--35
+\OT1/cmr/m/n/10.95 cate with the Topy robot. The com-mu-ni-ca-tion soft-ware wa
+s writ-ten in pro-cess-ing [[]]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 35--35
+
+ []
+
+
+Underfull \vbox (badness 2005) has occurred while \output is active []
+
+File: YRmaterials/YReportP2.eps Graphic file (type eps)
+
+<YRmaterials/YReportP2.eps>
+Underfull \hbox (badness 10000) has occurred while \output is active
+[]
+ []
+
+[2]
+File: Figs/real_P_scope_13_latency_plot.eps Graphic file (type eps)
+ <Figs/real_P_scope_13_latency_plot.eps>
+File: Figs/real_PID_scope_14_latency_plot.eps Graphic file (type eps)
+
+<Figs/real_PID_scope_14_latency_plot.eps>
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+File: YRmaterials/YReportP2.eps Graphic file (type eps)
+<YRmaterials/YReportP2.eps>
+Underfull \hbox (badness 10000) has occurred while \output is active
+[]
+ []
+
+[3]
+Overfull \hbox (10.07108pt too wide) in paragraph at lines 35--35
+ [][] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 35--35
+
+ []
+
+File: YRmaterials/YReportP2.eps Graphic file (type eps)
+<YRmaterials/YReportP2.eps>
+Underfull \hbox (badness 10000) has occurred while \output is active
+[]
+ []
+
+[4]
+Underfull \hbox (badness 10000) in paragraph at lines 35--35
+
+ []
+
+File: Figs/unity_test_setup.eps Graphic file (type eps)
+<Figs/unity_test_setup.eps>
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 35--35
+
+ []
+
+File: YRmaterials/YReportP2.eps Graphic file (type eps)
+<YRmaterials/YReportP2.eps>
+Underfull \hbox (badness 10000) has occurred while \output is active
+[]
+ []
+
+[5]
+Underfull \hbox (badness 10000) in paragraph at lines 35--35
+
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+File: YRmaterials/YReportP2.eps Graphic file (type eps)
+
+<YRmaterials/YReportP2.eps>
+Underfull \hbox (badness 10000) has occurred while \output is active
+[]
+ []
+
+[6]
+Underfull \hbox (badness 10000) in paragraph at lines 35--35
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 35--35
+
+ []
+
+
+Underfull \vbox (badness 1173) has occurred while \output is active []
+
+File: YRmaterials/YReportP2.eps Graphic file (type eps)
+
+<YRmaterials/YReportP2.eps>
+Underfull \hbox (badness 10000) has occurred while \output is active
+[]
+ []
+
+[7]
 File: YRmaterials/YReportP2.eps Graphic file (type eps)
  <YRmaterials/YReportP2.eps>
 Underfull \hbox (badness 10000) has occurred while \output is active
 []
  []
 
-[2] (YReport_en.aux) ) 
-Here is how much of TeX's memory you used:
- 1780 strings out of 493306
- 22523 string characters out of 3128523
- 108595 words of memory out of 3000000
- 5325 multiletter control sequences out of 15000+200000
- 11092 words of font info for 42 fonts, out of 3000000 for 9000
- 1141 hyphenation exceptions out of 8191
- 34i,18n,28p,534b,310s stack positions out of 5000i,500n,10000p,200000b,50000s
+[8]
+Underfull \hbox (badness 10000) in paragraph at lines 35--35
 
-Output written on YReport_en.dvi (2 pages, 232168 bytes).
+ []
+
+File: Figs/pilot_bode_P02.eps Graphic file (type eps)
+<Figs/pilot_bode_P02.eps>
+Underfull \hbox (badness 10000) in paragraph at lines 35--35
+
+ []
+
+File: YRmaterials/YReportP2.eps Graphic file (type eps)
+<YRmaterials/YReportP2.eps>
+Underfull \hbox (badness 10000) has occurred while \output is active
+[]
+ []
+
+[9]
+File: YRmaterials/YReportP2.eps Graphic file (type eps)
+ <YRmaterials/YReportP2.eps>
+Underfull \hbox (badness 10000) has occurred while \output is active
+[]
+ []
+
+[10] (YReport_en.bbl)
+File: YRmaterials/YReportP2.eps Graphic file (type eps)
+ <YRmaterials/YReportP2.eps>
+Underfull \hbox (badness 10000) has occurred while \output is active
+[]
+ []
+
+[11] (YReport_en.aux) ) 
+Here is how much of TeX's memory you used:
+ 1811 strings out of 493306
+ 23262 string characters out of 3128523
+ 153037 words of memory out of 3000000
+ 5349 multiletter control sequences out of 15000+200000
+ 11400 words of font info for 43 fonts, out of 3000000 for 9000
+ 1141 hyphenation exceptions out of 8191
+ 34i,19n,28p,953b,308s stack positions out of 5000i,500n,10000p,200000b,50000s
+
+Output written on YReport_en.dvi (11 pages, 267716 bytes).
