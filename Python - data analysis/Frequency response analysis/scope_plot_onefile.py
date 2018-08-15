@@ -108,6 +108,7 @@ for filename in os.listdir(directory):
     plt.legend(['Reference', 'Sensor left'])
     plt.xlabel('Time [s]')
     plt.ylabel('Compression [mm]')
+    plt.ylim([0, 4.5])
 
 
     plt.subplot(4, 2, counter_vec[counter]+2)
@@ -115,6 +116,7 @@ for filename in os.listdir(directory):
     # plt.legend(['Reference', 'Sensor left'])
     plt.xlabel('Time [s]')
     plt.ylabel('Motor voltage [V]')
+    plt.ylim([-20.2, 22.2])
 
     if counter%4 == 3:
         fig.savefig(directory + 'figs/pilot_tracking_perf' + str(counter) + '.jpg')
