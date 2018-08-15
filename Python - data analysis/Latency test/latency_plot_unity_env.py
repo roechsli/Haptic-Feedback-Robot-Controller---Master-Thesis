@@ -36,9 +36,9 @@ for filename in os.listdir(directory):
     # plotting
     df = pd.read_csv(directory + filename, delimiter=',')
     my_multiplier = 1
-    if "a" in filename:
+    if "b" in filename:
         my_multiplier = 1.800
-    elif "b" in filename:
+    elif "a" in filename:
         my_multiplier = 5.000
 
     for i in range(len(df.iloc[:,3]) -3):
@@ -97,6 +97,6 @@ for filename in os.listdir(directory):
         os.makedirs(figure_directory)
     #print (figure_directory + filename[:-4] + '_latency_plot.jpg')
     fig.savefig(figure_directory + filename[:-4] + '_latency_plot.jpg')
-    #plt.close(fig)
+    plt.close(fig)
 
-    plt.show()
+    #plt.show()
