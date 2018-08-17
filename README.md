@@ -12,3 +12,8 @@ For testing on a real robot, designed by Topy, a communication software and grap
 Based on performance analysis, design suggestions have been made and a second controller could be developed.
 
 The transparency and latency (response delay) have been reported for both controllers with different setup parameters settings.
+
+
+![yoke_handheld](https://user-images.githubusercontent.com/23032203/44253562-f8c0fc00-a23a-11e8-819a-4ec990692a4f.JPG)
+
+![game_handheld](https://user-images.githubusercontent.com/23032203/44253570-ff4f7380-a23a-11e8-8256-264f28890fb3.JPG)
