@@ -17,3 +17,6 @@ The transparency and latency (response delay) have been reported for both contro
 ![yoke_handheld](https://user-images.githubusercontent.com/23032203/44253562-f8c0fc00-a23a-11e8-819a-4ec990692a4f.JPG)
 
 ![game_handheld](https://user-images.githubusercontent.com/23032203/44253570-ff4f7380-a23a-11e8-8256-264f28890fb3.JPG)
+
+
+![Yoke controller - gif](https://github.com/roechsli/Haptic-Feedback-Robot-Controller---Master-Thesis/blob/master/Videos%20and%20Photos/readme-gif.gif)
