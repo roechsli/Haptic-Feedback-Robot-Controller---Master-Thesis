@@ -1,4 +1,4 @@
-# Haptic-Feedback-Robot-Controller---Master-Thesis
+# Haptic Feedback Robot Controller - Master-Thesis
 This is the Master Thesis written by Roman Oechslin at University of Tokyo in 2018.
 
 Haptic Feedback Controller - Palm Pressurization by Series Elastic Actuators in a Handheld Device
